@@ -4,194 +4,221 @@
  * To change site copy, edit this file only -- no component contains hardcoded
  * marketing text. See README "Changing site copy".
  *
- * NOTE: The live baldwinlifeinsurance.com site was unreachable from the build
- * environment (blocked by network egress policy), so the copy below was
- * reconstructed from the section inventory rather than lifted verbatim.
- * Section order, structure and contact details match the original; the prose
- * should be reviewed against the live site before the domain is cut over.
+ * The copy below is the client's approved language, transcribed verbatim from
+ * the live site. It is marketing copy for a regulated industry: do not reword,
+ * tighten, or "fix" it. Change it only when the client asks for a change.
  */
 
 export const site = {
   name: 'Baldwin Insurance Agency',
   legalName: 'Baldwin Insurance Agency',
   domain: 'baldwinlifeinsurance.com',
-  tagline: 'Life insurance and retirement strategies built around your family.',
+  canonical: 'https://www.baldwinlifeinsurance.com/',
+
+  meta: {
+    title: 'Baldwin Insurance Agency – Life Insurance & Annuities in California & Texas',
+    description:
+      "Baldwin Insurance Agency offers life insurance and annuity solutions in California and Texas. Protect your family's financial future with expert guidance and personalized coverage options.",
+    author: 'Baldwin Insurance Agency',
+    keywords: [
+      'life insurance California',
+      'life insurance Texas',
+      'annuities California',
+      'annuities Texas',
+      'life insurance agent',
+      'term life insurance',
+      'whole life insurance',
+      'final expense insurance',
+      'retirement annuity',
+      'Baldwin Insurance Agency',
+    ],
+    geoPlacename: 'California, Texas',
+    geoRegion: 'US-CA, US-TX',
+    socialTitle: 'Baldwin Insurance Agency – Life Insurance & Annuities in CA & TX',
+    socialDescription:
+      "Protect your family's financial future with life insurance and annuity solutions from Baldwin Insurance Agency. Serving California and Texas.",
+    /**
+     * The live site's OG image. NOT YET PRESENT in /public/images -- the file
+     * could not be retrieved (see public/images/README.md). The OG/Twitter
+     * image tags are deliberately omitted until it lands, rather than shipping
+     * a tag that points at a 404.
+     */
+    socialImage: '/images/image-3.jpg',
+  },
+
+  nav: [
+    { label: 'About Us', href: '#about' },
+    { label: 'Our Services', href: '#services' },
+    { label: 'Agent Opportunity', href: '#agent-opportunity' },
+    { label: 'Contact Us', href: '#contact' },
+  ],
 
   contact: {
     phone: '(858) 729-0003',
     phoneHref: 'tel:+18587290003',
     email: 'chris@baldwinlifeinsurance.com',
     emailHref: 'mailto:chris@baldwinlifeinsurance.com',
-    hours: 'Mon-Fri 9am-5pm',
+    hours: 'Mon–Fri: 9am–5pm',
+    phoneLabel: 'Call Us:',
+    emailLabel: 'Email Us:',
+    hoursLabel: 'Business Hours:',
   },
 
   hero: {
-    eyebrow: 'Licensed in California & Texas',
-    headline: 'Protect What You Have Built.',
+    eyebrow: 'Family-Focused Protection Since Day One',
+    headline: "Protect Your Family's Financial Future Without the Stress",
     subhead:
-      'Independent life insurance and retirement planning from an agency that has spent 25 years putting families first. Straight answers, no pressure, and coverage that actually fits your situation.',
-    primaryCta: 'Start Quote',
+      'Get affordable life insurance, mortgage protection life insurance, and retirement solutions designed for families like yours. Led by Chris Baldwin, we put integrity and your peace of mind first.',
+    primaryCta: 'Start Quote →',
     secondaryCta: 'Join Our Team',
+    trustStrip: ['Free quotes in minutes', 'Licensed & trusted', 'Family-first approach'],
   },
 
-  products: {
-    heading: 'What We Offer',
+  services: {
+    heading: 'Comprehensive Protection for Every Stage of Life',
     intro:
-      'Independent means we shop the whole market for you. Here is where we spend most of our time.',
+      "From safeguarding your mortgage to securing your retirement, we offer solutions tailored to your family's unique needs.",
     items: [
       {
         title: 'Indexed Universal Life',
         description:
-          'Permanent coverage with cash value tied to market index performance, with a floor that protects you in down years. Tax-advantaged growth you can borrow against later.',
+          'Build cash value while protecting your family. IUL policies offer growth potential tied to market indexes with downside protection and tax advantages.',
       },
       {
-        title: 'Mortgage Protection',
+        title: 'Mortgage Protection Life Insurance',
         description:
-          'Coverage sized to your mortgage balance and term, so your family keeps the house if the primary earner is gone. Often the simplest place to start.',
+          "Keep your family in their home even if you can't make the payments. Protect your most valuable asset with term life coverage.",
       },
       {
         title: 'Final Expense',
         description:
-          'Smaller whole-life policies designed to cover funeral costs, medical bills and outstanding debts, so those expenses never land on your children.',
+          "Don't leave your family with the burden of funeral costs. Plan ahead with affordable final expense coverage.",
       },
       {
         title: 'Annuities',
         description:
-          'Guaranteed income streams for retirement, structured for the payout and timeline you need. A predictable floor underneath the rest of your plan.',
+          'Build a reliable income stream for retirement. Grow your savings with guaranteed, tax-deferred options.',
       },
       {
         title: 'Retirement Rollovers',
         description:
-          'Move an old 401(k) or IRA into a vehicle with clearer terms and downside protection, without triggering a taxable event.',
+          'Consolidate old 401(k)s and IRAs into one secure account. Simplify your retirement planning today.',
       },
       {
         title: 'Estate Planning',
         description:
-          'Strategies that pass wealth to the next generation efficiently, keeping your estate out of probate and reducing what the tax bill takes.',
+          "Protect your legacy and ensure your assets are distributed according to your wishes. Plan for your family's financial future beyond your lifetime.",
       },
     ],
   },
 
   about: {
-    heading: 'Meet Chris Baldwin',
-    body: [
-      'Chris Baldwin has spent more than 25 years helping families and business owners make sense of life insurance and retirement income. He founded Baldwin Insurance Agency on a straightforward idea: people make good decisions when someone takes the time to explain the trade-offs honestly.',
-      'As an independent agency, we are not tied to a single carrier. That means the recommendation you get is the one that fits your situation, not the one that fits a sales quota.',
-    ],
+    eyebrow: 'Led by Chris Baldwin – 25+ Years Experience',
+    heading: 'Family & Integrity Come First',
+    body: "At Baldwin Insurance Agency, we're not just selling policies—we're protecting families and securing financial futures. With over 25 years of experience and a commitment to putting your needs first, Chris Baldwin and our team provide personalized guidance you can trust.",
+    /** Not yet present in /public/images -- see meta.socialImage above. */
+    image: { src: '/images/image-3.jpg', alt: 'Advisor meeting with couple' },
     valueProps: [
       {
-        title: '25+ Years of Experience',
+        title: 'Personalized Approach',
         description:
-          'Two and a half decades of writing policies, handling claims and sitting with families at the worst moments. That experience shapes every recommendation.',
+          'We take time to understand your unique situation and financial goals',
       },
       {
-        title: 'Independent & Objective',
+        title: 'Proven Results',
         description:
-          'We represent you, not a carrier. We compare offers across multiple A-rated insurers and tell you plainly which one wins and why.',
+          'Navigate complex insurance and retirement decisions with battle-tested guidance',
       },
       {
-        title: 'No-Pressure Guidance',
-        description:
-          'A real conversation about what you need and what it costs. If the answer is that you already have enough coverage, we will tell you that too.',
+        title: 'Family-First Values',
+        description: "We treat your family's financial future like it's our own",
       },
     ],
   },
 
-  recruiting: {
-    heading: 'Build a Career With Baldwin',
+  agentOpportunity: {
+    eyebrow: 'Build Your Career',
+    heading: 'Join a Team That Invests in Your Success',
     intro:
-      'We are hiring licensed agents and people willing to get licensed. If you want ownership of your schedule and your income, we should talk.',
-    cta: 'Join Our Team',
+      "Whether you're new to insurance or an experienced agent, Baldwin Insurance Agency offers comprehensive training, mentorship, and cutting-edge AI-powered lead tools to help you thrive.",
+    // The live site reads "Upload Your Resume →". There is no upload in this
+    // build, so the control does not claim one.
+    cta: 'Join Our Team →',
+    footnote: 'Join agents who are building successful, sustainable careers',
     benefits: [
       {
-        title: 'Uncapped Commission',
-        description:
-          'Straightforward, competitive contracts with clear advancement. What you earn is a function of what you write, not office politics.',
+        title: 'Top Producer Mentorship',
+        description: 'Learn from proven, high-performing professionals',
       },
-      {
-        title: 'Warm Leads Provided',
-        description:
-          'No cold calling strangers from a phone book. You work with people who have already raised their hand and asked about coverage.',
-      },
-      {
-        title: 'Training & Mentorship',
-        description:
-          'Direct coaching from Chris and the senior team. New agents are not handed a script and left alone with it.',
-      },
-      {
-        title: 'Work On Your Own Terms',
-        description:
-          'Set your own hours and work remotely. We care about the outcomes you produce, not the chair you produce them in.',
-      },
+      { title: 'AI Lead Tools', description: 'Modern technology to find clients' },
+      { title: 'Proven Systems', description: 'Follow our success framework' },
+      { title: 'Supportive Culture', description: 'We win together as a team' },
     ],
   },
 
   howItWorks: {
     heading: 'How It Works',
-    intro: 'Three steps, no obligation, and nobody shows up at your door.',
+    intro:
+      'Getting the right coverage for your family is simple and stress-free with Baldwin Insurance Agency',
+    cta: 'Start Quote →',
+    footnote: 'Takes less than 5 minutes • No obligation',
     steps: [
       {
         number: '01',
-        title: 'Request Your Quote',
+        title: 'Get Your Free Quote',
         description:
-          'Send us your name, phone and email. It takes about thirty seconds and commits you to nothing.',
+          "Fill out a quick form or give us a call. We'll gather basic information to understand your needs and budget.",
       },
       {
         number: '02',
-        title: 'Talk It Through',
+        title: 'Review Your Options',
         description:
-          'We call at a time that works for you, learn what you are trying to protect, and walk you through the realistic options.',
+          "We'll present you with personalized coverage options that fit your family's situation and financial goals.",
       },
       {
         number: '03',
-        title: 'Get Covered',
+        title: 'Get Protected',
         description:
-          'We handle the application and the carrier paperwork, then stay reachable for as long as you hold the policy.',
+          "Choose your plan and we'll handle the paperwork. Your family's financial future is secured—peace of mind achieved.",
       },
     ],
   },
 
   forms: {
     quote: {
-      title: 'Start Your Quote',
-      description:
-        'Tell us how to reach you and we will follow up shortly. No obligation, and we never sell your information.',
-      submit: 'Request My Quote',
+      title: 'Get Your Free Quote',
+      description: 'An agent will contact you directly — no obligation.',
+      submit: 'Submit →',
       submitting: 'Sending...',
-      successTitle: 'Request received.',
-      successBody:
-        'Thanks -- we have your request and will be in touch shortly during business hours.',
+      successTitle: "You're all set!",
+      successBody: 'Thank you! One of our agents will be in touch with you shortly.',
     },
     apply: {
       title: 'Join Our Team',
-      description:
-        'Tell us how to reach you and we will follow up about opportunities with the agency.',
-      submit: 'Submit Application',
+      description: 'An agent will contact you directly — no obligation.',
+      submit: 'Submit Application →',
       submitting: 'Sending...',
-      successTitle: 'Application received.',
-      successBody:
-        'Thanks -- we have your details and someone from the team will reach out shortly.',
+      successTitle: 'Application Received!',
+      successBody: 'Thank you! One of our team members will be in touch with you shortly.',
     },
     fields: {
-      name: 'Full name',
-      phone: 'Phone number',
-      email: 'Email address',
+      name: 'Full Name',
+      phone: 'Cell Phone',
+      email: 'Email Address',
     },
     genericError:
       'Something went wrong on our end and your request was not sent. Please try again, or reach us directly at (858) 729-0003.',
   },
 
   footer: {
-    blurb:
-      'Independent life insurance and retirement planning, serving families across California and Texas.',
-    hoursLabel: 'Hours',
-    contactLabel: 'Contact',
+    blurb: 'Protecting families and building careers with integrity since day one.',
+    contactLabel: 'Get In Touch',
     legalLabel: 'Legal',
-    disclaimer:
-      'Baldwin Insurance Agency is an independent insurance agency. Policy availability, rates and benefits vary by state, carrier and individual underwriting. This site is for informational purposes and is not an offer of coverage.',
   },
 
   legal: {
+    // Placeholder text for the two legal routes, required by the build brief
+    // until real policies are written. Not marketing copy.
     pendingNotice:
       'This policy is being finalized. For questions in the meantime, or to request information about how we handle your data, contact us and we will respond directly.',
   },

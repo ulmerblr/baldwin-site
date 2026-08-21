@@ -2,42 +2,38 @@ import type { Metadata, Viewport } from 'next'
 import { site } from '@/content/site'
 import './globals.css'
 
-const title = `${site.name} | Life Insurance & Retirement Planning`
-const description =
-  'Independent life insurance, annuities and retirement planning for families in California and Texas. 25+ years of straight answers from Chris Baldwin. Get a free, no-obligation quote.'
-
 export const metadata: Metadata = {
-  metadataBase: new URL(`https://www.${site.domain}`),
+  metadataBase: new URL(site.canonical),
   title: {
-    default: title,
+    default: site.meta.title,
     template: `%s | ${site.name}`,
   },
-  description,
-  keywords: [
-    'life insurance',
-    'indexed universal life',
-    'mortgage protection',
-    'final expense insurance',
-    'annuities',
-    'retirement rollover',
-    'estate planning',
-    'California life insurance',
-    'Texas life insurance',
-  ],
-  authors: [{ name: site.name }],
-  alternates: { canonical: '/' },
+  description: site.meta.description,
+  // Joined by hand: Next joins an array with a bare comma, and the live site
+  // separates keywords with a comma AND a space.
+  keywords: site.meta.keywords.join(', '),
+  authors: [{ name: site.meta.author }],
+  // NOTE: no `alternates.canonical` here. Next normalizes the trailing slash
+  // off the URL, and the live site declares it. The tag is emitted explicitly
+  // in the component below instead -- there must be exactly one.
   openGraph: {
     type: 'website',
     siteName: site.name,
-    title,
-    description,
+    title: site.meta.socialTitle,
+    description: site.meta.socialDescription,
     url: '/',
     locale: 'en_US',
+    // NOTE: the live site's OG image is `/images/image-3.jpg`. That file is not
+    // in this repo yet (see public/images/README.md), so the image tag is
+    // omitted rather than pointing crawlers at a 404. Once the file is added,
+    // restore it here and on `twitter` below:
+    //   images: [{ url: site.meta.socialImage, width: 1200, height: 630, alt: site.about.image.alt }],
   },
   twitter: {
     card: 'summary_large_image',
-    title,
-    description,
+    title: site.meta.socialTitle,
+    description: site.meta.socialDescription,
+    // images: [site.meta.socialImage],  <- restore with the file, as above
   },
   robots: {
     index: true,
@@ -45,9 +41,9 @@ export const metadata: Metadata = {
   },
   // Geo targeting carried over from the existing site.
   other: {
-    'geo.region': 'US-CA, US-TX',
-    'geo.placename': 'California, Texas',
-    'og:locality': 'California, Texas',
+    'geo.region': site.meta.geoRegion,
+    'geo.placename': site.meta.geoPlacename,
+    'og:locality': site.meta.geoPlacename,
   },
 }
 
@@ -61,6 +57,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        {/* React hoists this into <head>. See the metadata note above. */}
+        <link rel="canonical" href={site.canonical} />
         <a
           href="#main"
           className="sr-only rounded-md focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-gold-500 focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-950"

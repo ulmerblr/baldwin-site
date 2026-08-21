@@ -19,15 +19,30 @@ export function SiteHeader() {
           </span>
         </Link>
 
+        <nav aria-label="Main" className="hidden lg:block">
+          <ul className="flex items-center gap-7">
+            {site.nav.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="rounded text-sm font-medium text-ink-300 transition-colors hover:text-gold-300"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         <div className="flex items-center gap-2 sm:gap-4">
           <a
             href={site.contact.phoneHref}
-            className="hidden rounded-lg text-sm font-semibold text-ink-300 transition-colors hover:text-gold-300 sm:block"
+            className="hidden rounded-lg text-sm font-semibold text-ink-300 transition-colors hover:text-gold-300 sm:block lg:hidden xl:block"
           >
             {site.contact.phone}
           </a>
           <CtaButton kind="quote" className="px-4 py-2 text-sm sm:px-5">
-            {site.hero.primaryCta}
+            Start Quote
           </CtaButton>
         </div>
       </div>
@@ -46,7 +61,14 @@ function BrandMark() {
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
-      <path d="M13.6 17l2.4 2.4 4.6-4.8" fill="none" stroke="#e8ca6b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M13.6 17l2.4 2.4 4.6-4.8"
+        fill="none"
+        stroke="#e8ca6b"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -80,27 +102,57 @@ export function Hero() {
             {site.hero.secondaryCta}
           </CtaButton>
         </div>
+
+        <ul className="mt-10 flex flex-col gap-3 text-sm text-ink-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 sm:gap-y-2">
+          {site.hero.trustStrip.map((item) => (
+            <li key={item} className="flex items-center gap-2">
+              <CheckMark />
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
 }
 
-/* ---------------------------------------------------------------- products */
-
-export function Products() {
+function CheckMark() {
   return (
-    <section id="products" className="border-b border-navy-800 py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading title={site.products.heading} intro={site.products.intro} />
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="#d9b53d"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="shrink-0"
+    >
+      <path d="M2.5 8.5l3.5 3.5 7.5-8" />
+    </svg>
+  )
+}
 
+/* ---------------------------------------------------------------- services */
+
+export function Services() {
+  return (
+    <section id="services" className="border-b border-navy-800 py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading title={site.services.heading} intro={site.services.intro} />
+
+        {/* Per the build brief the old "Learn More →" links are removed rather
+            than shipped pointing at "#". Card text only. */}
         <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {site.products.items.map((product) => (
+          {site.services.items.map((service) => (
             <li
-              key={product.title}
+              key={service.title}
               className="rounded-2xl border border-navy-700 bg-navy-900/60 p-6 transition-colors hover:border-gold-500/50"
             >
-              <h3 className="text-lg font-semibold text-gold-300">{product.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-300">{product.description}</p>
+              <h3 className="text-lg font-semibold text-gold-300">{service.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-300">{service.description}</p>
             </li>
           ))}
         </ul>
@@ -121,16 +173,29 @@ export function About() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gold-400">
+              {site.about.eyebrow}
+            </p>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">
               {site.about.heading}
             </h2>
-            <div className="mt-6 space-y-4">
-              {site.about.body.map((paragraph) => (
-                <p key={paragraph.slice(0, 32)} className="leading-relaxed text-ink-300">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+            <p className="mt-6 leading-relaxed text-ink-300">{site.about.body}</p>
+
+            {/*
+              The live site shows `site.about.image` here. That file is not in
+              this repo yet (see public/images/README.md), so nothing is
+              rendered rather than shipping a broken <img>. Once the file is
+              added, restore:
+
+              <Image
+                src={site.about.image.src}
+                alt={site.about.image.alt}
+                width={1200}
+                height={800}
+                className="mt-8 w-full rounded-2xl border border-navy-700 object-cover"
+              />
+            */}
+
             <div className="mt-8">
               <CtaButton kind="quote">{site.hero.primaryCta}</CtaButton>
             </div>
@@ -138,10 +203,7 @@ export function About() {
 
           <ul className="space-y-4">
             {site.about.valueProps.map((prop) => (
-              <li
-                key={prop.title}
-                className="rounded-2xl border border-navy-700 bg-navy-950/60 p-6"
-              >
+              <li key={prop.title} className="rounded-2xl border border-navy-700 bg-navy-950/60 p-6">
                 <h3 className="text-base font-semibold text-gold-300">{prop.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-300">{prop.description}</p>
               </li>
@@ -164,10 +226,7 @@ export function HowItWorks() {
         <ol className="mt-12 grid gap-5 md:grid-cols-3">
           {site.howItWorks.steps.map((step) => (
             <li key={step.number} className="rounded-2xl border border-navy-700 bg-navy-900/60 p-6">
-              <span
-                aria-hidden="true"
-                className="text-3xl font-bold tabular-nums text-gold-500/70"
-              >
+              <span aria-hidden="true" className="text-3xl font-bold tabular-nums text-gold-500/70">
                 {step.number}
               </span>
               <h3 className="mt-3 text-lg font-semibold text-ink-100">{step.title}</h3>
@@ -175,36 +234,50 @@ export function HowItWorks() {
             </li>
           ))}
         </ol>
+
+        <div className="mt-12 flex flex-col items-center gap-3">
+          <CtaButton kind="quote">{site.howItWorks.cta}</CtaButton>
+          <p className="text-sm text-ink-400">{site.howItWorks.footnote}</p>
+        </div>
       </div>
     </section>
   )
 }
 
-/* --------------------------------------------------------------- recruiting */
+/* -------------------------------------------------------- agent opportunity */
 
-export function Recruiting() {
+export function AgentOpportunity() {
   return (
-    <section id="careers" className="border-b border-navy-800 bg-navy-900/40 py-20 sm:py-24">
+    <section
+      id="agent-opportunity"
+      className="border-b border-navy-800 bg-navy-900/40 py-20 sm:py-24"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading title={site.recruiting.heading} intro={site.recruiting.intro} />
+        <div className="max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gold-400">
+            {site.agentOpportunity.eyebrow}
+          </p>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">
+            {site.agentOpportunity.heading}
+          </h2>
+          <p className="mt-4 leading-relaxed text-ink-300">{site.agentOpportunity.intro}</p>
+        </div>
 
         <ul className="mt-12 grid gap-5 sm:grid-cols-2">
-          {site.recruiting.benefits.map((benefit) => (
-            <li
-              key={benefit.title}
-              className="rounded-2xl border border-navy-700 bg-navy-950/60 p-6"
-            >
+          {site.agentOpportunity.benefits.map((benefit) => (
+            <li key={benefit.title} className="rounded-2xl border border-navy-700 bg-navy-950/60 p-6">
               <h3 className="text-base font-semibold text-gold-300">{benefit.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-300">{benefit.description}</p>
             </li>
           ))}
         </ul>
 
-        <div className="mt-12 flex justify-center">
-          {/* Was "Upload Your Resume" on the old site, which promised an upload
-              that silently discarded every file. There is no upload in this
-              build, so the control does not claim one. */}
-          <CtaButton kind="apply">{site.recruiting.cta} &rarr;</CtaButton>
+        <div className="mt-12 flex flex-col items-center gap-3">
+          {/* The live site reads "Upload Your Resume →" and silently discarded
+              every file. There is no upload in this build, so the control does
+              not claim one. */}
+          <CtaButton kind="apply">{site.agentOpportunity.cta}</CtaButton>
+          <p className="text-sm text-ink-400">{site.agentOpportunity.footnote}</p>
         </div>
       </div>
     </section>
@@ -215,7 +288,7 @@ export function Recruiting() {
 
 export function SiteFooter() {
   return (
-    <footer className="py-14 sm:py-16">
+    <footer id="contact" className="py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
@@ -232,8 +305,9 @@ export function SiteFooter() {
             <h2 className="text-xs font-semibold uppercase tracking-wider text-gold-400">
               {site.footer.contactLabel}
             </h2>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <ul className="mt-4 space-y-3 text-sm">
               <li>
+                <span className="block text-ink-400">{site.contact.phoneLabel}</span>
                 <a
                   href={site.contact.phoneHref}
                   className="rounded text-ink-300 transition-colors hover:text-gold-300"
@@ -242,6 +316,7 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
+                <span className="block text-ink-400">{site.contact.emailLabel}</span>
                 <a
                   href={site.contact.emailHref}
                   className="rounded break-words text-ink-300 transition-colors hover:text-gold-300"
@@ -249,7 +324,10 @@ export function SiteFooter() {
                   {site.contact.email}
                 </a>
               </li>
-              <li className="text-ink-400">{site.contact.hours}</li>
+              <li>
+                <span className="block text-ink-400">{site.contact.hoursLabel}</span>
+                <span className="text-ink-300">{site.contact.hours}</span>
+              </li>
             </ul>
           </div>
 
@@ -279,8 +357,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 border-t border-navy-800 pt-8">
-          <p className="text-xs leading-relaxed text-ink-400">{site.footer.disclaimer}</p>
-          <p className="mt-4 text-xs text-ink-400">
+          <p className="text-xs text-ink-400">
             &copy; <CurrentYear buildYear={new Date().getFullYear()} /> {site.legalName}. All rights
             reserved.
           </p>

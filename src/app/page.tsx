@@ -1,10 +1,10 @@
 import { LeadModalProvider } from '@/components/lead-modals'
 import {
   About,
+  AgentOpportunity,
   Hero,
   HowItWorks,
-  Products,
-  Recruiting,
+  Services,
   SiteFooter,
   SiteHeader,
 } from '@/components/sections'
@@ -15,10 +15,10 @@ export default function HomePage() {
       <SiteHeader />
       <main id="main">
         <Hero />
-        <Products />
+        <Services />
         <About />
         <HowItWorks />
-        <Recruiting />
+        <AgentOpportunity />
       </main>
       <SiteFooter />
     </LeadModalProvider>

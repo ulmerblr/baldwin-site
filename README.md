@@ -58,15 +58,18 @@ component contains hardcoded marketing copy. To reword the hero, rename a produc
 change the phone number, or edit a form's success message, edit that one file and
 push. The change is live on the next deploy.
 
-The file is a plain object grouped by section: `hero`, `products`, `about`,
-`recruiting`, `howItWorks`, `forms`, `footer`, `legal`.
+The file is a plain object grouped by section: `meta`, `nav`, `contact`, `hero`,
+`services`, `about`, `agentOpportunity`, `howItWorks`, `forms`, `footer`, `legal`.
 
-> ⚠️ **The prose in `site.ts` is reconstructed, not copied from the live site.**
-> `baldwinlifeinsurance.com` was unreachable from the build environment (blocked by
-> network egress policy), so the section structure, order and contact details match
-> the original but the wording is new. **Review it against the live site before
-> cutting the domain over.** The same applies to imagery — see
-> [`public/images/README.md`](public/images/README.md).
+> ⚠️ **The copy is the client's approved marketing language, transcribed verbatim
+> from the live site.** This is a regulated industry: do not reword, tighten, or
+> "fix" its grammar. Change it only when the client asks for a change.
+
+**Still missing: `image-3.jpg`.** The live site's one photograph could not be
+downloaded — the build environment blocks `baldwinlifeinsurance.com`. The About
+section image and the OG/Twitter image tags are omitted rather than shipped
+broken. See [`public/images/README.md`](public/images/README.md) for the
+two-line fix once the file is added.
 
 ---
 
@@ -185,6 +188,8 @@ its records are removed.
 
 ### Also worth doing at cutover
 
+- Add `public/images/image-3.jpg` and restore the two commented blocks that reference
+  it, so the About section and the social share card are complete.
 - Verify the domain in Resend and set `NOTIFY_FROM` to an address at it. Notifications
   currently send from Resend's shared `onboarding@resend.dev`, which is fine for
   delivery to your own inbox but is not a good long-term sender.
