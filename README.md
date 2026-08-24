@@ -24,6 +24,7 @@ npm run build      # production build; must finish with no warnings
 npm run start      # serve the production build locally
 npm run lint       # eslint
 npm run typecheck  # tsc --noEmit
+npm run check:tk   # fails while any [[TK:]] placeholder is unfilled
 ```
 
 Node 22 or newer.
@@ -53,13 +54,17 @@ error the user can see. They are never silently accepted and dropped.
 
 ## Changing site copy
 
-**All user-facing text lives in [`src/content/site.ts`](src/content/site.ts).** No
-component contains hardcoded marketing copy. To reword the hero, rename a product,
-change the phone number, or edit a form's success message, edit that one file and
-push. The change is live on the next deploy.
+**All user-facing text lives in [`src/content/`](src/content).** No component contains
+hardcoded marketing copy. Edit the right file and push; the change is live on the next
+deploy.
 
-The file is a plain object grouped by section: `meta`, `nav`, `contact`, `hero`,
-`services`, `about`, `agentOpportunity`, `howItWorks`, `forms`, `footer`, `legal`.
+| File | What is in it |
+| --- | --- |
+| [`site.ts`](src/content/site.ts) | The home page, in the client's approved words: `meta`, `contact`, `hero`, `services`, `about`, `agentOpportunity`, `howItWorks`, `forms`, `footer`, `legal`. |
+| [`pages.ts`](src/content/pages.ts) | The pages added later: About, the products overview, Agent Opportunity, Contact, the two new home page bands, and the footer compliance line. |
+| [`products.ts`](src/content/products.ts) | The six product pages. Each one's lead paragraph is read out of `site.services.items`, so a card and its page cannot drift apart. |
+| [`nav.ts`](src/content/nav.ts) | Header and footer navigation, including the Products dropdown. |
+| [`images.ts`](src/content/images.ts) | Photography slots — see [Images](#images). |
 
 > ⚠️ **The copy is the client's approved marketing language, transcribed verbatim
 > from the live site.** This is a regulated industry: do not reword, tighten, or
@@ -70,6 +75,55 @@ downloaded — the build environment blocks `baldwinlifeinsurance.com`. The Abou
 section image and the OG/Twitter image tags are omitted rather than shipped
 broken. See [`public/images/README.md`](public/images/README.md) for the
 two-line fix once the file is added.
+
+---
+
+## Placeholders
+
+Some facts nobody has supplied yet — license numbers, professional designations,
+client testimonials, the office address — are written in the content files as
+`[[TK: ...]]` tokens. They render on the page as a visible muted chip carrying the
+token text.
+
+**That is deliberate and it is not a bug.** These are regulated advertising claims on
+an insurance site: a plausible-looking invented license number is materially worse
+than an obvious blank. Nothing guesses at them, and nothing quietly drops the sentence
+around them.
+
+```bash
+npm run check:tk     # exits 1 and lists every unfilled token, with file:line
+```
+
+Run it before go-live. A clean pass means every supplied-later fact has a real value.
+
+`prebuild` runs the same check in `--warn` mode: it prints the same list in a banner on
+every build but exits 0, so the site still deploys while it is pre-launch. Move it to
+the hard check (drop `--warn`) once the values land, if you want the build itself to
+guard them.
+
+The tokens live in [`src/content/pages.ts`](src/content/pages.ts). Replace the token
+with the real value — no other edit is needed.
+
+---
+
+## Images
+
+Every photograph on the site resolves through a **named slot** in
+[`src/content/images.ts`](src/content/images.ts). Components render
+`<ImageSlot name="chris-portrait" />` and never mention a file path.
+
+No real photography has been supplied yet, so each slot draws a neutral branded panel
+in the site palette. **There is no stock photography and no generated imagery in this
+repo, and nothing has been copied from any other site.**
+
+To drop a real photo in:
+
+1. Save the file under `public/images/`.
+2. In `src/content/images.ts`, set that slot's `src` (and its `alt`, for the two slots
+   that are not decorative).
+
+That is the whole change — no component is touched. Slots: `chris-portrait`,
+`about-secondary`, `product-<slug>` (six, one per product page), `agent-team`.
 
 ---
 
@@ -100,16 +154,47 @@ src/
   app/
     page.tsx              home page — composes the sections
     layout.tsx            metadata, OG tags, CA/TX geo targeting
+    about/                Meet Chris Baldwin
+    products/             overview + [slug]/ for the six product pages
+    agent-opportunity/    recruiting
+    contact/              contact details and both CTAs
     privacy/, terms/      real legal routes (no dead links anywhere)
+    sitemap.ts            built from nav.ts + products.ts, so it cannot go stale
     api/quote/route.ts    POST — quote form
     api/apply/route.ts    POST — application form
-  components/             presentation + the modal/form client island
-  content/site.ts         ← all copy lives here
+  components/
+    site-shell.tsx        header + footer + dialog provider, used by every page
+    site-header.tsx       nav, incl. the keyboard-navigable Products dropdown
+    sections.tsx          the home page bands
+    page-sections.tsx     shared furniture for the interior pages
+    image-slot.tsx        named photography slots (see Images)
+    tk.tsx                renders unfilled [[TK:]] facts as visible chips
+    modal.tsx, lead-*.tsx the modal/form client island
+  content/                ← all copy lives here (see Changing site copy)
   lib/
+    seo.ts                canonical URLs and per-page title/description
     validate.ts           server-side validation and sanitization
     rate-limit.ts         in-memory per-IP limiter
     notify.ts             the notification seam (email today, ATS later)
     handle-submission.ts  shared pipeline for both endpoints
+scripts/
+  check-placeholders.mjs  the [[TK:]] gate — see Placeholders
+```
+
+### Routes
+
+All eleven marketing routes are statically rendered at build time.
+
+```
+/                                   /agent-opportunity
+/about                              /contact
+/products                           /privacy    (noindex)
+/products/indexed-universal-life    /terms      (noindex)
+/products/mortgage-protection
+/products/final-expense
+/products/annuities
+/products/retirement-rollovers
+/products/estate-planning
 ```
 
 Both endpoints always answer with JSON in one of exactly two shapes:

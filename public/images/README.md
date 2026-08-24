@@ -29,6 +29,32 @@ Both places have a comment showing exactly what to restore.
 The path and alt text are already in `src/content/site.ts`
 (`about.image` and `meta.socialImage`), so nothing else needs editing.
 
+## Photography slots
+
+The pages added in the multi-page expansion each have a photo slot, and none of
+them has a photograph yet. They are declared in
+[`src/content/images.ts`](../../src/content/images.ts):
+
+| Slot | Where it appears | Alt text |
+| --- | --- | --- |
+| `chris-portrait` | `/about`, beside the story | supplied — Chris Baldwin, founder |
+| `about-secondary` | `/about`, supporting photo | ships with the photo |
+| `product-<slug>` (six) | each product page | decorative |
+| `agent-team` | `/agent-opportunity` | decorative |
+
+Until a slot has a `src`, it draws a neutral branded panel in the site palette.
+**No stock photography, no generated imagery, and nothing copied from any other
+site** — including the reference site, which asserts copyright over its images
+and its copy.
+
+### To fill a slot
+
+1. Save the file in this folder, e.g. `public/images/chris-portrait.jpg`.
+2. Set that slot's `src` in `src/content/images.ts` (and its `alt`, for the two
+   slots that are not decorative).
+
+No component changes. That config file is the only edit.
+
 ## Everything else
 
 The brand mark is inline SVG and the hero ground is a CSS gradient, so there
