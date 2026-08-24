@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100" viewBox="0 0 900 1100" role="img" aria-label="Sample placeholder, replace before launch">
+  <defs>
+    <pattern id="hatch" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="18" stroke="#B5179E" stroke-width="4" opacity="0.16" />
+    </pattern>
+  </defs>
+  <rect width="900" height="1100" fill="#EDEAE4" />
+  <rect width="900" height="1100" fill="url(#hatch)" />
+  
+    <circle cx="450" cy="374" r="135" stroke="#B5179E" stroke-width="2.25" fill="none" opacity="0.5" />
+    <path d="M180 814 q270 -202.5 540 0" stroke="#B5179E" stroke-width="2.25" fill="none" opacity="0.5" />
+    <line x1="72" y1="374" x2="180" y2="374" stroke="#B5179E" stroke-width="2.25" fill="none" opacity="0.5" />
+    <line x1="720" y1="374" x2="828" y2="374" stroke="#B5179E" stroke-width="2.25" fill="none" opacity="0.5" />
+  <rect x="27" y="27" width="846" height="1046"
+        fill="none" stroke="#B5179E" stroke-width="10" stroke-dasharray="40.90909090909091 27.272727272727273" />
+  <rect x="0" y="475" width="900" height="150" fill="#B5179E" opacity="0.92" />
+  <text x="450" y="541" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50" font-weight="700"
+        fill="#FFFFFF" letter-spacing="2">SAMPLE — REPLACE</text>
+  <text x="450" y="595" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30"
+        fill="#FFFFFF" opacity="0.95">chris-portrait</text>
+  <text x="450" y="1035.2" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22.5"
+        fill="#2A2F3A" opacity="0.75">900 × 1100 — not final artwork</text>
+</svg>

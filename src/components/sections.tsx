@@ -12,7 +12,14 @@ export function Hero() {
   return (
     <OverlayImage name="home-hero" priority className="border-b border-line">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
-        <p className="inline-flex items-center rounded-full border border-gold-bright/50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-gold-bright">
+{/* Opaque ink fill, not just a border: gold-bright is a FILL colour, and
+            as small text directly on a scrim it fails AA the moment a bright
+            photograph lands behind it (2.56:1 over a white frame). Holding it
+            to AA via the scrim alone would need a 0.88 floor, which would bury
+            the photograph. Giving the pill its own ground makes the contrast
+            photo-independent at 6.91:1 and leaves the scrim free to stay light
+            enough for the image to read. */}
+        <p className="inline-flex items-center rounded-full border border-gold-bright/50 bg-ink px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-gold-bright">
           {site.hero.eyebrow}
         </p>
 

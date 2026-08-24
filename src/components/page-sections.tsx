@@ -33,7 +33,11 @@ export function PageHeader({
         <p
           className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] ${
             imageSlot
-              ? 'border border-gold-bright/50 text-gold-bright'
+              // Opaque fill on the overlay variant: see the note in Hero --
+              // gold-bright as small text on a scrim fails AA over a bright
+              // photograph, and its own ground fixes that without a scrim
+              // heavy enough to bury the image.
+              ? 'border border-gold-bright/50 bg-ink text-gold-bright'
               : 'border border-gold/50 bg-gold-wash text-gold-deep'
           }`}
         >

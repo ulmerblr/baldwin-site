@@ -3,6 +3,7 @@ import {
   SCRIM_FLOOR,
   imagePlaceholderLabel,
   imageSlots,
+  resolveSlot,
   type ImageSlotName,
   type OverlaySlotName,
   type Scrim,
@@ -12,12 +13,22 @@ import {
 /**
  * Named photography slots. Two renderers, one per slot type.
  *
- * No real photography has been supplied. Until a slot gets a `src` in
- * `src/content/images.ts`, a neutral placeholder draws at the slot's exact
- * aspect ratio -- no stock photograph, no generated image, nothing lifted from
- * another site. Adding the real photo is a one-line edit to that config file;
- * no component changes.
+ * Three states, decided entirely by `state` in `src/content/images.ts` and read
+ * only through `resolveSlot()`:
+ *
+ *   empty   the neutral "photograph to come" treatment
+ *   sample  a generated stand-in, loudly marked SAMPLE - REPLACE. Scaffolding
+ *           for reviewing layout and overlay contrast. NOT a filled slot:
+ *           `data-slot-filled` stays "false" and nothing here treats it as done.
+ *   real    an actual photograph
+ *
+ * All three reserve the slot's exact aspect ratio, so nothing moves when the
+ * real file lands. No stock photography, no generated imagery, nothing lifted
+ * from another site.
  */
+
+/** The marker a sample carries in the DOM, over the image itself. */
+const SAMPLE_LABEL = 'SAMPLE — REPLACE'
 
 /* ------------------------------------------------------------ shared bits */
 
@@ -134,37 +145,93 @@ export function ImageSlot({
   priority?: boolean
 }) {
   const slot = imageSlots[name]
+  const resolved = resolveSlot(name)
   const ratio = { aspectRatio: `${slot.width} / ${slot.height}` }
 
-  if (slot.src) {
+  // Nothing supplied: the neutral reserved-space treatment.
+  if (!resolved.src) {
     return (
-      <Image
-        src={slot.src}
-        alt={slot.alt}
-        width={slot.width}
-        height={slot.height}
-        priority={priority}
+      <div
+        // A stand-in for a photo: there is nothing here to describe, so it
+        // stays out of the accessibility tree entirely.
+        aria-hidden="true"
         data-image-slot={name}
         data-slot-type="standalone"
+        data-slot-state="empty"
+        data-slot-filled="false"
+        style={ratio}
+        className={`w-full overflow-hidden rounded-2xl border border-dashed border-line bg-gold-wash ${className}`}
+      >
+        <PlaceholderBody name={name} />
+      </div>
+    )
+  }
+
+  const isSample = resolved.state === 'sample'
+
+  const image = (
+    <Image
+      src={resolved.src}
+      alt={resolved.alt}
+      width={slot.width}
+      height={slot.height}
+      priority={priority}
+      // A sample is scaffolding, not content -- keep it out of the
+      // accessibility tree entirely. `resolved.alt` is already forced empty.
+      aria-hidden={isSample || resolved.alt === '' ? true : undefined}
+      style={{ objectPosition: `${slot.focalPoint.x}% ${slot.focalPoint.y}%` }}
+      className="h-full w-full rounded-2xl object-cover"
+    />
+  )
+
+  if (!isSample) {
+    return (
+      <div
+        data-image-slot={name}
+        data-slot-type="standalone"
+        data-slot-state="real"
         data-slot-filled="true"
-        style={{ objectPosition: `${slot.focalPoint.x}% ${slot.focalPoint.y}%` }}
-        className={`w-full rounded-2xl border border-line object-cover ${className}`}
-      />
+        style={ratio}
+        className={`w-full overflow-hidden rounded-2xl border border-line ${className}`}
+      >
+        {image}
+      </div>
     )
   }
 
   return (
     <div
-      // A stand-in for a photo: there is nothing here to describe, so it stays
-      // out of the accessibility tree entirely.
-      aria-hidden="true"
       data-image-slot={name}
       data-slot-type="standalone"
+      data-slot-state="sample"
+      // A sample is NOT a filled slot. Nothing downstream may read it as done.
       data-slot-filled="false"
       style={ratio}
-      className={`w-full overflow-hidden rounded-2xl border border-dashed border-line bg-gold-wash ${className}`}
+      className={`relative w-full overflow-hidden rounded-2xl border-2 border-dashed border-[#B5179E] ${className}`}
     >
-      <PlaceholderBody name={name} />
+      {image}
+      <SampleTag name={name} />
+    </div>
+  )
+}
+
+/**
+ * The persistent needs-replacing marker.
+ *
+ * The generated SVG already prints SAMPLE - REPLACE across its middle, but the
+ * overlay slots run it under a scrim at 0.70 or heavier, so the in-image label
+ * alone cannot be relied on. This sits above everything.
+ */
+function SampleTag({ name }: { name: ImageSlotName }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute bottom-2 right-2 z-20 flex items-center gap-2 rounded-md bg-[#B5179E] px-2 py-1"
+    >
+      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-white">
+        {SAMPLE_LABEL}
+      </span>
+      <span className="font-mono text-[10px] text-white/85">{name}</span>
     </div>
   )
 }
@@ -193,22 +260,27 @@ export function OverlayImage({
   const slot = imageSlots[name]
   if (slot.type !== 'overlay') throw new Error(`Slot ${name} is not an overlay slot`)
 
+  const resolved = resolveSlot(name)
+  const isSample = resolved.state === 'sample'
   const gradient = scrimGradient(slot.scrim)
 
   return (
     <section
       data-image-slot={name}
       data-slot-type="overlay"
-      data-slot-filled={slot.src ? 'true' : 'false'}
+      data-slot-state={resolved.state}
+      // Only a real photograph counts as filled. A sample is scaffolding.
+      data-slot-filled={resolved.isReal ? 'true' : 'false'}
       className={`relative isolate overflow-hidden bg-ink ${className}`}
     >
-      {slot.src ? (
+      {resolved.src ? (
         <Image
-          src={slot.src}
-          alt={slot.alt}
+          src={resolved.src}
+          alt={resolved.alt}
           fill
           priority={priority}
           sizes="100vw"
+          aria-hidden={resolved.alt === '' ? true : undefined}
           style={{ objectPosition: `${slot.focalPoint.x}% ${slot.focalPoint.y}%` }}
           className="absolute inset-0 -z-20 h-full w-full object-cover"
         />
@@ -218,7 +290,9 @@ export function OverlayImage({
         <OverlayPlaceholderGround />
       )}
 
-      {/* The scrim. One layer, floor-clamped at its lightest point. */}
+      {/* The scrim. One layer, floor-clamped at its lightest point. It renders
+          over a sample exactly as it will over a photograph -- which is the
+          whole reason the samples are banded light-to-dark. */}
       <div
         aria-hidden="true"
         data-scrim={name}
@@ -229,7 +303,8 @@ export function OverlayImage({
 
       <div className="on-dark relative">{children}</div>
 
-      {!slot.src && <OverlayPlaceholderTag name={name} />}
+      {resolved.state === 'empty' && <OverlayPlaceholderTag name={name} />}
+      {isSample && <SampleTag name={name} />}
     </section>
   )
 }

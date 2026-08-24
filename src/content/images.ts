@@ -7,8 +7,19 @@
  * to THIS FILE ONLY: save the file under `public/images/`, set `src`, and set
  * `alt` where the image is not decorative.
  *
- * Until a slot has a `src`, a neutral placeholder renders in its place, at the
- * slot's exact aspect ratio so nothing shifts when the real file arrives.
+ * EVERY SLOT IS IN EXACTLY ONE OF THREE STATES, and `state` below is the only
+ * thing that says which. Nothing else in the codebase decides it:
+ *
+ *   'empty'   nothing supplied yet -- the neutral "photograph to come"
+ *             treatment renders.
+ *   'sample'  a generated stand-in renders, loudly marked SAMPLE - REPLACE.
+ *             Scaffolding for reviewing layout, crops and overlay contrast.
+ *             A sample is NOT a filled slot and never counts as done.
+ *   'real'    an actual photograph. The only state that means finished.
+ *
+ * Both 'empty' and 'sample' reserve the slot's exact aspect ratio, so nothing
+ * on the page moves when the real file lands.
+ *
  * No stock photography, no generated imagery. See public/images/README.md.
  *
  * TWO SLOT TYPES, and the difference is structural rather than cosmetic:
@@ -48,6 +59,14 @@ export type ImageSlotName = StandaloneSlotName | OverlaySlotName
 export type FocalPoint = { x: number; y: number }
 
 /**
+ * The single source of truth for whether a slot is done.
+ *
+ * Read it through `resolveSlot()` rather than comparing it in call sites --
+ * that is what keeps "is this slot finished?" answerable in one place.
+ */
+export type SlotState = 'empty' | 'sample' | 'real'
+
+/**
  * How hard the scrim sits between photo and text.
  *
  * `direction` is where the darkest part goes -- put it where the text is.
@@ -62,7 +81,12 @@ export type Scrim = {
 }
 
 type BaseSlot = {
-  /** Path under /public once the photo exists, e.g. '/images/chris-portrait.jpg'. */
+  state: SlotState
+  /**
+   * Path under /public to the REAL photograph, e.g. '/images/chris.jpg'.
+   * Only consulted when `state` is 'real'; the sample's path is derived from
+   * the slot name, so a sample can never be mistaken for supplied artwork.
+   */
   src: string | null
   /**
    * Alt text. Empty string means decorative -- hidden from assistive tech,
@@ -87,6 +111,7 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
 
   'chris-portrait': {
     type: 'standalone',
+    state: 'sample',
     src: null,
     alt: 'Chris Baldwin, founder of Baldwin Insurance Agency',
     width: 900,
@@ -96,6 +121,7 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
   },
   'about-secondary': {
     type: 'standalone',
+    state: 'sample',
     src: null,
     alt: '',
     width: 1200,
@@ -103,28 +129,29 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     focalPoint: CENTER,
   },
   'product-indexed-universal-life': {
-    type: 'standalone', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-mortgage-protection': {
-    type: 'standalone', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-final-expense': {
-    type: 'standalone', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-annuities': {
-    type: 'standalone', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-retirement-rollovers': {
-    type: 'standalone', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-estate-planning': {
-    type: 'standalone', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'agent-team': {
-    type: 'standalone', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   family: {
     type: 'standalone',
+    state: 'sample',
     src: null,
     alt: '',
     width: 1200,
@@ -136,6 +163,7 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
 
   'home-hero': {
     type: 'overlay',
+    state: 'sample',
     src: null,
     // Decorative: the headline over it says everything this image would.
     alt: '',
@@ -147,25 +175,41 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
   },
   'about-header': {
     type: 'overlay',
-    src: null, alt: '', width: 2400, height: 1000,
+    state: 'sample',
+    src: null,
+    alt: '',
+    width: 2400,
+    height: 1000,
     focalPoint: { x: 60, y: 40 },
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'products-header': {
     type: 'overlay',
-    src: null, alt: '', width: 2400, height: 1000,
+    state: 'sample',
+    src: null,
+    alt: '',
+    width: 2400,
+    height: 1000,
     focalPoint: CENTER,
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'agent-header': {
     type: 'overlay',
-    src: null, alt: '', width: 2400, height: 1000,
+    state: 'sample',
+    src: null,
+    alt: '',
+    width: 2400,
+    height: 1000,
     focalPoint: { x: 55, y: 40 },
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'contact-header': {
     type: 'overlay',
-    src: null, alt: '', width: 2400, height: 1000,
+    state: 'sample',
+    src: null,
+    alt: '',
+    width: 2400,
+    height: 1000,
     focalPoint: CENTER,
     scrim: { direction: 'left', opacity: 0.78 },
   },
@@ -184,6 +228,62 @@ export const SCRIM_FLOOR = 0.7
 
 /** Shown inside an unfilled slot. Chrome, not marketing copy. */
 export const imagePlaceholderLabel = 'Photograph to come'
+
+/**
+ * Sample files are generated by `npm run images:samples` and land here. The
+ * path is DERIVED from the slot name rather than configured, so no sample can
+ * ever be typed into `src` and quietly pass as supplied artwork.
+ */
+export function sampleSrc(name: ImageSlotName): string {
+  return `/images/samples/${name}.svg`
+}
+
+export type ResolvedSlot = {
+  name: ImageSlotName
+  config: ImageSlotConfig
+  state: SlotState
+  /** The file to render now, or null when nothing should be. */
+  src: string | null
+  /**
+   * The alt text to use NOW.
+   *
+   * Forced empty while a slot holds a sample: `chris-portrait` is configured
+   * as "Chris Baldwin, founder of Baldwin Insurance Agency", and announcing
+   * that over a magenta test card tells a screen reader user a photograph of a
+   * real person is present when it is not. The configured value stays in the
+   * config, ready for the day the real photo lands.
+   */
+  alt: string
+  /** The ONLY thing that means this slot is finished. */
+  isReal: boolean
+}
+
+/**
+ * Resolve a slot to what should render right now.
+ *
+ * Every consumer -- the components, the build banner, `check:images` -- goes
+ * through here, so "is this slot done?" has exactly one answer in exactly one
+ * place.
+ */
+export function resolveSlot(name: ImageSlotName): ResolvedSlot {
+  const config = imageSlots[name]
+  const isReal = config.state === 'real' && Boolean(config.src)
+
+  if (isReal) {
+    return { name, config, state: 'real', src: config.src, alt: config.alt, isReal: true }
+  }
+  if (config.state === 'sample') {
+    return { name, config, state: 'sample', src: sampleSrc(name), alt: '', isReal: false }
+  }
+  return { name, config, state: 'empty', src: null, alt: '', isReal: false }
+}
+
+/** Every slot not yet carrying a real photograph. Drives the gate and banner. */
+export function unfinishedSlots(): ResolvedSlot[] {
+  return (Object.keys(imageSlots) as ImageSlotName[])
+    .map(resolveSlot)
+    .filter((slot) => !slot.isReal)
+}
 
 /** Type guard, so callers get the scrim field narrowed. */
 export function isOverlaySlot(slot: ImageSlotConfig): slot is OverlaySlot {
