@@ -7,7 +7,7 @@
  * page can never drift apart.
  */
 
-import type { ImageSlotName } from './images'
+import type { StandaloneSlotName } from './images'
 import { site } from './site'
 
 /** Pulls the client-approved blurb for a product out of the home page copy. */
@@ -29,7 +29,8 @@ export type Product = {
   title: string
   /** Shorter label for the nav dropdown. */
   navLabel: string
-  imageSlot: ImageSlotName
+  /** Always a Type A slot: the product photo is contained, nothing overlays it. */
+  imageSlot: StandaloneSlotName
   meta: { title: string; description: string }
   /** Approved home page blurb, verbatim. */
   lead: string
