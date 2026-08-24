@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* The lead is the client's approved home page blurb, verbatim. */}
       <PageHeader heading={product.title} intro={product.lead} />
 
-      <section className="border-b border-navy-800 py-16 sm:py-20">
+      <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-16">
             <div>
@@ -51,7 +51,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               />
 
               <div className="mt-12">
-                <h2 className="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">
+                <h2 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.015em] text-ink sm:text-3xl">
                   {productPage.whoItsForLabel}
                 </h2>
                 <BulletList items={product.whoItsFor} />

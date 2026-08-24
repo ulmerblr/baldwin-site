@@ -14,28 +14,29 @@ export default function AgentOpportunity() {
       {/* Eyebrow, headline and subhead are the approved recruiting copy from
           the home page, reused verbatim. */}
       <PageHeader
+        imageSlot="agent-header"
         eyebrow={site.agentOpportunity.eyebrow}
         heading={site.agentOpportunity.heading}
         intro={site.agentOpportunity.intro}
       />
 
-      <section className="border-b border-navy-800 py-16 sm:py-20">
+      <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {site.agentOpportunity.benefits.map((benefit) => (
               <li
                 key={benefit.title}
-                className="rounded-2xl border border-navy-700 bg-navy-900/60 p-6"
+                className="rounded-2xl border border-line bg-surface p-6"
               >
-                <h2 className="text-base font-semibold text-gold-300">{benefit.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-ink-300">{benefit.description}</p>
+                <h2 className="text-base font-semibold text-ink">{benefit.title}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-body">{benefit.description}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="border-b border-navy-800 bg-navy-900/40 py-16 sm:py-20">
+      <section className="border-b border-line bg-surface py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-16">
             <div>
@@ -51,11 +52,11 @@ export default function AgentOpportunity() {
               />
 
               <div className="mt-12">
-                <h2 className="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">
+                <h2 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.015em] text-ink sm:text-3xl">
                   {agentOpportunityPage.whoWereLookingFor.heading}
                 </h2>
                 <BulletList items={agentOpportunityPage.whoWereLookingFor.items} />
-                <p className="mt-6 leading-relaxed text-ink-300">
+                <p className="mt-6 leading-relaxed text-body">
                   {agentOpportunityPage.whoWereLookingFor.closing}
                 </p>
               </div>

@@ -34,13 +34,13 @@ export function SiteHeader() {
   }, [mobileOpen, setMobileOpen])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-navy-800/80 bg-navy-950/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line bg-paper/92 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-1.5 px-3 py-3 xs:gap-2 xs:px-4 sm:gap-4 sm:px-6 sm:py-3.5">
         <Link href="/" className="flex shrink-0 items-center gap-2 rounded-lg sm:gap-2.5">
           <BrandMark />
-          <span className="hidden text-sm font-bold leading-tight text-ink-100 xs:block sm:text-base">
+          <span className="font-display hidden text-sm font-semibold leading-tight tracking-[-0.01em] text-ink xs:block sm:text-base">
             Baldwin
-            <span className="hidden text-[10px] font-medium uppercase tracking-[0.18em] text-gold-400 sm:block sm:text-[11px]">
+            <span className="hidden font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-gold-deep sm:block sm:text-[11px]">
               Insurance Agency
             </span>
           </span>
@@ -60,7 +60,7 @@ export function SiteHeader() {
               human, and on a phone it is one tap. */}
           <a
             href={site.contact.phoneHref}
-            className="whitespace-nowrap rounded-lg text-[11px] font-semibold text-ink-300 transition-colors hover:text-gold-300 xs:text-xs sm:text-sm"
+            className="whitespace-nowrap rounded-lg text-[11px] font-semibold text-body transition-colors hover:text-gold-deep xs:text-xs sm:text-sm"
           >
             {site.contact.phone}
           </a>
@@ -79,7 +79,7 @@ export function SiteHeader() {
             aria-controls={mobileId}
             aria-label={mobileOpen ? navLabels.closeMenu : navLabels.menu}
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="-mr-1 rounded-lg p-2 text-ink-300 transition-colors hover:bg-navy-800 hover:text-ink-100 lg:hidden"
+            className="-mr-1 rounded-lg p-2 text-body transition-colors hover:bg-gold-wash hover:text-ink lg:hidden"
           >
             <MenuIcon open={mobileOpen} />
           </button>
@@ -87,7 +87,7 @@ export function SiteHeader() {
       </div>
 
       {mobileOpen && (
-        <div id={mobileId} className="border-t border-navy-800 bg-navy-950 lg:hidden">
+        <div id={mobileId} className="border-t border-line bg-paper lg:hidden">
           <nav aria-label="Main" className="mx-auto max-w-6xl px-4 py-3 sm:px-6">
             <ul className="flex flex-col">
               {nav.map((item) => (
@@ -104,7 +104,7 @@ export function SiteHeader() {
 /* ------------------------------------------------------------------ desktop */
 
 const DESKTOP_LINK =
-  'rounded text-sm font-medium transition-colors hover:text-gold-300 whitespace-nowrap'
+  'rounded text-sm font-medium transition-colors hover:text-gold-deep whitespace-nowrap'
 
 function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
   const menuId = useId()
@@ -152,7 +152,7 @@ function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
         <Link
           href={item.href}
           aria-current={pathname === item.href ? 'page' : undefined}
-          className={`${DESKTOP_LINK} ${pathname === item.href ? 'text-gold-300' : 'text-ink-300'}`}
+          className={`${DESKTOP_LINK} ${pathname === item.href ? 'text-gold-deep' : 'text-body'}`}
         >
           {item.label}
         </Link>
@@ -220,7 +220,7 @@ function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
         <Link
           href={item.href}
           aria-current={pathname === item.href ? 'page' : undefined}
-          className={`${DESKTOP_LINK} ${inSection ? 'text-gold-300' : 'text-ink-300'}`}
+          className={`${DESKTOP_LINK} ${inSection ? 'text-gold-deep' : 'text-body'}`}
         >
           {item.label}
         </Link>
@@ -232,8 +232,8 @@ function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
           aria-label={navLabels.submenu(item.label)}
           onClick={() => setOpen(!open)}
           onKeyDown={onTriggerKeyDown}
-          className={`rounded p-1 transition-colors hover:text-gold-300 ${
-            inSection ? 'text-gold-300' : 'text-ink-300'
+          className={`rounded p-1 transition-colors hover:text-gold-deep ${
+            inSection ? 'text-gold-deep' : 'text-body'
           }`}
         >
           <Chevron open={open} />
@@ -243,7 +243,7 @@ function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
       {open && (
         <ul
           id={menuId}
-          className="absolute left-0 top-full z-50 mt-2 w-64 rounded-xl border border-navy-700 bg-navy-900 p-2 shadow-2xl"
+          className="raised absolute left-0 top-full z-50 mt-2 w-64 rounded-xl border border-line bg-surface p-2"
         >
           {item.children.map((child, index) => (
             <li key={child.href}>
@@ -254,8 +254,8 @@ function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
                 href={child.href}
                 aria-current={pathname === child.href ? 'page' : undefined}
                 onKeyDown={(event) => onItemKeyDown(event, index)}
-                className={`block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-navy-800 hover:text-gold-300 ${
-                  pathname === child.href ? 'text-gold-300' : 'text-ink-300'
+                className={`block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gold-wash hover:text-gold-deep ${
+                  pathname === child.href ? 'text-gold-deep' : 'text-body'
                 }`}
               >
                 {child.label}
@@ -278,12 +278,12 @@ function MobileItem({ item, pathname }: { item: NavItem; pathname: string }) {
   const [expanded, setExpanded] = useState(inSection && Boolean(item.children))
 
   return (
-    <li className="border-b border-navy-800/70 last:border-b-0">
+    <li className="border-b border-line last:border-b-0">
       <div className="flex items-center justify-between gap-2">
         <Link
           href={item.href}
           aria-current={pathname === item.href ? 'page' : undefined}
-          className={`${MOBILE_LINK} flex-1 ${inSection ? 'text-gold-300' : 'text-ink-200'}`}
+          className={`${MOBILE_LINK} flex-1 ${inSection ? 'text-gold-deep' : 'text-ink'}`}
         >
           {item.label}
         </Link>
@@ -296,7 +296,7 @@ function MobileItem({ item, pathname }: { item: NavItem; pathname: string }) {
             aria-controls={subId}
             aria-label={navLabels.submenu(item.label)}
             onClick={() => setExpanded((value) => !value)}
-            className="rounded-lg p-3 text-ink-300 transition-colors hover:bg-navy-800 hover:text-gold-300"
+            className="rounded-lg p-3 text-body transition-colors hover:bg-gold-wash hover:text-gold-deep"
           >
             <Chevron open={expanded} />
           </button>
@@ -304,14 +304,14 @@ function MobileItem({ item, pathname }: { item: NavItem; pathname: string }) {
       </div>
 
       {item.children && expanded && (
-        <ul id={subId} className="mb-2 ml-2 border-l border-navy-700 pl-3">
+        <ul id={subId} className="mb-2 ml-2 border-l border-line pl-3">
           {item.children.map((child) => (
             <li key={child.href}>
               <Link
                 href={child.href}
                 aria-current={pathname === child.href ? 'page' : undefined}
                 className={`${MOBILE_LINK} text-sm ${
-                  pathname === child.href ? 'text-gold-300' : 'text-ink-300'
+                  pathname === child.href ? 'text-gold-deep' : 'text-body'
                 }`}
               >
                 {child.label}

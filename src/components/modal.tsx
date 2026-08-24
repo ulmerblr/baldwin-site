@@ -114,7 +114,7 @@ export function Modal({ open, onClose, title, description, children }: ModalProp
     <div className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto p-0 sm:items-center sm:p-4">
       {/* Backdrop. Presentational -- Escape and the close button do the work. */}
       <div
-        className="fixed inset-0 bg-navy-950/85 backdrop-blur-sm"
+        className="fixed inset-0 bg-ink/45 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -125,15 +125,15 @@ export function Modal({ open, onClose, title, description, children }: ModalProp
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
-        className="relative z-10 w-full max-w-lg rounded-t-2xl border border-navy-700 bg-navy-900 p-6 shadow-2xl sm:rounded-2xl sm:p-8"
+        className="relative z-10 w-full max-w-lg rounded-t-2xl border border-line raised bg-surface p-6 sm:rounded-2xl sm:p-8"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 id={titleId} className="text-xl font-bold text-ink-100 sm:text-2xl">
+            <h2 id={titleId} className="font-display text-xl font-semibold tracking-[-0.01em] text-ink sm:text-2xl">
               {title}
             </h2>
             {description && (
-              <p id={descriptionId} className="mt-2 text-sm leading-relaxed text-ink-300">
+              <p id={descriptionId} className="mt-2 text-sm leading-relaxed text-body">
                 {description}
               </p>
             )}
@@ -142,7 +142,7 @@ export function Modal({ open, onClose, title, description, children }: ModalProp
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="-mr-2 -mt-2 rounded-lg p-2 text-ink-400 transition-colors hover:bg-navy-800 hover:text-ink-100"
+            className="-mr-2 -mt-2 rounded-lg p-2 text-muted transition-colors hover:bg-gold-wash hover:text-ink"
           >
             <svg
               width="20"

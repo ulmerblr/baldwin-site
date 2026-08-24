@@ -11,9 +11,13 @@ export const metadata: Metadata = pageMetadata(productsIndex.meta)
 export default function ProductsPage() {
   return (
     <SiteShell path="/products">
-      <PageHeader heading={productsIndex.heading} intro={productsIndex.intro} />
+      <PageHeader
+        heading={productsIndex.heading}
+        intro={productsIndex.intro}
+        imageSlot="products-header"
+      />
 
-      <section className="border-b border-navy-800 py-16 sm:py-20">
+      <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           {/* Same cards as the home page, same approved blurbs. */}
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

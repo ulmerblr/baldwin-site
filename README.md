@@ -114,26 +114,111 @@ with the real value — no other edit is needed.
 
 ---
 
+## Design system
+
+Light theme. Navy is structure and text; gold is the accent. Tokens live in
+[`src/app/globals.css`](src/app/globals.css) and every colour below is
+machine-checked against WCAG AA.
+
+| Token | Hex | Use |
+| --- | --- | --- |
+| `--color-paper` | `#FAF9F6` | page ground — warm off-white, deliberately not `#FFF` |
+| `--color-surface` | `#FFFFFF` | cards and raised panels only, to read against paper |
+| `--color-line` | `#E5E2DA` | hairline rules, which do most of the separating |
+| `--color-ink` | `#101E33` | headings; the existing brand navy |
+| `--color-body` | `#3D4757` | body text |
+| `--color-muted` | `#68707E` | secondary text and labels |
+| `--color-gold-deep` | `#8B6816` | **small text and links** — 4.88:1 on paper |
+| `--color-gold` | `#A67C1A` | large text (≥24px), borders, rules — 3.61:1 |
+| `--color-gold-bright` | `#C9A227` | brand gold: **fills and large elements only** |
+| `--color-gold-wash` | `#FBF6E8` | subtle accent bands |
+
+> **Three golds, on purpose.** The brand gold is 2.30:1 on paper — a fill, never a
+> text colour. The mid gold clears the 3:1 that large text and non-text UI need, but
+> not the 4.5:1 that normal-size text needs. So anything small and textual uses
+> `--color-gold-deep`. Buttons are a gold fill with `--color-ink` text, never white.
+
+**Type — two families, no third.** Display is **Source Serif 4**: a transitional
+serif drawn for screen, carrying the "established agency" signal. Body is **Inter**,
+a neutral grotesque that holds up at the small sizes where most of this site's words
+live; tracking is tightened at display sizes so it never reads as a default stack.
+Both are self-hosted through `next/font` — no runtime request to Google.
+
+**Surfaces.** Hairline rules in `--color-line` do the separating. There is exactly
+one elevation level (`.raised`), used sparingly. Body copy is constrained to ~68
+characters with `.measure`.
+
+**Focus.** Re-derived for light: a 2px ink ring with a paper halo, so it stays
+visible on gold fills and on photography alike. `.on-dark` inverts it for anything
+sitting on an overlay scrim. It is never removed.
+
+---
+
 ## Images
 
 Every photograph on the site resolves through a **named slot** in
 [`src/content/images.ts`](src/content/images.ts). Components render
-`<ImageSlot name="chris-portrait" />` and never mention a file path.
+`<ImageSlot name="chris-portrait" />` or `<OverlayImage name="home-hero">…</OverlayImage>`
+and never mention a file path.
 
-No real photography has been supplied yet, so each slot draws a neutral branded panel
-in the site palette. **There is no stock photography and no generated imagery in this
-repo, and nothing has been copied from any other site.**
+No real photography has been supplied yet, so each slot draws a neutral placeholder
+at that slot's exact aspect ratio — so nothing on the page moves when a real file
+lands. **There is no stock photography and no generated imagery in this repo, and
+nothing has been copied from any other site.**
 
 To drop a real photo in:
 
 1. Save the file under `public/images/`.
-2. In `src/content/images.ts`, set that slot's `src` (and its `alt`, for the two slots
-   that are not decorative).
+2. In `src/content/images.ts`, set that slot's `src` (and its `alt`, where the image
+   is not decorative).
 
-That is the whole change — no component is touched. Slots: `chris-portrait`,
-`about-secondary`, `product-<slug>` (six, one per product page), `agent-team`.
+That is the whole change — no component is touched.
 
----
+### Two slot types
+
+|  | Type A — `standalone` | Type B — `overlay` |
+| --- | --- | --- |
+| What it is | A contained image; nothing sits on top | A wide background with text and buttons over it |
+| Renders with | `<ImageSlot>` | `<OverlayImage>` |
+| Extra config | — | `scrim` |
+
+The distinction is structural, not cosmetic: a Type B slot has to carry a scrim, a
+focal point, and text contrast that survives whatever photograph lands in it later.
+
+**Type A (10):** `chris-portrait`, `about-secondary`, `product-<slug>` ×6,
+`agent-team`, `family`.
+
+**Type B (5):** `home-hero`, `about-header`, `products-header`, `agent-header`,
+`contact-header`.
+
+Every slot also carries a `focalPoint` (`{x, y}` percentages, straight onto
+`object-position`) so the subject stays framed as the crop narrows — a portrait with
+the face high in frame keeps the face, rather than centring on a collar.
+
+### The scrim, and why it has a floor
+
+Text over photography is where sites fail accessibility silently: a photo that is
+dark on one side and bright on the other breaks contrast on half the viewports, and
+nothing warns you.
+
+So every Type B slot renders a scrim **whether or not a photograph exists yet** —
+overlay text is contrast-testable today rather than the day the photos arrive. The
+scrim is a single gradient running from the slot's requested `opacity` down to
+`SCRIM_FLOOR` (0.70), never below it:
+
+- 0.70 ink over a *pure white* photo — the worst case a real photograph can approach
+  — composites to `#586270`, carrying `--color-overlay-text` at **5.87:1**, clear of
+  the 4.5:1 AA floor.
+- Because the floor applies to the whole frame rather than just the gradient's dark
+  end, a crop that shifts at 360px cannot move text onto a bright patch.
+
+Do not lower `SCRIM_FLOOR` without re-running the contrast check. And note the
+tempting mistake it avoids: a flat base tint *plus* a directional gradient
+double-composites (0.70 under 0.82 is an effective 0.95) and would bury the
+photograph entirely.
+
+Overlay text colour is `--color-overlay-text` (`#FAF9F6`) — warm white rather than
+pure white, so it belongs to the same palette as the paper ground.
 
 ## How deploys work
 

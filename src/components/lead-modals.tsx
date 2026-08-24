@@ -73,13 +73,16 @@ function useLeadModals(): LeadModalContext {
 type CtaButtonProps = {
   kind: LeadKind
   children: React.ReactNode
-  variant?: 'primary' | 'secondary'
+  variant?: keyof typeof VARIANTS
   className?: string
 }
 
 const VARIANTS = {
-  primary: 'bg-gold-500 text-navy-950 hover:bg-gold-400',
-  secondary: 'border border-gold-500/60 text-gold-300 hover:bg-gold-500/10',
+  primary: 'bg-gold-bright text-ink hover:bg-gold',
+  secondary: 'border border-gold/60 text-gold-deep hover:bg-gold-wash',
+  // For use on an overlay scrim, where the light half has to do the work.
+  onDark:
+    'border border-overlay-text/70 text-overlay-text hover:bg-overlay-text hover:text-ink',
 } as const
 
 /** Opens the matching dialog. Focus returns here when it closes. */

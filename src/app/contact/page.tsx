@@ -9,16 +9,16 @@ import { pageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = pageMetadata(contact.meta)
 
-const CARD = 'min-w-0 rounded-2xl border border-navy-700 bg-navy-900/60 p-6'
-const LABEL = 'text-xs font-semibold uppercase tracking-wider text-gold-400'
-const LINK = 'mt-2 inline-block rounded text-ink-300 transition-colors hover:text-gold-300'
+const CARD = 'min-w-0 rounded-2xl border border-line bg-surface p-6'
+const LABEL = 'text-xs font-semibold uppercase tracking-wider text-gold-deep'
+const LINK = 'mt-2 inline-block rounded text-body transition-colors hover:text-gold-deep'
 
 export default function ContactPage() {
   return (
     <SiteShell path="/contact">
-      <PageHeader heading={contact.heading} intro={contact.intro} />
+      <PageHeader heading={contact.heading} intro={contact.intro} imageSlot="contact-header" />
 
-      <section className="border-b border-navy-800 py-16 sm:py-20">
+      <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <li className={CARD}>
@@ -35,17 +35,17 @@ export default function ContactPage() {
             </li>
             <li className={CARD}>
               <h2 className={LABEL}>{site.contact.hoursLabel}</h2>
-              <p className="mt-2 text-ink-300">{site.contact.hours}</p>
+              <p className="mt-2 text-body">{site.contact.hours}</p>
             </li>
             <li className={CARD}>
               <h2 className={LABEL}>{contact.licensedInLabel}</h2>
-              <p className="mt-2 text-ink-300">
+              <p className="mt-2 text-body">
                 <Copy text={contact.licensedIn} />
               </p>
             </li>
             <li className={`${CARD} sm:col-span-2`}>
               <h2 className={LABEL}>{contact.officeLabel}</h2>
-              <p className="mt-2 text-ink-300">
+              <p className="mt-2 text-body">
                 <Copy text={contact.office} />
               </p>
             </li>

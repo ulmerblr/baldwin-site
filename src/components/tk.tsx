@@ -21,7 +21,7 @@ export function TkChip({ token }: { token: string }) {
     <span
       data-tk=""
       title="Placeholder — a real value is required before launch"
-      className="mx-0.5 inline-flex items-center rounded-md border border-dashed border-gold-500/60 bg-gold-500/10 px-1.5 py-0.5 align-baseline font-mono text-[0.8em] font-medium text-gold-300"
+      className="mx-0.5 inline-flex items-center rounded-md border border-dashed border-gold/60 bg-gold-wash px-1.5 py-0.5 align-baseline font-mono text-[0.8em] font-medium text-gold-deep"
     >
       <span className="sr-only">Placeholder, value pending: </span>
       {token}

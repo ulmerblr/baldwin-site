@@ -136,15 +136,15 @@ export function LeadForm({
         <div
           role="status"
           aria-live="polite"
-          className="rounded-xl border border-gold-500/40 bg-gold-500/10 p-5"
+          className="rounded-xl border border-gold/50 bg-gold-wash p-5"
         >
-          <p className="font-semibold text-gold-300">{successTitle}</p>
-          <p className="mt-2 text-sm leading-relaxed text-ink-300">{successBody}</p>
+          <p className="font-semibold text-gold-deep">{successTitle}</p>
+          <p className="mt-2 text-sm leading-relaxed text-body">{successBody}</p>
         </div>
         <button
           type="button"
           onClick={onDone}
-          className="mt-5 w-full rounded-xl bg-gold-500 px-6 py-3 font-semibold text-navy-950 transition-colors hover:bg-gold-400"
+          className="mt-5 w-full rounded-xl bg-gold-bright px-6 py-3 font-semibold text-ink transition-colors hover:bg-gold"
         >
           Close
         </button>
@@ -164,7 +164,7 @@ export function LeadForm({
 
           return (
             <div key={field.name}>
-              <label htmlFor={fieldId} className="mb-1.5 block text-sm font-medium text-ink-300">
+              <label htmlFor={fieldId} className="mb-1.5 block text-sm font-medium text-body">
                 {field.label}
               </label>
               <input
@@ -180,12 +180,12 @@ export function LeadForm({
                 onBlur={() => onBlur(field.name)}
                 aria-invalid={invalid}
                 aria-describedby={invalid ? errorId : undefined}
-                className={`w-full rounded-xl border bg-navy-950 px-4 py-3 text-ink-100 placeholder:text-ink-400 disabled:opacity-60 ${
-                  invalid ? 'border-red-400' : 'border-navy-700'
+                className={`w-full rounded-xl border bg-paper px-4 py-3 text-ink placeholder:text-muted disabled:opacity-60 ${
+                  invalid ? 'border-red-500' : 'border-line'
                 }`}
               />
               {invalid && (
-                <p id={errorId} className="mt-1.5 text-sm text-red-300">
+                <p id={errorId} className="mt-1.5 text-sm text-red-700">
                   {errors[field.name]}
                 </p>
               )}
@@ -212,7 +212,7 @@ export function LeadForm({
           announce changes rather than a node appearing from nowhere. */}
       <div role="status" aria-live="assertive" className="mt-4 empty:mt-0">
         {status === 'error' && formError && (
-          <p className="rounded-xl border border-red-400/40 bg-red-500/10 p-4 text-sm leading-relaxed text-red-200">
+          <p className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm leading-relaxed text-red-800">
             {formError}
           </p>
         )}
@@ -222,14 +222,14 @@ export function LeadForm({
       <button
         type="submit"
         disabled={busy}
-        className="mt-5 w-full rounded-xl bg-gold-500 px-6 py-3.5 font-semibold text-navy-950 transition-colors hover:bg-gold-400 disabled:cursor-not-allowed disabled:opacity-70"
+        className="mt-5 w-full rounded-xl bg-gold-bright px-6 py-3.5 font-semibold text-ink transition-colors hover:bg-gold disabled:cursor-not-allowed disabled:opacity-70"
       >
         {busy ? submittingLabel : submitLabel}
       </button>
 
-      <p className="mt-3 text-center text-xs text-ink-400">
+      <p className="mt-3 text-center text-xs text-muted">
         We never sell your information. Reach us any time at{' '}
-        <a href={site.contact.phoneHref} className="underline hover:text-ink-300">
+        <a href={site.contact.phoneHref} className="underline hover:text-body">
           {site.contact.phone}
         </a>
         .

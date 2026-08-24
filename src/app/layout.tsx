@@ -1,6 +1,33 @@
 import type { Metadata, Viewport } from 'next'
+import { Inter, Source_Serif_4 } from 'next/font/google'
 import { site } from '@/content/site'
 import './globals.css'
+
+/*
+ * Two families, deliberately.
+ *
+ * Source Serif 4 for display: a transitional serif drawn for screen, with
+ * real optical sizing. It carries the "established agency, not a template"
+ * signal that the dark ground used to carry.
+ *
+ * Inter for body: a neutral grotesque that holds up at small sizes, where
+ * most of this site's words live. Tracking is tightened at display sizes in
+ * the components so it never reads as a default stack.
+ *
+ * Both are self-hosted by next/font -- no runtime request to Google.
+ */
+const sourceSerif = Source_Serif_4({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-source-serif',
+  weight: ['400', '600', '700'],
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.canonical),
@@ -46,18 +73,18 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0a1628',
+  themeColor: '#faf9f6',
   width: 'device-width',
   initialScale: 1,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${sourceSerif.variable}`}>
       <body>
         <a
           href="#main"
-          className="sr-only rounded-md focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-gold-500 focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-950"
+          className="sr-only rounded-md focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-gold-bright focus:px-4 focus:py-2 focus:font-semibold focus:text-ink"
         >
           Skip to main content
         </a>

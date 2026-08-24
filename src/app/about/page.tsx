@@ -12,9 +12,9 @@ export const metadata: Metadata = pageMetadata(about.meta)
 export default function AboutPage() {
   return (
     <SiteShell path="/about">
-      <PageHeader eyebrow={about.eyebrow} heading={about.heading} />
+      <PageHeader eyebrow={about.eyebrow} heading={about.heading} imageSlot="about-header" />
 
-      <section className="border-b border-navy-800 py-16 sm:py-20">
+      <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-16">
             <ImageSlot name="chris-portrait" />
@@ -31,7 +31,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-navy-800 bg-navy-900/40 py-16 sm:py-20">
+      <section className="border-b border-line bg-surface py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-16">
             <div>
@@ -46,12 +46,12 @@ export default function AboutPage() {
                 {about.licensing.items.map((item) => (
                   <div
                     key={item.label}
-                    className="rounded-2xl border border-navy-700 bg-navy-950/60 p-5"
+                    className="rounded-2xl border border-line bg-surface p-5"
                   >
-                    <dt className="text-xs font-semibold uppercase tracking-wider text-gold-400">
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
                       {item.label}
                     </dt>
-                    <dd className="mt-2 text-sm leading-relaxed text-ink-300">
+                    <dd className="mt-2 text-sm leading-relaxed text-body">
                       <Copy text={item.value} />
                     </dd>
                   </div>
@@ -64,7 +64,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-navy-800 py-16 sm:py-20">
+      <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
             {/* The client's approved About copy, reused verbatim from the home
@@ -75,10 +75,10 @@ export default function AboutPage() {
               {site.about.valueProps.map((prop) => (
                 <li
                   key={prop.title}
-                  className="rounded-2xl border border-navy-700 bg-navy-900/60 p-6"
+                  className="rounded-2xl border border-line bg-surface p-6"
                 >
-                  <h3 className="text-base font-semibold text-gold-300">{prop.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-300">{prop.description}</p>
+                  <h3 className="text-base font-semibold text-ink">{prop.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-body">{prop.description}</p>
                 </li>
               ))}
             </ul>

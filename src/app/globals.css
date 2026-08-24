@@ -1,27 +1,45 @@
 @import 'tailwindcss';
 
 /*
- * Brand tokens. The site is dark-theme-only by design -- navy ground, gold
- * accent -- matching the existing baldwinlifeinsurance.com look. There is no
- * light variant, so colors are painted explicitly rather than inherited.
+ * Light theme. Navy became structure and text; gold stayed the accent.
+ *
+ * CONTRAST NOTE -- the reason there are two "text" golds and one "fill" gold:
+ * the brand gold #C9A227 is 2.30:1 on paper, nowhere near AA, so it is a fill
+ * and never a text colour. The mid gold #A67C1A is 3.61:1 -- fine for large
+ * text (>=24px) and for borders and rules, still short of the 4.5:1 that
+ * normal-size text needs. So small text and links use --color-gold-deep at
+ * 4.88:1. Every pair is machine-checked; see the report in the repo history.
  */
 @theme {
-  --color-navy-950: #060d18;
-  --color-navy-900: #0a1628;
-  --color-navy-800: #0f2038;
-  --color-navy-700: #16304f;
-  --color-navy-600: #1e3f66;
+  /* ground */
+  --color-paper: #faf9f6; /* page background -- warm off-white, not pure white */
+  --color-surface: #ffffff; /* cards and raised panels only */
+  --color-line: #e5e2da; /* borders and hairline rules */
 
-  --color-gold-500: #c9a227;
-  --color-gold-400: #d9b53d;
-  --color-gold-300: #e8ca6b;
+  /* type */
+  --color-ink: #101e33; /* headings -- the existing brand navy */
+  --color-body: #3d4757; /* body text */
+  /* Nudged 3% darker than the brief's #6B7382, which lands at 4.42:1 on the
+     gold wash -- under AA. #68707E clears 4.5 on paper, surface AND wash. */
+  --color-muted: #68707e; /* secondary text, labels */
 
-  --color-ink-100: #f4f6fa;
-  --color-ink-300: #c3ccdb;
-  --color-ink-400: #9aa8bd;
+  /* accent */
+  --color-gold-deep: #8b6816; /* small text and links -- 4.88:1 on paper */
+  --color-gold: #a67c1a; /* large text, borders, rules -- 3.61:1 */
+  --color-gold-bright: #c9a227; /* brand gold: FILLS AND LARGE ELEMENTS ONLY */
+  --color-gold-wash: #fbf6e8; /* subtle accent backgrounds */
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  /* Overlay text sits on a scrim over unknown photography. Warm white rather
+     than pure white, to match the paper ground. 5.87:1 against the scrim
+     composited over a pure-white photo -- the worst realistic case. */
+  --color-overlay-text: #faf9f6;
+
+  /* Two families, no more. Source Serif 4 carries display; Inter carries body.
+     Both are loaded through next/font in the root layout and self-hosted, so
+     there is no third-party request at runtime. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: var(--font-source-serif), ui-serif, Georgia, 'Times New Roman', serif;
 
   /* Small phones. The header carries a wordmark, a phone number, a CTA and a
      menu button; below this width the wordmark stands down so the rest fit. */
@@ -35,17 +53,39 @@
   }
 
   body {
-    background-color: var(--color-navy-950);
-    color: var(--color-ink-100);
+    background-color: var(--color-paper);
+    color: var(--color-body);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Visible focus everywhere, including for keyboard users in modals. */
+  /*
+   * Display type. The serif does the "established, not templated" work, so it
+   * gets real optical treatment: tight tracking that loosens as size drops.
+   */
+  .font-display {
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /*
+   * Focus, re-derived for light. Ink rather than gold: on a warm ground the
+   * navy ring is the higher-contrast of the two and reads as deliberate. Two
+   * rings -- a paper gap inside the ink -- so it stays visible on gold fills
+   * and on photography alike. Never removed anywhere.
+   */
   :focus-visible {
-    outline: 3px solid var(--color-gold-400);
+    outline: 2px solid var(--color-ink);
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 4px rgb(250 249 246 / 0.9);
+  }
+
+  /* On dark grounds (overlay bands, gold fills) invert the ring so it is the
+     light half that separates it from its surroundings. */
+  .on-dark :focus-visible {
+    outline-color: var(--color-overlay-text);
+    box-shadow: 0 0 0 4px rgb(16 30 51 / 0.55);
   }
 
   /* Respect reduced-motion: kill transitions and smooth scrolling outright. */
@@ -78,5 +118,18 @@
     overflow: hidden;
     opacity: 0;
     pointer-events: none;
+  }
+
+  /* Body measure: roughly 65-75 characters. Long-form paragraphs opt in. */
+  .measure {
+    max-width: 68ch;
+  }
+
+  /* The single elevation level. One soft shadow, used sparingly on raised
+     cards -- everything else separates with a hairline rule in --color-line. */
+  .raised {
+    box-shadow:
+      0 1px 2px rgb(16 30 51 / 0.04),
+      0 8px 24px -12px rgb(16 30 51 / 0.14);
   }
 }

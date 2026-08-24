@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { homeAdditions } from '@/content/pages'
 import { productByApprovedTitle, productPage } from '@/content/products'
 import { site } from '@/content/site'
+import { ImageSlot, OverlayImage } from './image-slot'
 import { CtaButton } from './lead-modals'
 import { Copy } from './tk'
 
@@ -9,42 +10,37 @@ import { Copy } from './tk'
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-navy-800">
-      {/* Decorative ground: a gold wash over navy, no raster asset to load. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(201,162,39,0.16),transparent_58%),radial-gradient(ellipse_at_bottom_left,rgba(30,63,102,0.5),transparent_62%)]"
-      />
-      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
-        <p className="inline-flex items-center rounded-full border border-gold-500/40 bg-gold-500/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-gold-300">
+    <OverlayImage name="home-hero" priority className="border-b border-line">
+      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
+        <p className="inline-flex items-center rounded-full border border-gold-bright/50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-gold-bright">
           {site.hero.eyebrow}
         </p>
 
-        <h1 className="mt-6 max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight text-ink-100 sm:text-5xl lg:text-6xl">
+        <h1 className="font-display mt-7 max-w-3xl text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.02em] text-overlay-text sm:text-6xl lg:text-7xl">
           {site.hero.headline}
         </h1>
 
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">
+        <p className="measure mt-7 text-base leading-relaxed text-overlay-text/90 sm:text-lg">
           {site.hero.subhead}
         </p>
 
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:gap-4">
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4">
           <CtaButton kind="quote">{site.hero.primaryCta}</CtaButton>
-          <CtaButton kind="apply" variant="secondary">
+          <CtaButton kind="apply" variant="onDark">
             {site.hero.secondaryCta}
           </CtaButton>
         </div>
 
-        <ul className="mt-10 flex flex-col gap-3 text-sm text-ink-300 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 sm:gap-y-2">
+        <ul className="mt-12 flex flex-col gap-3 text-sm text-overlay-text/85 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-2">
           {site.hero.trustStrip.map((item) => (
-            <li key={item} className="flex items-center gap-2">
+            <li key={item} className="flex items-center gap-2.5">
               <CheckMark />
               {item}
             </li>
           ))}
         </ul>
       </div>
-    </section>
+    </OverlayImage>
   )
 }
 
@@ -55,12 +51,12 @@ export function CheckMark() {
       height="16"
       viewBox="0 0 16 16"
       fill="none"
-      stroke="#d9b53d"
-      strokeWidth="2"
+      stroke="currentColor"
+      strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      className="shrink-0"
+      className="shrink-0 text-gold-bright"
     >
       <path d="M2.5 8.5l3.5 3.5 7.5-8" />
     </svg>
@@ -77,13 +73,13 @@ export function ProductCard({ title, description }: { title: string; description
   const product = productByApprovedTitle.get(title)
 
   return (
-    <li className="flex flex-col rounded-2xl border border-navy-700 bg-navy-900/60 p-6 transition-colors hover:border-gold-500/50">
-      <h3 className="text-lg font-semibold text-gold-300">{title}</h3>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-300">{description}</p>
+    <li className="flex flex-col rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-gold/50">
+      <h3 className="text-lg font-semibold text-ink">{title}</h3>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-body">{description}</p>
       {product && (
         <Link
           href={product.href}
-          className="mt-5 inline-flex w-fit rounded text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300"
+          className="mt-5 inline-flex w-fit rounded text-sm font-semibold text-gold-deep underline-offset-4 transition-colors hover:text-ink hover:underline"
         >
           {productPage.learnMore}
           <span className="sr-only"> about {title}</span>
@@ -95,7 +91,7 @@ export function ProductCard({ title, description }: { title: string; description
 
 export function Services() {
   return (
-    <section id="services" className="border-b border-navy-800 py-20 sm:py-24">
+    <section id="services" className="border-b border-line py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading title={site.services.heading} intro={site.services.intro} />
 
@@ -121,17 +117,17 @@ export function Services() {
 
 export function About() {
   return (
-    <section id="about" className="border-b border-navy-800 bg-navy-900/40 py-20 sm:py-24">
+    <section id="about" className="border-b border-line bg-surface py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-gold-400">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
               {site.about.eyebrow}
             </p>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">
+            <h2 className="font-display mt-4 text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
               {site.about.heading}
             </h2>
-            <p className="mt-6 leading-relaxed text-ink-300">{site.about.body}</p>
+            <p className="mt-6 leading-relaxed text-body">{site.about.body}</p>
 
             {/*
               The live site shows `site.about.image` here. That file is not in
@@ -144,7 +140,7 @@ export function About() {
                 alt={site.about.image.alt}
                 width={1200}
                 height={800}
-                className="mt-8 w-full rounded-2xl border border-navy-700 object-cover"
+                className="mt-8 w-full rounded-2xl border border-line object-cover"
               />
             */}
 
@@ -155,9 +151,9 @@ export function About() {
 
           <ul className="space-y-4">
             {site.about.valueProps.map((prop) => (
-              <li key={prop.title} className="rounded-2xl border border-navy-700 bg-navy-950/60 p-6">
-                <h3 className="text-base font-semibold text-gold-300">{prop.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-300">{prop.description}</p>
+              <li key={prop.title} className="rounded-2xl border border-line bg-surface p-6">
+                <h3 className="text-base font-semibold text-ink">{prop.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-body">{prop.description}</p>
               </li>
             ))}
           </ul>
@@ -171,25 +167,25 @@ export function About() {
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="border-b border-navy-800 py-20 sm:py-24">
+    <section id="how-it-works" className="border-b border-line py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading title={site.howItWorks.heading} intro={site.howItWorks.intro} />
 
         <ol className="mt-12 grid gap-5 md:grid-cols-3">
           {site.howItWorks.steps.map((step) => (
-            <li key={step.number} className="rounded-2xl border border-navy-700 bg-navy-900/60 p-6">
-              <span aria-hidden="true" className="text-3xl font-bold tabular-nums text-gold-500/70">
+            <li key={step.number} className="rounded-2xl border border-line bg-surface p-6">
+              <span aria-hidden="true" className="text-3xl font-bold tabular-nums text-gold">
                 {step.number}
               </span>
-              <h3 className="mt-3 text-lg font-semibold text-ink-100">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-300">{step.description}</p>
+              <h3 className="mt-3 text-lg font-semibold text-ink">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-body">{step.description}</p>
             </li>
           ))}
         </ol>
 
         <div className="mt-12 flex flex-col items-center gap-3">
           <CtaButton kind="quote">{site.howItWorks.cta}</CtaButton>
-          <p className="text-sm text-ink-400">{site.howItWorks.footnote}</p>
+          <p className="text-sm text-muted">{site.howItWorks.footnote}</p>
         </div>
       </div>
     </section>
@@ -208,13 +204,13 @@ export function HowItWorks() {
  */
 export function Testimonials() {
   return (
-    <section id="testimonials" className="border-b border-navy-800 py-20 sm:py-24">
+    <section id="testimonials" className="border-b border-line py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">
+          <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
             {homeAdditions.testimonials.heading}
           </h2>
-          <p className="mt-4 leading-relaxed text-ink-300">
+          <p className="mt-4 leading-relaxed text-body">
             <Copy text={homeAdditions.testimonials.pending} />
           </p>
         </div>
@@ -223,15 +219,15 @@ export function Testimonials() {
           {[0, 1, 2].map((index) => (
             <li
               key={index}
-              className="rounded-2xl border border-dashed border-navy-600 bg-navy-900/40 p-6"
+              className="rounded-2xl border border-dashed border-line bg-surface p-6"
             >
               <QuoteGlyph />
               <div className="mt-5 space-y-2.5">
-                <div className="h-2.5 w-full rounded-full bg-navy-700/70" />
-                <div className="h-2.5 w-11/12 rounded-full bg-navy-700/70" />
-                <div className="h-2.5 w-4/5 rounded-full bg-navy-700/70" />
+                <div className="h-2.5 w-full rounded-full bg-line" />
+                <div className="h-2.5 w-11/12 rounded-full bg-line" />
+                <div className="h-2.5 w-4/5 rounded-full bg-line" />
               </div>
-              <div className="mt-6 h-2.5 w-24 rounded-full bg-navy-700" />
+              <div className="mt-6 h-2.5 w-24 rounded-full bg-gold-bright/40" />
             </li>
           ))}
         </ul>
@@ -247,7 +243,7 @@ function QuoteGlyph() {
       height="28"
       viewBox="0 0 28 28"
       fill="none"
-      stroke="#c9a227"
+      stroke="#A67C1A"
       strokeWidth="1.6"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -263,12 +259,17 @@ function QuoteGlyph() {
 
 export function ServiceAreas() {
   return (
-    <section id="service-areas" className="border-b border-navy-800 bg-navy-900/40 py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading
-          title={homeAdditions.serviceAreas.heading}
-          intro={homeAdditions.serviceAreas.body}
-        />
+    <section id="service-areas" className="border-b border-line bg-surface py-20 sm:py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
+            {homeAdditions.serviceAreas.heading}
+          </h2>
+          <p className="measure mt-5 leading-relaxed text-body">
+            {homeAdditions.serviceAreas.body}
+          </p>
+        </div>
+        <ImageSlot name="family" />
       </div>
     </section>
   )
@@ -280,24 +281,24 @@ export function AgentOpportunity() {
   return (
     <section
       id="agent-opportunity"
-      className="border-b border-navy-800 bg-navy-900/40 py-20 sm:py-24"
+      className="border-b border-line bg-surface py-20 sm:py-24"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gold-400">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
             {site.agentOpportunity.eyebrow}
           </p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">
+          <h2 className="font-display mt-4 text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
             {site.agentOpportunity.heading}
           </h2>
-          <p className="mt-4 leading-relaxed text-ink-300">{site.agentOpportunity.intro}</p>
+          <p className="mt-4 leading-relaxed text-body">{site.agentOpportunity.intro}</p>
         </div>
 
         <ul className="mt-12 grid gap-5 sm:grid-cols-2">
           {site.agentOpportunity.benefits.map((benefit) => (
-            <li key={benefit.title} className="rounded-2xl border border-navy-700 bg-navy-950/60 p-6">
-              <h3 className="text-base font-semibold text-gold-300">{benefit.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-300">{benefit.description}</p>
+            <li key={benefit.title} className="rounded-2xl border border-line bg-surface p-6">
+              <h3 className="text-base font-semibold text-ink">{benefit.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-body">{benefit.description}</p>
             </li>
           ))}
         </ul>
@@ -307,7 +308,7 @@ export function AgentOpportunity() {
               every file. There is no upload in this build, so the control does
               not claim one. */}
           <CtaButton kind="apply">{site.agentOpportunity.cta}</CtaButton>
-          <p className="text-sm text-ink-400">{site.agentOpportunity.footnote}</p>
+          <p className="text-sm text-muted">{site.agentOpportunity.footnote}</p>
         </div>
       </div>
     </section>
@@ -319,8 +320,8 @@ export function AgentOpportunity() {
 export function SectionHeading({ title, intro }: { title: string; intro: string }) {
   return (
     <div className="max-w-2xl">
-      <h2 className="text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">{title}</h2>
-      <p className="mt-4 leading-relaxed text-ink-300">{intro}</p>
+      <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">{title}</h2>
+      <p className="mt-4 leading-relaxed text-body">{intro}</p>
     </div>
   )
 }

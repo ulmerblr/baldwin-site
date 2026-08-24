@@ -9,22 +9,22 @@ export function LegalPage({ title, path }: { title: string; path: string }) {
       <CanonicalLink path={path} />
       <Link
         href="/"
-        className="rounded text-sm font-medium text-gold-300 transition-colors hover:text-gold-400"
+        className="rounded text-sm font-medium text-gold-deep underline-offset-4 transition-colors hover:text-ink hover:underline"
       >
         &larr; Back to home
       </Link>
 
-      <h1 className="mt-8 text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">{title}</h1>
+      <h1 className="font-display mt-8 text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">{title}</h1>
 
-      <p className="mt-6 leading-relaxed text-ink-300">{site.legal.pendingNotice}</p>
+      <p className="mt-6 leading-relaxed text-body">{site.legal.pendingNotice}</p>
 
-      <div className="mt-10 rounded-2xl border border-navy-700 bg-navy-900/60 p-6">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-gold-400">Contact</h2>
+      <div className="mt-10 rounded-2xl border border-line bg-surface p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-gold-deep">Contact</h2>
         <ul className="mt-4 space-y-2 text-sm">
           <li>
             <a
               href={site.contact.emailHref}
-              className="rounded break-words text-ink-300 transition-colors hover:text-gold-300"
+              className="rounded break-words text-body transition-colors hover:text-gold-deep"
             >
               {site.contact.email}
             </a>
@@ -32,12 +32,12 @@ export function LegalPage({ title, path }: { title: string; path: string }) {
           <li>
             <a
               href={site.contact.phoneHref}
-              className="rounded text-ink-300 transition-colors hover:text-gold-300"
+              className="rounded text-body transition-colors hover:text-gold-deep"
             >
               {site.contact.phone}
             </a>
           </li>
-          <li className="text-ink-400">{site.contact.hours}</li>
+          <li className="text-muted">{site.contact.hours}</li>
         </ul>
       </div>
     </main>
