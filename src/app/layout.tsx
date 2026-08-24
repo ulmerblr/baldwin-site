@@ -39,12 +39,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  // Geo targeting carried over from the existing site.
-  other: {
-    'geo.region': site.meta.geoRegion,
-    'geo.placename': site.meta.geoPlacename,
-    'og:locality': site.meta.geoPlacename,
-  },
+  // No geo.* tags. They are a machine-readable claim about where the agency
+  // operates, the same kind of assertion as schema.org areaServed, and are
+  // left out for the same reason: accurate or absent. Restore them from the
+  // real state list once it exists.
 }
 
 export const viewport: Viewport = {

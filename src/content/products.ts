@@ -48,7 +48,7 @@ export const products: readonly Product[] = [
     meta: {
       title: 'Indexed Universal Life Insurance | Baldwin Insurance Agency',
       description:
-        'Indexed universal life insurance offers growth potential tied to market indexes with downside protection. Serving families in California and Texas.',
+        'Indexed universal life insurance offers growth potential tied to market indexes with downside protection.',
     },
     lead: approvedLead('Indexed Universal Life'),
     howItWorks:
@@ -71,7 +71,7 @@ export const products: readonly Product[] = [
     meta: {
       title: 'Mortgage Protection Life Insurance | Baldwin Insurance Agency',
       description:
-        'Mortgage protection life insurance helps keep your family in their home. Serving California and Texas.',
+        'Mortgage protection life insurance helps keep your family in their home.',
     },
     lead: approvedLead('Mortgage Protection Life Insurance'),
     howItWorks:
@@ -94,7 +94,7 @@ export const products: readonly Product[] = [
     meta: {
       title: 'Final Expense Insurance | Baldwin Insurance Agency',
       description:
-        'Affordable final expense coverage so your family isn\'t left with funeral costs. Serving California and Texas.',
+        'Affordable final expense coverage so your family isn\'t left with funeral costs.',
     },
     lead: approvedLead('Final Expense'),
     howItWorks:
@@ -117,7 +117,7 @@ export const products: readonly Product[] = [
     meta: {
       title: 'Annuities & Retirement Income | Baldwin Insurance Agency',
       description:
-        'Build reliable retirement income with annuity solutions. Serving California and Texas.',
+        'Build reliable retirement income with annuity solutions.',
     },
     lead: approvedLead('Annuities'),
     howItWorks:
@@ -140,7 +140,7 @@ export const products: readonly Product[] = [
     meta: {
       title: '401(k) & IRA Rollovers | Baldwin Insurance Agency',
       description:
-        'Consolidate old 401(k)s and IRAs into one account. Serving California and Texas.',
+        'Consolidate old 401(k)s and IRAs into one account.',
     },
     lead: approvedLead('Retirement Rollovers'),
     howItWorks:
@@ -163,7 +163,7 @@ export const products: readonly Product[] = [
     meta: {
       title: 'Estate Planning & Legacy Protection | Baldwin Insurance Agency',
       description:
-        'Protect your legacy and plan for your family\'s future. Serving California and Texas.',
+        'Protect your legacy and plan for your family\'s future.',
     },
     lead: approvedLead('Estate Planning'),
     howItWorks:

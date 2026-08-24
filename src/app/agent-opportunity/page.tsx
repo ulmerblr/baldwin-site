@@ -44,6 +44,12 @@ export default function AgentOpportunity() {
                 paragraphs={[agentOpportunityPage.theWork.body]}
               />
 
+              <TextBlock
+                heading={agentOpportunityPage.whereYouCanBuild.heading}
+                paragraphs={[agentOpportunityPage.whereYouCanBuild.body]}
+                className="mt-12"
+              />
+
               <div className="mt-12">
                 <h2 className="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">
                   {agentOpportunityPage.whoWereLookingFor.heading}

@@ -38,8 +38,10 @@ export default function ContactPage() {
               <p className="mt-2 text-ink-300">{site.contact.hours}</p>
             </li>
             <li className={CARD}>
-              <h2 className={LABEL}>{contact.servingLabel}</h2>
-              <p className="mt-2 text-ink-300">{contact.serving}</p>
+              <h2 className={LABEL}>{contact.licensedInLabel}</h2>
+              <p className="mt-2 text-ink-300">
+                <Copy text={contact.licensedIn} />
+              </p>
             </li>
             <li className={`${CARD} sm:col-span-2`}>
               <h2 className={LABEL}>{contact.officeLabel}</h2>

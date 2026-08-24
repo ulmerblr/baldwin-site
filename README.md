@@ -104,6 +104,14 @@ guard them.
 The tokens live in [`src/content/pages.ts`](src/content/pages.ts). Replace the token
 with the real value — no other edit is needed.
 
+> `[[TK: states licensed in]]` is load-bearing. The site deliberately names no state
+> in any title, description, heading or body: where the agency is licensed is stated
+> **only** in the licensing disclosures, from that one list. Do not substitute
+> "nationwide" or "all 50 states" for it — if it is unfilled, the placeholder ships.
+> Two related claims are left out of the machine-readable layer for the same reason
+> and should be restored from the real list once it exists: `areaServed` in the
+> home page's structured data, and the `geo.*` meta tags in the root layout.
+
 ---
 
 ## Images
@@ -153,7 +161,7 @@ Two things to know:
 src/
   app/
     page.tsx              home page — composes the sections
-    layout.tsx            metadata, OG tags, CA/TX geo targeting
+    layout.tsx            sitewide metadata and OG defaults
     about/                Meet Chris Baldwin
     products/             overview + [slug]/ for the six product pages
     agent-opportunity/    recruiting

@@ -4,10 +4,11 @@ import { canonicalUrl } from '@/lib/seo'
 /**
  * InsuranceAgency markup for the home page.
  *
- * Deliberately omits any license or credential field: those values are still
- * unfilled (see the TK placeholders), and structured data is exactly
- * the wrong place to publish a guess about a regulated credential. Add them
- * here once real numbers exist.
+ * Deliberately omits both the license fields and `areaServed`. Those values
+ * are still unfilled (see the TK placeholders), and structured data is exactly
+ * the wrong place to publish a guess about a regulated credential or about
+ * where an agency operates: such a claim should be accurate or absent. Add
+ * both once the real license numbers and state list exist.
  */
 export function StructuredData() {
   const data = {
@@ -18,10 +19,6 @@ export function StructuredData() {
     telephone: site.contact.phone,
     email: site.contact.email,
     description: site.meta.description,
-    areaServed: [
-      { '@type': 'State', name: 'California' },
-      { '@type': 'State', name: 'Texas' },
-    ],
     openingHours: 'Mo-Fr 09:00-17:00',
   }
 

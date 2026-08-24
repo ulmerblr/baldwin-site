@@ -16,15 +16,11 @@ export const site = {
   canonical: 'https://www.baldwinlifeinsurance.com/',
 
   meta: {
-    title: 'Baldwin Insurance Agency – Life Insurance & Annuities in California & Texas',
+    title: 'Baldwin Insurance Agency — Life Insurance & Annuities',
     description:
-      "Baldwin Insurance Agency offers life insurance and annuity solutions in California and Texas. Protect your family's financial future with expert guidance and personalized coverage options.",
+      'Life insurance, annuity, and retirement solutions built around your family. Personal guidance from a licensed agency with more than 25 years of experience.',
     author: 'Baldwin Insurance Agency',
     keywords: [
-      'life insurance California',
-      'life insurance Texas',
-      'annuities California',
-      'annuities Texas',
       'life insurance agent',
       'term life insurance',
       'whole life insurance',
@@ -32,11 +28,9 @@ export const site = {
       'retirement annuity',
       'Baldwin Insurance Agency',
     ],
-    geoPlacename: 'California, Texas',
-    geoRegion: 'US-CA, US-TX',
-    socialTitle: 'Baldwin Insurance Agency – Life Insurance & Annuities in CA & TX',
+    socialTitle: 'Baldwin Insurance Agency – Life Insurance & Annuities',
     socialDescription:
-      "Protect your family's financial future with life insurance and annuity solutions from Baldwin Insurance Agency. Serving California and Texas.",
+      "Protect your family's financial future with life insurance and annuity solutions from Baldwin Insurance Agency.",
     /**
      * The live site's OG image. NOT YET PRESENT in /public/images -- the file
      * could not be retrieved (see public/images/README.md). The OG/Twitter
