@@ -7,7 +7,7 @@ export default function NotFound() {
         Page not found
       </h1>
       <p className="mt-4 leading-relaxed text-ink-300">
-        That page does not exist. Everything on this site lives on the home page.
+        That page does not exist. Head back to the home page to find what you need.
       </p>
       <Link
         href="/"
