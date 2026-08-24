@@ -1,10 +1,12 @@
 import Link from 'next/link'
+import { CanonicalLink } from '@/components/canonical-link'
 import { site } from '@/content/site'
 
 /** Shared shell for the two legal routes. */
-export function LegalPage({ title }: { title: string }) {
+export function LegalPage({ title, path }: { title: string; path: string }) {
   return (
     <main id="main" className="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-24">
+      <CanonicalLink path={path} />
       <Link
         href="/"
         className="rounded text-sm font-medium text-gold-300 transition-colors hover:text-gold-400"

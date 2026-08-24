@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   keywords: site.meta.keywords.join(', '),
   authors: [{ name: site.meta.author }],
   // NOTE: no `alternates.canonical` here. Next normalizes the trailing slash
-  // off the URL, and the live site declares it. The tag is emitted explicitly
-  // in the component below instead -- there must be exactly one.
+  // off the URL, and the live site declares it on the home page. Each page
+  // emits its own canonical explicitly instead -- see src/lib/seo.ts.
   openGraph: {
     type: 'website',
     siteName: site.name,
@@ -57,8 +57,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {/* React hoists this into <head>. See the metadata note above. */}
-        <link rel="canonical" href={site.canonical} />
         <a
           href="#main"
           className="sr-only rounded-md focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-gold-500 focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-950"

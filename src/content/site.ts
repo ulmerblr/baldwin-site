@@ -46,13 +46,6 @@ export const site = {
     socialImage: '/images/image-3.jpg',
   },
 
-  nav: [
-    { label: 'About Us', href: '#about' },
-    { label: 'Our Services', href: '#services' },
-    { label: 'Agent Opportunity', href: '#agent-opportunity' },
-    { label: 'Contact Us', href: '#contact' },
-  ],
-
   contact: {
     phone: '(858) 729-0003',
     phoneHref: 'tel:+18587290003',

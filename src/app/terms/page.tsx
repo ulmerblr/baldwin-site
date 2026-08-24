@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function Terms() {
-  return <LegalPage title="Terms of Service" />
+  return <LegalPage path="/terms" title="Terms of Service" />
 }

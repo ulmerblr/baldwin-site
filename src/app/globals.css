@@ -22,6 +22,10 @@
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
+
+  /* Small phones. The header carries a wordmark, a phone number, a CTA and a
+     menu button; below this width the wordmark stands down so the rest fit. */
+  --breakpoint-xs: 400px;
 }
 
 @layer base {

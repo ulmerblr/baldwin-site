@@ -1,26 +1,26 @@
-import { LeadModalProvider } from '@/components/lead-modals'
+import { SiteShell } from '@/components/site-shell'
+import { StructuredData } from '@/components/structured-data'
 import {
   About,
   AgentOpportunity,
   Hero,
   HowItWorks,
+  ServiceAreas,
   Services,
-  SiteFooter,
-  SiteHeader,
+  Testimonials,
 } from '@/components/sections'
 
 export default function HomePage() {
   return (
-    <LeadModalProvider>
-      <SiteHeader />
-      <main id="main">
-        <Hero />
-        <Services />
-        <About />
-        <HowItWorks />
-        <AgentOpportunity />
-      </main>
-      <SiteFooter />
-    </LeadModalProvider>
+    <SiteShell path="/">
+      <StructuredData />
+      <Hero />
+      <Services />
+      <About />
+      <HowItWorks />
+      <Testimonials />
+      <ServiceAreas />
+      <AgentOpportunity />
+    </SiteShell>
   )
 }

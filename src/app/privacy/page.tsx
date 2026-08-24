@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function Privacy() {
-  return <LegalPage title="Privacy Policy" />
+  return <LegalPage path="/privacy" title="Privacy Policy" />
 }

@@ -1,77 +1,9 @@
 import Link from 'next/link'
+import { homeAdditions } from '@/content/pages'
+import { productByApprovedTitle, productPage } from '@/content/products'
 import { site } from '@/content/site'
 import { CtaButton } from './lead-modals'
-import { CurrentYear } from './current-year'
-
-/* ------------------------------------------------------------------ header */
-
-export function SiteHeader() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-navy-800/80 bg-navy-950/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5 rounded-lg">
-          <BrandMark />
-          <span className="text-sm font-bold leading-tight text-ink-100 sm:text-base">
-            Baldwin
-            <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-gold-400 sm:text-[11px]">
-              Insurance Agency
-            </span>
-          </span>
-        </Link>
-
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-7">
-            {site.nav.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="rounded text-sm font-medium text-ink-300 transition-colors hover:text-gold-300"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="flex items-center gap-2 sm:gap-4">
-          <a
-            href={site.contact.phoneHref}
-            className="hidden rounded-lg text-sm font-semibold text-ink-300 transition-colors hover:text-gold-300 sm:block lg:hidden xl:block"
-          >
-            {site.contact.phone}
-          </a>
-          <CtaButton kind="quote" className="px-4 py-2 text-sm sm:px-5">
-            Start Quote
-          </CtaButton>
-        </div>
-      </div>
-    </header>
-  )
-}
-
-function BrandMark() {
-  return (
-    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" className="shrink-0">
-      <rect width="34" height="34" rx="8" fill="#0f2038" stroke="#c9a227" strokeWidth="1.5" />
-      <path
-        d="M17 8l7 3.2v5.4c0 4.2-2.9 7.6-7 8.9-4.1-1.3-7-4.7-7-8.9v-5.4L17 8z"
-        fill="none"
-        stroke="#c9a227"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M13.6 17l2.4 2.4 4.6-4.8"
-        fill="none"
-        stroke="#e8ca6b"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
+import { Copy } from './tk'
 
 /* -------------------------------------------------------------------- hero */
 
@@ -116,7 +48,7 @@ export function Hero() {
   )
 }
 
-function CheckMark() {
+export function CheckMark() {
   return (
     <svg
       width="16"
@@ -137,23 +69,43 @@ function CheckMark() {
 
 /* ---------------------------------------------------------------- services */
 
+/**
+ * One product card. Shared by the home page and the products overview so the
+ * approved blurb and the link to the detail page stay in one place.
+ */
+export function ProductCard({ title, description }: { title: string; description: string }) {
+  const product = productByApprovedTitle.get(title)
+
+  return (
+    <li className="flex flex-col rounded-2xl border border-navy-700 bg-navy-900/60 p-6 transition-colors hover:border-gold-500/50">
+      <h3 className="text-lg font-semibold text-gold-300">{title}</h3>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-300">{description}</p>
+      {product && (
+        <Link
+          href={product.href}
+          className="mt-5 inline-flex w-fit rounded text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300"
+        >
+          {productPage.learnMore}
+          <span className="sr-only"> about {title}</span>
+        </Link>
+      )}
+    </li>
+  )
+}
+
 export function Services() {
   return (
     <section id="services" className="border-b border-navy-800 py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading title={site.services.heading} intro={site.services.intro} />
 
-        {/* Per the build brief the old "Learn More →" links are removed rather
-            than shipped pointing at "#". Card text only. */}
         <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {site.services.items.map((service) => (
-            <li
+            <ProductCard
               key={service.title}
-              className="rounded-2xl border border-navy-700 bg-navy-900/60 p-6 transition-colors hover:border-gold-500/50"
-            >
-              <h3 className="text-lg font-semibold text-gold-300">{service.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-300">{service.description}</p>
-            </li>
+              title={service.title}
+              description={service.description}
+            />
           ))}
         </ul>
 
@@ -244,6 +196,84 @@ export function HowItWorks() {
   )
 }
 
+/* ------------------------------------------------------------- testimonials */
+
+/**
+ * The band is built and styled; the quotes are not written.
+ *
+ * Client testimonials on an insurance site are regulated advertising. Sample
+ * quotes -- even obviously fake ones -- are a compliance problem, so the cards
+ * below carry no text at all: they show the shape the real ones will take and
+ * are hidden from assistive tech until they say something.
+ */
+export function Testimonials() {
+  return (
+    <section id="testimonials" className="border-b border-navy-800 py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">
+            {homeAdditions.testimonials.heading}
+          </h2>
+          <p className="mt-4 leading-relaxed text-ink-300">
+            <Copy text={homeAdditions.testimonials.pending} />
+          </p>
+        </div>
+
+        <ul aria-hidden="true" className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {[0, 1, 2].map((index) => (
+            <li
+              key={index}
+              className="rounded-2xl border border-dashed border-navy-600 bg-navy-900/40 p-6"
+            >
+              <QuoteGlyph />
+              <div className="mt-5 space-y-2.5">
+                <div className="h-2.5 w-full rounded-full bg-navy-700/70" />
+                <div className="h-2.5 w-11/12 rounded-full bg-navy-700/70" />
+                <div className="h-2.5 w-4/5 rounded-full bg-navy-700/70" />
+              </div>
+              <div className="mt-6 h-2.5 w-24 rounded-full bg-navy-700" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+function QuoteGlyph() {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      stroke="#c9a227"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="opacity-60"
+    >
+      <path d="M11 8H6a2 2 0 00-2 2v4a2 2 0 002 2h3v1a3 3 0 01-3 3M24 8h-5a2 2 0 00-2 2v4a2 2 0 002 2h3v1a3 3 0 01-3 3" />
+    </svg>
+  )
+}
+
+/* ------------------------------------------------------------ service areas */
+
+export function ServiceAreas() {
+  return (
+    <section id="service-areas" className="border-b border-navy-800 bg-navy-900/40 py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading
+          title={homeAdditions.serviceAreas.heading}
+          intro={homeAdditions.serviceAreas.body}
+        />
+      </div>
+    </section>
+  )
+}
+
 /* -------------------------------------------------------- agent opportunity */
 
 export function AgentOpportunity() {
@@ -284,92 +314,9 @@ export function AgentOpportunity() {
   )
 }
 
-/* ------------------------------------------------------------------ footer */
-
-export function SiteFooter() {
-  return (
-    <footer id="contact" className="py-14 sm:py-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5">
-              <BrandMark />
-              <span className="font-bold text-ink-100">{site.name}</span>
-            </div>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-400">
-              {site.footer.blurb}
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-gold-400">
-              {site.footer.contactLabel}
-            </h2>
-            <ul className="mt-4 space-y-3 text-sm">
-              <li>
-                <span className="block text-ink-400">{site.contact.phoneLabel}</span>
-                <a
-                  href={site.contact.phoneHref}
-                  className="rounded text-ink-300 transition-colors hover:text-gold-300"
-                >
-                  {site.contact.phone}
-                </a>
-              </li>
-              <li>
-                <span className="block text-ink-400">{site.contact.emailLabel}</span>
-                <a
-                  href={site.contact.emailHref}
-                  className="rounded break-words text-ink-300 transition-colors hover:text-gold-300"
-                >
-                  {site.contact.email}
-                </a>
-              </li>
-              <li>
-                <span className="block text-ink-400">{site.contact.hoursLabel}</span>
-                <span className="text-ink-300">{site.contact.hours}</span>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-gold-400">
-              {site.footer.legalLabel}
-            </h2>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              <li>
-                <Link
-                  href="/privacy"
-                  className="rounded text-ink-300 transition-colors hover:text-gold-300"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms"
-                  className="rounded text-ink-300 transition-colors hover:text-gold-300"
-                >
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-12 border-t border-navy-800 pt-8">
-          <p className="text-xs text-ink-400">
-            &copy; <CurrentYear buildYear={new Date().getFullYear()} /> {site.legalName}. All rights
-            reserved.
-          </p>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 /* ------------------------------------------------------------------ shared */
 
-function SectionHeading({ title, intro }: { title: string; intro: string }) {
+export function SectionHeading({ title, intro }: { title: string; intro: string }) {
   return (
     <div className="max-w-2xl">
       <h2 className="text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">{title}</h2>
