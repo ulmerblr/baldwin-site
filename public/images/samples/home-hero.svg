@@ -24,10 +24,10 @@
   <rect x="456" y="979.9999999999999" width="1488" height="344.61538461538464" rx="41.353846153846156" fill="#B5179E" opacity="0.96" />
   <text x="1200" y="1103.8461538461538" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="107.6923076923077" font-weight="700"
-        fill="#FFFFFF" letter-spacing="5.384615384615385">SAMPLE — REPLACE</text>
+        fill="#FFFFFF" letter-spacing="5.384615384615385">PHOTO 01 — SAMPLE</text>
   <text x="1200" y="1191.3461538461538" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="58.333333333333336"
-        fill="#FFFFFF" opacity="0.95">home-hero — 2400 × 1400</text>
+        fill="#FFFFFF" opacity="0.95">REPLACE · home-hero · 2400 × 1400</text>
   <text x="1200" y="224" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="41.1764705882353"
         fill="#B5179E" opacity="0.95">light/dark bands: overlay contrast stress test</text>

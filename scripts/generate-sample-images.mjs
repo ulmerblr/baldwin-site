@@ -30,7 +30,7 @@ import { join } from 'node:path'
 const ROOT = new URL('..', import.meta.url).pathname
 const OUT_DIR = join(ROOT, 'public/images/samples')
 
-const { imageSlots } = await import(join(ROOT, 'src/content/images.ts'))
+const { imageSlots, photoRef } = await import(join(ROOT, 'src/content/images.ts'))
 
 /** Proof magenta. Nowhere in the brand palette, which is the entire point. */
 const PROOF = '#B5179E'
@@ -80,7 +80,7 @@ function subjectHint(name, w, h) {
 }
 
 /** Type A: a calm proof card. Nothing sits on top of these. */
-function standaloneSvg(name, w, h) {
+function standaloneSvg(name, w, h, ref) {
   const unit = Math.min(w, h)
   const title = unit / 18
   const sub = unit / 30
@@ -99,6 +99,9 @@ function standaloneSvg(name, w, h) {
   <rect x="${inset}" y="${inset}" width="${w - inset * 2}" height="${h - inset * 2}"
         fill="none" stroke="${PROOF}" stroke-width="${unit / 90}" stroke-dasharray="${unit / 22} ${unit / 33}" />
   <rect x="0" y="${h / 2 - title * 1.5}" width="${w}" height="${title * 3}" fill="${PROOF}" opacity="0.92" />
+  <text x="${w / 2}" y="${h / 2 - title * 2.3}" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="${title * 2.1}" font-weight="700"
+        fill="${PROOF}">PHOTO ${ref}</text>
   <text x="${w / 2}" y="${h / 2 - title * 0.18}" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="${title}" font-weight="700"
         fill="#FFFFFF" letter-spacing="${title * 0.04}">SAMPLE — REPLACE</text>
@@ -120,7 +123,7 @@ function standaloneSvg(name, w, h) {
  * crop -- including the narrow ones, where a horizontally-split image would
  * have quietly shown only its dark half and hidden the failure.
  */
-function overlaySvg(name, w, h) {
+function overlaySvg(name, w, h, ref) {
   const unit = Math.min(w, h)
   const title = unit / 13
   const sub = unit / 24
@@ -162,10 +165,10 @@ function overlaySvg(name, w, h) {
   <rect x="${plateX}" y="${plateY}" width="${plateW}" height="${plateH}" rx="${plateH * 0.12}" fill="${PROOF}" opacity="0.96" />
   <text x="${w / 2}" y="${plateY + title * 1.15}" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="${title}" font-weight="700"
-        fill="#FFFFFF" letter-spacing="${title * 0.05}">SAMPLE — REPLACE</text>
+        fill="#FFFFFF" letter-spacing="${title * 0.05}">PHOTO ${ref} — SAMPLE</text>
   <text x="${w / 2}" y="${plateY + title * 1.15 + sub * 1.5}" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="${sub}"
-        fill="#FFFFFF" opacity="0.95">${escape(name)} — ${w} × ${h}</text>
+        fill="#FFFFFF" opacity="0.95">REPLACE · ${escape(name)} · ${w} × ${h}</text>
   <text x="${w / 2}" y="${h * 0.16}" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="${meta}"
         fill="${PROOF}" opacity="0.95">light/dark bands: overlay contrast stress test</text>
@@ -187,8 +190,8 @@ for (const [name, slot] of Object.entries(imageSlots)) {
   if (slot.state === 'real') { skipped += 1; continue }
   const svg =
     slot.type === 'overlay'
-      ? overlaySvg(name, slot.width, slot.height)
-      : standaloneSvg(name, slot.width, slot.height)
+      ? overlaySvg(name, slot.width, slot.height, photoRef(slot.ref))
+      : standaloneSvg(name, slot.width, slot.height, photoRef(slot.ref))
   writeFileSync(join(OUT_DIR, `${name}.svg`), svg)
   count += 1
 }

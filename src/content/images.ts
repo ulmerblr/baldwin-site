@@ -81,6 +81,19 @@ export type Scrim = {
 }
 
 type BaseSlot = {
+  /**
+   * Stable reference number. Rendered on the placeholder and printed by
+   * `npm run check:images`, so a photograph can be handed over as "this is
+   * photo 07" with no ambiguity about where it lands.
+   *
+   * Assigned in site-journey order -- the order you meet them walking the
+   * site. NEVER renumber or reuse one once it has been published: the number
+   * is how people outside this repo refer to the slot, and a photo filed
+   * against an old number would land in the wrong place.
+   */
+  ref: number
+  /** Where it appears, in plain words. Printed alongside the number. */
+  where: string
   state: SlotState
   /**
    * Path under /public to the REAL photograph, e.g. '/images/chris.jpg'.
@@ -110,6 +123,8 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
   /* ------------------------------------------------ type A -- standalone */
 
   'chris-portrait': {
+    ref: 2,
+    where: 'Home page About section, and the top of the About page',
     type: 'standalone',
     state: 'real',
     src: '/images/chris-baldwin-desk.jpg',
@@ -127,6 +142,8 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     focalPoint: { x: 40, y: 40 },
   },
   'about-secondary': {
+    ref: 5,
+    where: 'About page, supporting photo lower down',
     type: 'standalone',
     state: 'sample',
     src: null,
@@ -136,27 +153,43 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     focalPoint: CENTER,
   },
   'product-indexed-universal-life': {
+    ref: 7,
+    where: 'Indexed Universal Life product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-mortgage-protection': {
+    ref: 8,
+    where: 'Mortgage Protection product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-final-expense': {
+    ref: 9,
+    where: 'Final Expense product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-annuities': {
+    ref: 10,
+    where: 'Annuities product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-retirement-rollovers': {
+    ref: 11,
+    where: 'Retirement Rollovers product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-estate-planning': {
+    ref: 12,
+    where: 'Estate Planning product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'agent-team': {
+    ref: 14,
+    where: 'Agent Opportunity page, beside the benefits',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   family: {
+    ref: 3,
+    where: 'Home page, beside "Wherever You Are"',
     type: 'standalone',
     state: 'sample',
     src: null,
@@ -169,6 +202,8 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
   /* --------------------------------------------------- type B -- overlay */
 
   'home-hero': {
+    ref: 1,
+    where: 'Home page, the wide banner behind the headline',
     type: 'overlay',
     state: 'sample',
     src: null,
@@ -181,6 +216,8 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     scrim: { direction: 'left', opacity: 0.82 },
   },
   'about-header': {
+    ref: 4,
+    where: 'About page, the wide banner across the top',
     type: 'overlay',
     state: 'sample',
     src: null,
@@ -191,6 +228,8 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'products-header': {
+    ref: 6,
+    where: 'Products overview page, the wide banner across the top',
     type: 'overlay',
     state: 'sample',
     src: null,
@@ -201,6 +240,8 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'agent-header': {
+    ref: 13,
+    where: 'Agent Opportunity page, the wide banner across the top',
     type: 'overlay',
     state: 'sample',
     src: null,
@@ -211,6 +252,8 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'contact-header': {
+    ref: 15,
+    where: 'Contact page, the wide banner across the top',
     type: 'overlay',
     state: 'sample',
     src: null,
@@ -243,6 +286,49 @@ export const imagePlaceholderLabel = 'Photograph to come'
  */
 export function sampleSrc(name: ImageSlotName): string {
   return `/images/samples/${name}.svg`
+}
+
+/**
+ * The reference number as it is shown to people: zero-padded, so the list
+ * sorts correctly and "07" is unmistakably a slot id rather than a count.
+ */
+export function photoRef(ref: number): string {
+  return String(ref).padStart(2, '0')
+}
+
+/**
+ * Every slot in reference order. This is the photo list -- what
+ * `npm run check:images` prints and what the README documents.
+ */
+export function photoList(): ResolvedSlot[] {
+  return (Object.keys(imageSlots) as ImageSlotName[])
+    .map(resolveSlot)
+    .sort((a, b) => a.config.ref - b.config.ref)
+}
+
+/**
+ * Guard: reference numbers must be unique and contiguous from 1.
+ *
+ * A duplicate would send two photographs to the same place and a gap would
+ * make the printed list lie, and both are silent failures -- nothing renders
+ * differently. `check:images` calls this so the build surfaces it instead.
+ */
+export function refProblems(): string[] {
+  const problems: string[] = []
+  const seen = new Map<number, ImageSlotName[]>()
+  for (const name of Object.keys(imageSlots) as ImageSlotName[]) {
+    const { ref } = imageSlots[name]
+    if (!Number.isInteger(ref) || ref < 1) problems.push(`${name}: ref ${ref} is not a positive integer`)
+    seen.set(ref, [...(seen.get(ref) ?? []), name])
+  }
+  for (const [ref, names] of seen) {
+    if (names.length > 1) problems.push(`ref ${photoRef(ref)} is used by ${names.join(' and ')}`)
+  }
+  const total = Object.keys(imageSlots).length
+  for (let i = 1; i <= total; i += 1) {
+    if (!seen.has(i)) problems.push(`ref ${photoRef(i)} is missing -- numbers must run 1..${total} with no gaps`)
+  }
+  return problems
 }
 
 export type ResolvedSlot = {

@@ -17,6 +17,9 @@
   <rect x="27" y="27" width="1146" height="846"
         fill="none" stroke="#B5179E" stroke-width="10" stroke-dasharray="40.90909090909091 27.272727272727273" />
   <rect x="0" y="375" width="1200" height="150" fill="#B5179E" opacity="0.92" />
+  <text x="600" y="335" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="105" font-weight="700"
+        fill="#B5179E">PHOTO 03</text>
   <text x="600" y="441" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50" font-weight="700"
         fill="#FFFFFF" letter-spacing="2">SAMPLE — REPLACE</text>

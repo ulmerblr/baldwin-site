@@ -3,6 +3,7 @@ import {
   SCRIM_FLOOR,
   imagePlaceholderLabel,
   imageSlots,
+  photoRef,
   resolveSlot,
   type ImageSlotName,
   type OverlaySlotName,
@@ -39,13 +40,20 @@ const SAMPLE_LABEL = 'SAMPLE — REPLACE'
  * photograph belongs where.
  */
 function PlaceholderBody({ name }: { name: ImageSlotName }) {
+  const slot = imageSlots[name]
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center">
-      <PhotoGlyph className="text-gold" />
+    <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 px-4 text-center">
+      {/*
+        The reference number leads, and is the biggest thing here. It is what
+        a photograph gets handed over against -- "this is photo 07" -- so it
+        has to be readable from across the room and at a glance on a phone.
+      */}
+      <span className="font-display text-3xl font-semibold leading-none tracking-tight text-gold">
+        {photoRef(slot.ref)}
+      </span>
       <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted">
         {imagePlaceholderLabel}
       </span>
-      {/* Which photo goes here. Muted, small, unmistakably a build note. */}
       <code className="font-mono text-[10px] tracking-tight text-muted">{name}</code>
     </div>
   )
@@ -82,9 +90,10 @@ function OverlayPlaceholderTag({ name }: { name: OverlaySlotName }) {
       className="pointer-events-none absolute bottom-3 right-3 z-10 flex items-center gap-2 rounded-lg border border-overlay-text/25 bg-ink/50 px-2.5 py-1.5"
     >
       <PhotoGlyph className="text-overlay-text/70" size={14} />
-      <span className="font-mono text-[10px] tracking-tight text-overlay-text/70">
-        {name}
+      <span className="font-mono text-[11px] font-bold tracking-wider text-overlay-text">
+        PHOTO {photoRef(imageSlots[name].ref)}
       </span>
+      <span className="font-mono text-[10px] tracking-tight text-overlay-text">{name}</span>
     </div>
   )
 }
@@ -156,6 +165,7 @@ export function ImageSlot({
         // stays out of the accessibility tree entirely.
         aria-hidden="true"
         data-image-slot={name}
+        data-slot-ref={slot.ref}
         data-slot-type="standalone"
         data-slot-state="empty"
         data-slot-filled="false"
@@ -188,6 +198,7 @@ export function ImageSlot({
     return (
       <div
         data-image-slot={name}
+        data-slot-ref={slot.ref}
         data-slot-type="standalone"
         data-slot-state="real"
         data-slot-filled="true"
@@ -202,6 +213,7 @@ export function ImageSlot({
   return (
     <div
       data-image-slot={name}
+      data-slot-ref={slot.ref}
       data-slot-type="standalone"
       data-slot-state="sample"
       // A sample is NOT a filled slot. Nothing downstream may read it as done.
@@ -228,10 +240,16 @@ function SampleTag({ name }: { name: ImageSlotName }) {
       aria-hidden="true"
       className="pointer-events-none absolute bottom-2 right-2 z-20 flex items-center gap-2 rounded-md bg-[#B5179E] px-2 py-1"
     >
-      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-white">
-        {SAMPLE_LABEL}
+      {/*
+        All three lines are full white on the magenta ground. Dimming the
+        trailing ones with /85 and /70 read as hierarchy but measured 3.49:1,
+        under AA -- hierarchy here comes from weight and size instead.
+      */}
+      <span className="font-mono text-[11px] font-bold tracking-wider text-white">
+        PHOTO {photoRef(imageSlots[name].ref)}
       </span>
-      <span className="font-mono text-[10px] text-white/85">{name}</span>
+      <span className="font-mono text-[10px] font-medium text-white">{SAMPLE_LABEL}</span>
+      <span className="font-mono text-[10px] text-white">{name}</span>
     </div>
   )
 }
@@ -267,6 +285,7 @@ export function OverlayImage({
   return (
     <section
       data-image-slot={name}
+      data-slot-ref={slot.ref}
       data-slot-type="overlay"
       data-slot-state={resolved.state}
       // Only a real photograph counts as filled. A sample is scaffolding.

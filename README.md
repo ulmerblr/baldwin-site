@@ -172,6 +172,40 @@ at that slot's exact aspect ratio — so nothing on the page moves when a real f
 lands. **There is no stock photography and no generated imagery in this repo, and
 nothing has been copied from any other site.**
 
+### The photo list
+
+Every slot carries a **reference number**. It is printed on the placeholder, on
+the sample image itself, and by `npm run check:images` — so a photograph can be
+handed over as "this is photo 07" and land in exactly one place.
+
+**Numbers never change once published.** They are how people outside this repo
+refer to a slot; renumbering would send a photo filed against an old number to
+the wrong position. `check:images` fails if two slots share a number or if the
+sequence has a gap.
+
+| # | Where it goes | Slot | Size | Ratio |
+| --- | --- | --- | --- | --- |
+| **01** | Home page, the wide banner behind the headline | `home-hero` | 2400×1400 | 1.71:1 |
+| **02** ✅ | Home page About section, and the top of the About page | `chris-portrait` | 1200×800 | 3:2 |
+| **03** | Home page, beside "Wherever You Are" | `family` | 1200×900 | 1.33:1 |
+| **04** | About page, the wide banner across the top | `about-header` | 2400×1000 | 12:5 |
+| **05** | About page, supporting photo lower down | `about-secondary` | 1200×800 | 3:2 |
+| **06** | Products overview page, the wide banner across the top | `products-header` | 2400×1000 | 12:5 |
+| **07** | Indexed Universal Life product page | `product-indexed-universal-life` | 1200×800 | 3:2 |
+| **08** | Mortgage Protection product page | `product-mortgage-protection` | 1200×800 | 3:2 |
+| **09** | Final Expense product page | `product-final-expense` | 1200×800 | 3:2 |
+| **10** | Annuities product page | `product-annuities` | 1200×800 | 3:2 |
+| **11** | Retirement Rollovers product page | `product-retirement-rollovers` | 1200×800 | 3:2 |
+| **12** | Estate Planning product page | `product-estate-planning` | 1200×800 | 3:2 |
+| **13** | Agent Opportunity page, the wide banner across the top | `agent-header` | 2400×1000 | 12:5 |
+| **14** | Agent Opportunity page, beside the benefits | `agent-team` | 1200×800 | 3:2 |
+| **15** | Contact page, the wide banner across the top | `contact-header` | 2400×1000 | 12:5 |
+
+✅ = real photography supplied. Everything else is still a sample.
+
+Type B (overlay) slots are the wide banners with the headline over them —
+numbers 01, 04, 06, 13 and 15. They need a photograph that reads with text on
+top and something plain on the left. The rest are contained images.
 ### Three states
 
 `state` in [`src/content/images.ts`](src/content/images.ts) is the only thing that
