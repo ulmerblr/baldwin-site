@@ -111,13 +111,20 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
 
   'chris-portrait': {
     type: 'standalone',
-    state: 'sample',
-    src: null,
-    alt: 'Chris Baldwin, founder of Baldwin Insurance Agency',
-    width: 900,
-    height: 1100,
-    // Faces sit high in a portrait crop.
-    focalPoint: { x: 50, y: 35 },
+    state: 'real',
+    src: '/images/chris-baldwin-desk.jpg',
+    alt: 'Chris Baldwin at his desk in the Baldwin Life Insurance office.',
+    // Reboxed from the original 900x1100 guess. That portrait ratio was set
+    // before any photograph existed; the real asset is 640x427 landscape
+    // (1.4988), so a portrait box would have cropped 45% of the width -- the
+    // branded sign and most of the desk -- and upscaled it 2.06x at 768px.
+    // 1200x800 is 1.5, which the file fills essentially exactly.
+    width: 1200,
+    height: 800,
+    // The ratios match to within 0.08%, so nothing meaningful is cropped.
+    // Biased left-of-centre onto his face anyway, so any rounding crop at an
+    // odd viewport width takes it off the empty right side of the frame.
+    focalPoint: { x: 40, y: 40 },
   },
   'about-secondary': {
     type: 'standalone',

@@ -179,7 +179,12 @@ for (const existing of readdirSync(OUT_DIR)) {
 }
 
 let count = 0
+let skipped = 0
 for (const [name, slot] of Object.entries(imageSlots)) {
+  // A slot holding real photography has no use for a stand-in, and writing one
+  // would leave a dead file in the repo at whatever dimensions the slot last
+  // had.
+  if (slot.state === 'real') { skipped += 1; continue }
   const svg =
     slot.type === 'overlay'
       ? overlaySvg(name, slot.width, slot.height)
@@ -188,5 +193,6 @@ for (const [name, slot] of Object.entries(imageSlots)) {
   count += 1
 }
 
-console.log(`✓ wrote ${count} sample images to public/images/samples/`)
+console.log(`✓ wrote ${count} sample images to public/images/samples/` +
+  (skipped ? ` (skipped ${skipped} slot${skipped === 1 ? '' : 's'} already holding real photography)` : ''))
 console.log('  These are placeholders. `npm run check:images` fails while any remain.')

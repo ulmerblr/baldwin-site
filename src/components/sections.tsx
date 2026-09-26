@@ -137,19 +137,12 @@ export function About() {
             <p className="mt-6 leading-relaxed text-body">{site.about.body}</p>
 
             {/*
-              The live site shows `site.about.image` here. That file is not in
-              this repo yet (see public/images/README.md), so nothing is
-              rendered rather than shipping a broken <img>. Once the file is
-              added, restore:
-
-              <Image
-                src={site.about.image.src}
-                alt={site.about.image.alt}
-                width={1200}
-                height={800}
-                className="mt-8 w-full rounded-2xl border border-line object-cover"
-              />
+              The founder photograph. This position held a commented-out
+              <Image> pointing at site.about.image (image-3.jpg) for as long as
+              no file existed; it now renders the `chris-portrait` slot, so the
+              photo is configured in one place and shared with /about.
             */}
+            <ImageSlot name="chris-portrait" className="mt-8" />
 
             <div className="mt-8">
               <CtaButton kind="quote">{site.hero.primaryCta}</CtaButton>
