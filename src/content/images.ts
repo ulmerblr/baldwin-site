@@ -205,14 +205,17 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     ref: 1,
     where: 'Home page, the wide banner behind the headline',
     type: 'overlay',
-    state: 'sample',
-    src: null,
+    state: 'real',
+    src: '/images/family-outdoors.jpg',
     // Decorative: the headline over it says everything this image would.
     alt: '',
     width: 2400,
     height: 1400,
-    // Headline and CTAs sit left, so keep the subject right of them.
-    focalPoint: { x: 68, y: 45 },
+    // A group shot, not a single subject: the six of them span almost the
+    // whole frame and the faces cluster in the upper middle. Centred rather
+    // than the old right-of-centre guess, and lifted so the narrow crop at
+    // phone widths keeps faces instead of grass.
+    focalPoint: { x: 52, y: 32 },
     scrim: { direction: 'left', opacity: 0.82 },
   },
   'about-header': {
