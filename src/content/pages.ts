@@ -109,28 +109,36 @@ export const contact = {
 
 /** Two new bands on the home page. Everything already there stays. */
 export const homeAdditions = {
+  /**
+   * Real client testimonials, supplied by the agency and used verbatim.
+   * These are regulated advertising on an insurance site: do not edit,
+   * tighten, paraphrase or add to them, and do not invent more.
+   */
   testimonials: {
     heading: 'What Our Clients Say',
-    /**
-     * Deliberately unfilled. Invented client praise on an insurance site is a
-     * compliance problem, not a placeholder -- the cards below it show the
-     * intended shape and carry no text.
-     *
-     * Sourcing note, kept here rather than in the token because the token text
-     * renders on the page: where testimonials come from clients outside
-     * California and Texas, prefer those. Geographic spread supports the way
-     * the rest of the site reads.
-     */
-    pending: '[[TK: testimonials — 3–4, first name + last initial]]',
-  },
-  /**
-   * Deliberately names no state, city or region: the absence of a geography
-   * list is the point. Where the agency is licensed is stated once, from the
-   * real list, in the licensing disclosures.
-   */
-  serviceAreas: {
-    heading: 'Wherever You Are',
-    body: "Most of what matters in this conversation has nothing to do with where you live — what you're protecting, who depends on you, and what you want to leave behind are the same questions everywhere. Licensing and product availability do vary by state, so call and we'll tell you exactly what's available where you are.",
+    items: [
+      {
+        line: 'Mortgage protection',
+        name: 'Patty C.',
+        state: 'California',
+        quote:
+          'Thank you, Chris, for finding a great fit for my life insurance needs. Affordable and will protect my family in case something happens to me.',
+      },
+      {
+        line: 'Annuities',
+        name: 'Lawrence W.',
+        state: 'Arizona',
+        quote:
+          'Having a lifetime income stream that takes care of budgeting for my retirement has put my mind at ease. Thank you, Chris.',
+      },
+      {
+        line: 'Final expense',
+        name: 'Elizabeth F.',
+        state: 'Washington',
+        quote:
+          "Chris provided me a policy that was affordable and puts my mind at ease, knowing my family won't have to generate funds to take care of my final expense and funeral costs.",
+      },
+    ],
   },
 } as const
 

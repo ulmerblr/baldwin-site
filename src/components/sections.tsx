@@ -4,7 +4,6 @@ import { productByApprovedTitle, productPage } from '@/content/products'
 import { site } from '@/content/site'
 import { ImageSlot, OverlayImage } from './image-slot'
 import { CtaButton } from './lead-modals'
-import { Copy } from './tk'
 
 /* -------------------------------------------------------------------- hero */
 
@@ -120,73 +119,35 @@ export function Services() {
   )
 }
 
-/* ------------------------------------------------------------------- about */
+/* --------------------------------------------------------------- chris card */
 
-export function About() {
+/**
+ * The promotional card, on its own between the hero and the products.
+ *
+ * The artwork is square and already carries its own headline, portrait and
+ * business card, so it is treated as finished material rather than raw
+ * imagery: nothing is laid over it, it is never cropped, and no heading of
+ * ours competes with the one printed inside it. It gets a quiet band and
+ * room to breathe.
+ *
+ * Width is the legibility decision, and it is the whole reason the cap is as
+ * generous as it is. The card's smallest printed lines -- the street address,
+ * the licence and fax numbers -- are about 17px inside a 1254px square, so
+ * they only clear 12px on screen once the card is rendered near 900px wide.
+ * Hence max-w-4xl rather than something more restrained.
+ *
+ * On a phone none of that is reachable: 1254px of artwork inside a 328px
+ * column puts the fine print at about 4px, and no layout choice fixes that.
+ * What carries there is the headline, the name, and the portrait. The
+ * information itself is not trapped in the picture -- the phone number is in
+ * the header on every page, the phone, email and hours are in the footer, and
+ * the alt text names him and says the card carries contact details.
+ */
+export function ChrisCard() {
   return (
-    <section id="about" className="border-b border-line bg-surface py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
-              {site.about.eyebrow}
-            </p>
-            <h2 className="font-display mt-4 text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
-              {site.about.heading}
-            </h2>
-            <p className="mt-6 leading-relaxed text-body">{site.about.body}</p>
-
-            {/*
-              The founder photograph. This position held a commented-out
-              <Image> pointing at site.about.image (image-3.jpg) for as long as
-              no file existed; it now renders the `chris-portrait` slot, so the
-              photo is configured in one place and shared with /about.
-            */}
-            <ImageSlot name="chris-portrait" className="mt-8" />
-
-            <div className="mt-8">
-              <CtaButton kind="quote">{site.hero.primaryCta}</CtaButton>
-            </div>
-          </div>
-
-          <ul className="space-y-4">
-            {site.about.valueProps.map((prop) => (
-              <li key={prop.title} className="rounded-2xl border border-line bg-surface p-6">
-                <h3 className="text-base font-semibold text-ink">{prop.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-body">{prop.description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* -------------------------------------------------------------- how it works */
-
-export function HowItWorks() {
-  return (
-    <section id="how-it-works" className="border-b border-line py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading title={site.howItWorks.heading} intro={site.howItWorks.intro} />
-
-        <ol className="mt-12 grid gap-5 md:grid-cols-3">
-          {site.howItWorks.steps.map((step) => (
-            <li key={step.number} className="rounded-2xl border border-line bg-surface p-6">
-              <span aria-hidden="true" className="text-3xl font-bold tabular-nums text-gold">
-                {step.number}
-              </span>
-              <h3 className="mt-3 text-lg font-semibold text-ink">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">{step.description}</p>
-            </li>
-          ))}
-        </ol>
-
-        <div className="mt-12 flex flex-col items-center gap-3">
-          <CtaButton kind="quote">{site.howItWorks.cta}</CtaButton>
-          <p className="text-sm text-muted">{site.howItWorks.footnote}</p>
-        </div>
+    <section className="border-b border-line py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+        <ImageSlot name="chris-card" />
       </div>
     </section>
   )
@@ -204,30 +165,33 @@ export function HowItWorks() {
  */
 export function Testimonials() {
   return (
-    <section id="testimonials" className="border-b border-line py-20 sm:py-24">
+    <section id="testimonials" className="border-b border-line bg-surface py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="max-w-2xl">
-          <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
-            {homeAdditions.testimonials.heading}
-          </h2>
-          <p className="mt-4 leading-relaxed text-body">
-            <Copy text={homeAdditions.testimonials.pending} />
-          </p>
-        </div>
+        <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
+          {homeAdditions.testimonials.heading}
+        </h2>
 
-        <ul aria-hidden="true" className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {[0, 1, 2].map((index) => (
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {homeAdditions.testimonials.items.map((item) => (
             <li
-              key={index}
-              className="rounded-2xl border border-dashed border-line bg-surface p-6"
+              key={item.name}
+              className="flex flex-col rounded-2xl border border-line bg-paper p-6"
             >
               <QuoteGlyph />
-              <div className="mt-5 space-y-2.5">
-                <div className="h-2.5 w-full rounded-full bg-line" />
-                <div className="h-2.5 w-11/12 rounded-full bg-line" />
-                <div className="h-2.5 w-4/5 rounded-full bg-line" />
-              </div>
-              <div className="mt-6 h-2.5 w-24 rounded-full bg-gold-bright/40" />
+              {/* blockquote + figcaption: the attribution is marked up as the
+                  source of the quote, not as another line of body text. */}
+              <figure className="mt-5 flex flex-1 flex-col">
+                <blockquote className="flex-1 leading-relaxed text-body">{item.quote}</blockquote>
+                <figcaption className="mt-6 border-t border-line pt-4">
+                  <span className="block text-sm font-semibold text-ink">
+                    {item.name}
+                    <span className="font-normal text-body">, {item.state}</span>
+                  </span>
+                  <span className="mt-1 block text-xs font-medium uppercase tracking-[0.14em] text-gold-deep">
+                    {item.line}
+                  </span>
+                </figcaption>
+              </figure>
             </li>
           ))}
         </ul>
@@ -252,66 +216,6 @@ function QuoteGlyph() {
     >
       <path d="M11 8H6a2 2 0 00-2 2v4a2 2 0 002 2h3v1a3 3 0 01-3 3M24 8h-5a2 2 0 00-2 2v4a2 2 0 002 2h3v1a3 3 0 01-3 3" />
     </svg>
-  )
-}
-
-/* ------------------------------------------------------------ service areas */
-
-export function ServiceAreas() {
-  return (
-    <section id="service-areas" className="border-b border-line bg-surface py-20 sm:py-24">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
-        <div>
-          <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
-            {homeAdditions.serviceAreas.heading}
-          </h2>
-          <p className="measure mt-5 leading-relaxed text-body">
-            {homeAdditions.serviceAreas.body}
-          </p>
-        </div>
-        <ImageSlot name="family" />
-      </div>
-    </section>
-  )
-}
-
-/* -------------------------------------------------------- agent opportunity */
-
-export function AgentOpportunity() {
-  return (
-    <section
-      id="agent-opportunity"
-      className="border-b border-line bg-surface py-20 sm:py-24"
-    >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
-            {site.agentOpportunity.eyebrow}
-          </p>
-          <h2 className="font-display mt-4 text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
-            {site.agentOpportunity.heading}
-          </h2>
-          <p className="mt-4 leading-relaxed text-body">{site.agentOpportunity.intro}</p>
-        </div>
-
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2">
-          {site.agentOpportunity.benefits.map((benefit) => (
-            <li key={benefit.title} className="rounded-2xl border border-line bg-surface p-6">
-              <h3 className="text-base font-semibold text-ink">{benefit.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">{benefit.description}</p>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-12 flex flex-col items-center gap-3">
-          {/* The live site reads "Upload Your Resume →" and silently discarded
-              every file. There is no upload in this build, so the control does
-              not claim one. */}
-          <CtaButton kind="apply">{site.agentOpportunity.cta}</CtaButton>
-          <p className="text-sm text-muted">{site.agentOpportunity.footnote}</p>
-        </div>
-      </div>
-    </section>
   )
 }
 

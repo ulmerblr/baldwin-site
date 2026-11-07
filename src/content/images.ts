@@ -33,6 +33,7 @@
 
 export type StandaloneSlotName =
   | 'chris-portrait'
+  | 'chris-card'
   | 'about-secondary'
   | 'product-indexed-universal-life'
   | 'product-term-life-mortgage-protection'
@@ -41,7 +42,6 @@ export type StandaloneSlotName =
   | 'product-ira-401k-rollovers'
   | 'product-estate-planning'
   | 'agent-team'
-  | 'family'
 
 export type OverlaySlotName =
   | 'home-hero'
@@ -124,7 +124,7 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
 
   'chris-portrait': {
     ref: 2,
-    where: 'Home page About section, and the top of the About page',
+    where: 'About page, the portrait at the top',
     type: 'standalone',
     state: 'real',
     src: '/images/chris-baldwin-desk.jpg',
@@ -187,15 +187,18 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     where: 'Agent Opportunity page, beside the benefits',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
-  family: {
-    ref: 3,
-    where: 'Home page, beside "Wherever You Are"',
+
+  'chris-card': {
+    ref: 16,
+    where: 'Home page, the promotional card between the hero and the products',
     type: 'standalone',
-    state: 'sample',
-    src: null,
-    alt: '',
-    width: 1200,
-    height: 900,
+    state: 'real',
+    src: '/images/chris-baldwin-card.webp',
+    alt: 'Chris Baldwin, licensed life insurance agent at Baldwin Insurance Agency, with contact details.',
+    // Square, and the artwork already carries its own text and layout, so it
+    // is never cropped: the reserved box matches the file exactly.
+    width: 1254,
+    height: 1254,
     focalPoint: CENTER,
   },
 
@@ -310,11 +313,11 @@ export function photoList(): ResolvedSlot[] {
 }
 
 /**
- * Guard: reference numbers must be unique and contiguous from 1.
+ * Guard: reference numbers must be unique positive integers.
  *
- * A duplicate would send two photographs to the same place and a gap would
- * make the printed list lie, and both are silent failures -- nothing renders
- * differently. `check:images` calls this so the build surfaces it instead.
+ * A duplicate would send two photographs to the same place, and it is a
+ * silent failure -- nothing renders differently. `check:images` calls this so
+ * the build surfaces it instead. Gaps are allowed: see the note below.
  */
 export function refProblems(): string[] {
   const problems: string[] = []
@@ -327,10 +330,10 @@ export function refProblems(): string[] {
   for (const [ref, names] of seen) {
     if (names.length > 1) problems.push(`ref ${photoRef(ref)} is used by ${names.join(' and ')}`)
   }
-  const total = Object.keys(imageSlots).length
-  for (let i = 1; i <= total; i += 1) {
-    if (!seen.has(i)) problems.push(`ref ${photoRef(i)} is missing -- numbers must run 1..${total} with no gaps`)
-  }
+  // Deliberately NOT a contiguity check. When a slot is retired -- 03, the
+  // "Wherever You Are" band -- its number retires with it and the rest keep
+  // theirs. A gap is the correct outcome; renumbering to close it would send
+  // a photograph filed against an old number to the wrong place.
   return problems
 }
 
