@@ -154,32 +154,32 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
   },
   'product-indexed-universal-life': {
     ref: 7,
-    where: 'Indexed Universal Life product page',
+    where: 'Products page, Indexed Universal Life section',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-term-life-mortgage-protection': {
     ref: 8,
-    where: 'Term Life / Mortgage Protection product page',
+    where: 'Products page, Term Life / Mortgage Protection section',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-final-expense': {
     ref: 9,
-    where: 'Final Expense product page',
+    where: 'Products page, Final Expense section',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-annuities': {
     ref: 10,
-    where: 'Annuities product page',
+    where: 'Products page, Annuities section',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-ira-401k-rollovers': {
     ref: 11,
-    where: 'IRA and 401(k) Rollovers product page',
+    where: 'Products page, IRA and 401(k) Rollovers section',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-estate-planning': {
     ref: 12,
-    where: 'Estate Planning product page',
+    where: 'Products page, Estate Planning section',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'agent-team': {

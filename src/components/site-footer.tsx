@@ -35,24 +35,6 @@ export function SiteFooter() {
                   <NavLink href={item.href} className={FOOTER_LINK} currentClassName="text-gold-deep">
                     {item.label}
                   </NavLink>
-                  {item.children && (
-                    <ul className="mt-2 space-y-2 border-l border-line pl-3">
-                      {item.children
-                        // The overview page is already the parent link above.
-                        .filter((child) => child.href !== item.href)
-                        .map((child) => (
-                          <li key={child.href}>
-                            <NavLink
-                              href={child.href}
-                              className={`${FOOTER_LINK} text-muted`}
-                              currentClassName="text-gold-deep"
-                            >
-                              {child.label}
-                            </NavLink>
-                          </li>
-                        ))}
-                    </ul>
-                  )}
                 </li>
               ))}
             </ul>

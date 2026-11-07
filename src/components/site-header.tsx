@@ -106,164 +106,24 @@ export function SiteHeader() {
 const DESKTOP_LINK =
   'rounded text-sm font-medium transition-colors hover:text-gold-deep whitespace-nowrap'
 
+/**
+ * Every nav item is a plain link. Products used to be a dropdown over the six
+ * product pages; those collapsed into a single /products page, so the submenu
+ * and all of its keyboard, pointer and touch handling went with them.
+ */
 function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
-  const menuId = useId()
-  // Same as the mobile panel: the dropdown closes itself on navigation by
-  // remembering the page it was opened on.
-  const [openedOn, setOpenedOn] = useState<string | null>(null)
-  const open = openedOn === pathname
-  const setOpen = useCallback(
-    (next: boolean) => setOpenedOn(next ? pathname : null),
-    [pathname],
-  )
-  const wrapperRef = useRef<HTMLLIElement>(null)
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([])
-
-  const close = useCallback(
-    (returnFocus = false) => {
-      setOpen(false)
-      if (returnFocus) triggerRef.current?.focus()
-    },
-    [setOpen],
-  )
-
-  const focusItem = useCallback((index: number) => {
-    const items = itemRefs.current.filter(Boolean) as HTMLAnchorElement[]
-    if (items.length === 0) return
-    const wrapped = (index + items.length) % items.length
-    items[wrapped]?.focus()
-  }, [])
-
-  // Pointer anywhere outside closes it. Pointerdown rather than click so the
-  // menu is gone before the thing underneath reacts.
-  useEffect(() => {
-    if (!open) return
-    function onPointerDown(event: PointerEvent) {
-      if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false)
-    }
-    document.addEventListener('pointerdown', onPointerDown)
-    return () => document.removeEventListener('pointerdown', onPointerDown)
-  }, [open, setOpen])
-
-  if (!item.children) {
-    return (
-      <li>
-        <Link
-          href={item.href}
-          aria-current={pathname === item.href ? 'page' : undefined}
-          className={`${DESKTOP_LINK} ${pathname === item.href ? 'text-gold-deep' : 'text-body'}`}
-        >
-          {item.label}
-        </Link>
-      </li>
-    )
-  }
-
-  // A section is "active" when you are on the parent or any child. That is a
-  // visual cue only; aria-current marks the one page you are actually on.
-  const inSection = pathname === item.href || pathname.startsWith(`${item.href}/`)
-
-  function onTriggerKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault()
-      setOpen(true)
-      requestAnimationFrame(() => focusItem(0))
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault()
-      setOpen(true)
-      requestAnimationFrame(() => focusItem(-1))
-    } else if (event.key === 'Escape') {
-      close()
-    }
-  }
-
-  function onItemKeyDown(event: React.KeyboardEvent<HTMLAnchorElement>, index: number) {
-    switch (event.key) {
-      case 'ArrowDown':
-        event.preventDefault()
-        focusItem(index + 1)
-        break
-      case 'ArrowUp':
-        event.preventDefault()
-        focusItem(index - 1)
-        break
-      case 'Home':
-        event.preventDefault()
-        focusItem(0)
-        break
-      case 'End':
-        event.preventDefault()
-        focusItem(-1)
-        break
-      case 'Escape':
-        event.preventDefault()
-        close(true)
-        break
-      case 'Tab':
-        // Let focus leave naturally; the menu should not follow it out.
-        setOpen(false)
-        break
-    }
-  }
-
+  const current = pathname === item.href
+  // A section still highlights on its own page; there are no child pages left
+  // for it to cover.
   return (
-    <li
-      ref={wrapperRef}
-      className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <div className="flex items-center gap-0.5">
-        {/* A real link, not a dead parent. Tapping it on a touch device goes
-            to the overview page instead of doing nothing. */}
-        <Link
-          href={item.href}
-          aria-current={pathname === item.href ? 'page' : undefined}
-          className={`${DESKTOP_LINK} ${inSection ? 'text-gold-deep' : 'text-body'}`}
-        >
-          {item.label}
-        </Link>
-        <button
-          ref={triggerRef}
-          type="button"
-          aria-expanded={open}
-          aria-controls={menuId}
-          aria-label={navLabels.submenu(item.label)}
-          onClick={() => setOpen(!open)}
-          onKeyDown={onTriggerKeyDown}
-          className={`rounded p-1 transition-colors hover:text-gold-deep ${
-            inSection ? 'text-gold-deep' : 'text-body'
-          }`}
-        >
-          <Chevron open={open} />
-        </button>
-      </div>
-
-      {open && (
-        <ul
-          id={menuId}
-          className="raised absolute left-0 top-full z-50 mt-2 w-64 rounded-xl border border-line bg-surface p-2"
-        >
-          {item.children.map((child, index) => (
-            <li key={child.href}>
-              <Link
-                ref={(node) => {
-                  itemRefs.current[index] = node
-                }}
-                href={child.href}
-                aria-current={pathname === child.href ? 'page' : undefined}
-                onKeyDown={(event) => onItemKeyDown(event, index)}
-                className={`block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gold-wash hover:text-gold-deep ${
-                  pathname === child.href ? 'text-gold-deep' : 'text-body'
-                }`}
-              >
-                {child.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+    <li>
+      <Link
+        href={item.href}
+        aria-current={current ? 'page' : undefined}
+        className={`${DESKTOP_LINK} ${current ? 'text-gold-deep' : 'text-body'}`}
+      >
+        {item.label}
+      </Link>
     </li>
   )
 }
@@ -273,77 +133,21 @@ function DesktopItem({ item, pathname }: { item: NavItem; pathname: string }) {
 const MOBILE_LINK = 'block rounded-lg px-2 py-3 text-base font-medium transition-colors'
 
 function MobileItem({ item, pathname }: { item: NavItem; pathname: string }) {
-  const subId = useId()
-  const inSection = pathname === item.href || pathname.startsWith(`${item.href}/`)
-  const [expanded, setExpanded] = useState(inSection && Boolean(item.children))
-
+  const current = pathname === item.href
   return (
     <li className="border-b border-line last:border-b-0">
-      <div className="flex items-center justify-between gap-2">
-        <Link
-          href={item.href}
-          aria-current={pathname === item.href ? 'page' : undefined}
-          className={`${MOBILE_LINK} flex-1 ${inSection ? 'text-gold-deep' : 'text-ink'}`}
-        >
-          {item.label}
-        </Link>
-
-        {item.children && (
-          // A disclosure, not a hover menu: hover does not exist here.
-          <button
-            type="button"
-            aria-expanded={expanded}
-            aria-controls={subId}
-            aria-label={navLabels.submenu(item.label)}
-            onClick={() => setExpanded((value) => !value)}
-            className="rounded-lg p-3 text-body transition-colors hover:bg-gold-wash hover:text-gold-deep"
-          >
-            <Chevron open={expanded} />
-          </button>
-        )}
-      </div>
-
-      {item.children && expanded && (
-        <ul id={subId} className="mb-2 ml-2 border-l border-line pl-3">
-          {item.children.map((child) => (
-            <li key={child.href}>
-              <Link
-                href={child.href}
-                aria-current={pathname === child.href ? 'page' : undefined}
-                className={`${MOBILE_LINK} text-sm ${
-                  pathname === child.href ? 'text-gold-deep' : 'text-body'
-                }`}
-              >
-                {child.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <Link
+        href={item.href}
+        aria-current={current ? 'page' : undefined}
+        className={`${MOBILE_LINK} ${current ? 'text-gold-deep' : 'text-ink'}`}
+      >
+        {item.label}
+      </Link>
     </li>
   )
 }
 
 /* -------------------------------------------------------------------- icons */
-
-function Chevron({ open }: { open: boolean }) {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className={`transition-transform ${open ? 'rotate-180' : ''}`}
-    >
-      <path d="M4 6l4 4 4-4" />
-    </svg>
-  )
-}
 
 function MenuIcon({ open }: { open: boolean }) {
   return (

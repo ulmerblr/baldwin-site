@@ -2,30 +2,20 @@
  * Site navigation. Header and footer render the same tree, so they cannot
  * drift apart.
  *
- * The Products entry has both an `href` and `children`: the parent is a real
- * link to the overview page, never a dead `#` that swallows a tap on a touch
- * device. The dropdown is additive.
+ * Every entry is a plain link. Products was a dropdown over six product
+ * pages; those are now one page, so it behaves exactly like About and Agent
+ * Opportunity and `children` is gone.
  */
-
-import { products } from './products'
 
 export type NavItem = {
   label: string
   href: string
-  children?: readonly NavItem[]
 }
 
 export const nav: readonly NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
-  {
-    label: 'Products',
-    href: '/products',
-    children: [
-      { label: 'All Products', href: '/products' },
-      ...products.map((product) => ({ label: product.navLabel, href: product.href })),
-    ],
-  },
+  { label: 'Products', href: '/products' },
   { label: 'Agent Opportunity', href: '/agent-opportunity' },
   { label: 'Contact', href: '/contact' },
 ]
@@ -39,8 +29,6 @@ export const legalNav: readonly NavItem[] = [
 export const navLabels = {
   menu: 'Menu',
   closeMenu: 'Close menu',
-  /** Accessible name for the dropdown toggle that sits beside the parent link. */
-  submenu: (label: string) => `${label} submenu`,
   sections: 'Sections',
   legal: 'Legal',
 } as const

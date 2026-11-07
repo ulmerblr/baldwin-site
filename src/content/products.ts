@@ -1,10 +1,13 @@
 /**
- * The six product pages.
+ * The six products.
  *
- * Each page opens with its approved home-page blurb, verbatim. Rather than
+ * They had a page each; they now share /products, one section apiece, each
+ * anchored on its slug. The copy is unchanged -- only where it renders moved.
+ *
+ * Each section opens with its approved home-page blurb, verbatim. Rather than
  * copy those strings, `lead` is read out of `site.services.items` at module
- * load, so the card on the home page and the lead paragraph on the product
- * page can never drift apart.
+ * load, so the card on the home page and the lead paragraph on the section
+ * can never drift apart.
  */
 
 import type { StandaloneSlotName } from './images'
@@ -23,7 +26,9 @@ function approvedLead(approvedTitle: string): string {
 }
 
 export type Product = {
+  /** Also the anchor id of this product's section on /products. */
   slug: string
+  /** Deep link to that section, e.g. '/products#annuities'. */
   href: string
   /** H1 and card title. Matches the approved home page card title. */
   title: string
@@ -42,7 +47,7 @@ export type Product = {
 export const products: readonly Product[] = [
   {
     slug: 'indexed-universal-life',
-    href: '/products/indexed-universal-life',
+    href: '/products#indexed-universal-life',
     title: 'Indexed Universal Life',
     navLabel: 'Indexed Universal Life',
     imageSlot: 'product-indexed-universal-life',
@@ -65,7 +70,7 @@ export const products: readonly Product[] = [
   },
   {
     slug: 'term-life-mortgage-protection',
-    href: '/products/term-life-mortgage-protection',
+    href: '/products#term-life-mortgage-protection',
     title: 'Term Life / Mortgage Protection',
     navLabel: 'Term Life / Mortgage Protection',
     imageSlot: 'product-term-life-mortgage-protection',
@@ -88,7 +93,7 @@ export const products: readonly Product[] = [
   },
   {
     slug: 'final-expense',
-    href: '/products/final-expense',
+    href: '/products#final-expense',
     title: 'Final Expense',
     navLabel: 'Final Expense',
     imageSlot: 'product-final-expense',
@@ -111,7 +116,7 @@ export const products: readonly Product[] = [
   },
   {
     slug: 'annuities',
-    href: '/products/annuities',
+    href: '/products#annuities',
     title: 'Annuities',
     navLabel: 'Annuities',
     imageSlot: 'product-annuities',
@@ -134,7 +139,7 @@ export const products: readonly Product[] = [
   },
   {
     slug: 'ira-401k-rollovers',
-    href: '/products/ira-401k-rollovers',
+    href: '/products#ira-401k-rollovers',
     title: 'IRA and 401(k) Rollovers',
     navLabel: 'IRA and 401(k) Rollovers',
     imageSlot: 'product-ira-401k-rollovers',
@@ -157,7 +162,7 @@ export const products: readonly Product[] = [
   },
   {
     slug: 'estate-planning',
-    href: '/products/estate-planning',
+    href: '/products#estate-planning',
     title: 'Estate Planning',
     navLabel: 'Estate Planning',
     imageSlot: 'product-estate-planning',
@@ -184,11 +189,11 @@ export const productBySlug = new Map(products.map((product) => [product.slug, pr
 
 /**
  * Home page and overview cards are driven by the approved `site.services.items`
- * list; this maps each of those titles to the page it now links to.
+ * list; this maps each of those titles to the section it links to.
  */
 export const productByApprovedTitle = new Map(products.map((product) => [product.title, product]))
 
-/** Section labels and the shared footer line, common to all six pages. */
+/** Section labels and the shared footer line, common to all six sections. */
 export const productPage = {
   howItWorksLabel: 'How it works',
   whoItsForLabel: 'Who it\'s for',
