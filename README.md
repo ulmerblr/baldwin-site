@@ -67,9 +67,9 @@ deploy.
 | File | What is in it |
 | --- | --- |
 | [`site.ts`](src/content/site.ts) | The home page, in the client's approved words: `meta`, `contact`, `hero`, `services`, `about`, `agentOpportunity`, `howItWorks`, `forms`, `footer`, `legal`. |
-| [`pages.ts`](src/content/pages.ts) | The pages added later: About, the products overview, Agent Opportunity, Contact, the two new home page bands, and the footer compliance line. |
-| [`products.ts`](src/content/products.ts) | The six product pages. Each one's lead paragraph is read out of `site.services.items`, so a card and its page cannot drift apart. |
-| [`nav.ts`](src/content/nav.ts) | Header and footer navigation, including the Products dropdown. |
+| [`pages.ts`](src/content/pages.ts) | The pages added later: About, the products page, Agent Opportunity, Contact, the carriers list, the home page testimonials, and the footer compliance line. |
+| [`products.ts`](src/content/products.ts) | The six products, each a section of `/products`. Each one's lead paragraph is read out of `site.services.items`, so a card and its section cannot drift apart. |
+| [`nav.ts`](src/content/nav.ts) | Header and footer navigation. Five flat links, no submenus. |
 | [`images.ts`](src/content/images.ts) | Photography slots — see [Images](#images). |
 
 > ⚠️ **The copy is the client's approved marketing language, transcribed verbatim
@@ -180,26 +180,28 @@ handed over as "this is photo 07" and land in exactly one place.
 
 **Numbers never change once published.** They are how people outside this repo
 refer to a slot; renumbering would send a photo filed against an old number to
-the wrong position. `check:images` fails if two slots share a number or if the
-sequence has a gap.
+the wrong position. `check:images` fails if two slots share a number. It does
+*not* require the sequence to be unbroken: when a slot is retired its number is
+left as a permanent gap rather than reused, so 03 is missing below and nothing
+ever fills it again.
 
 | # | Where it goes | Slot | Size | Ratio |
 | --- | --- | --- | --- | --- |
 | **01** | Home page, the wide banner behind the headline | `home-hero` | 2400×1400 | 1.71:1 |
-| **02** ✅ | Home page About section, and the top of the About page | `chris-portrait` | 1200×800 | 3:2 |
-| **03** | Home page, beside "Wherever You Are" | `family` | 1200×900 | 1.33:1 |
+| **02** ✅ | About page, the portrait at the top | `chris-portrait` | 1200×800 | 3:2 |
 | **04** | About page, the wide banner across the top | `about-header` | 2400×1000 | 12:5 |
 | **05** | About page, supporting photo lower down | `about-secondary` | 1200×800 | 3:2 |
-| **06** | Products overview page, the wide banner across the top | `products-header` | 2400×1000 | 12:5 |
-| **07** | Indexed Universal Life product page | `product-indexed-universal-life` | 1200×800 | 3:2 |
-| **08** | Mortgage Protection product page | `product-mortgage-protection` | 1200×800 | 3:2 |
-| **09** | Final Expense product page | `product-final-expense` | 1200×800 | 3:2 |
-| **10** | Annuities product page | `product-annuities` | 1200×800 | 3:2 |
-| **11** | Retirement Rollovers product page | `product-retirement-rollovers` | 1200×800 | 3:2 |
-| **12** | Estate Planning product page | `product-estate-planning` | 1200×800 | 3:2 |
+| **06** | Products page, the wide banner across the top | `products-header` | 2400×1000 | 12:5 |
+| **07** | Products page, Indexed Universal Life section | `product-indexed-universal-life` | 1200×800 | 3:2 |
+| **08** | Products page, Term Life / Mortgage Protection section | `product-term-life-mortgage-protection` | 1200×800 | 3:2 |
+| **09** | Products page, Final Expense section | `product-final-expense` | 1200×800 | 3:2 |
+| **10** | Products page, Annuities section | `product-annuities` | 1200×800 | 3:2 |
+| **11** | Products page, IRA and 401(k) Rollovers section | `product-ira-401k-rollovers` | 1200×800 | 3:2 |
+| **12** | Products page, Estate Planning section | `product-estate-planning` | 1200×800 | 3:2 |
 | **13** | Agent Opportunity page, the wide banner across the top | `agent-header` | 2400×1000 | 12:5 |
 | **14** | Agent Opportunity page, beside the benefits | `agent-team` | 1200×800 | 3:2 |
 | **15** | Contact page, the wide banner across the top | `contact-header` | 2400×1000 | 12:5 |
+| **16** ✅ | Home page, the promotional card between the hero and the products | `chris-card` | 1254×1254 | 1:1 |
 
 ✅ = real photography supplied. Everything else is still a sample.
 
@@ -219,9 +221,9 @@ answer in one place.
 | `sample` | a generated stand-in, marked `SAMPLE — REPLACE` | **no** |
 | `real` | the actual photograph | yes |
 
-**Every slot is currently `sample`.** Samples are scaffolding: they make layout,
-cropping and overlay contrast reviewable before any photography exists. A sample is
-never a filled slot — `data-slot-filled` stays `"false"`, and `check:images` fails
+**Three slots are `real` — 01, 02 and 16. The rest are `sample`.** Samples are
+scaffolding: they make layout, cropping and overlay contrast reviewable before any
+photography exists. A sample is never a filled slot — `data-slot-filled` stays `"false"`, and `check:images` fails
 while any remain.
 
 Two consequences worth knowing:
@@ -255,7 +257,7 @@ The distinction is structural, not cosmetic: a Type B slot has to carry a scrim,
 focal point, and text contrast that survives whatever photograph lands in it later.
 
 **Type A (10):** `chris-portrait`, `about-secondary`, `product-<slug>` ×6,
-`agent-team`, `family`.
+`agent-team`, `chris-card`.
 
 **Type B (5):** `home-hero`, `about-header`, `products-header`, `agent-header`,
 `contact-header`.
@@ -332,16 +334,16 @@ src/
     page.tsx              home page — composes the sections
     layout.tsx            sitewide metadata and OG defaults
     about/                Meet Chris Baldwin
-    products/             overview + [slug]/ for the six product pages
+    products/             one page carrying all six products and the carriers list
     agent-opportunity/    recruiting
     contact/              contact details and both CTAs
     privacy/, terms/      real legal routes (no dead links anywhere)
-    sitemap.ts            built from nav.ts + products.ts, so it cannot go stale
+    sitemap.ts            built from nav.ts, so it cannot go stale
     api/quote/route.ts    POST — quote form
     api/apply/route.ts    POST — application form
   components/
     site-shell.tsx        header + footer + dialog provider, used by every page
-    site-header.tsx       nav, incl. the keyboard-navigable Products dropdown
+    site-header.tsx       nav — five flat links, no submenus
     sections.tsx          the home page bands
     page-sections.tsx     shared furniture for the interior pages
     image-slot.tsx        named photography slots (see Images)
@@ -360,19 +362,19 @@ scripts/
 
 ### Routes
 
-All eleven marketing routes are statically rendered at build time.
+All seven marketing routes are statically rendered at build time.
 
 ```
-/                                   /agent-opportunity
-/about                              /contact
-/products                           /privacy    (noindex)
-/products/indexed-universal-life    /terms      (noindex)
-/products/mortgage-protection
-/products/final-expense
-/products/annuities
-/products/retirement-rollovers
-/products/estate-planning
+/                     /agent-opportunity
+/about                /contact
+/products             /privacy    (noindex)
+                      /terms      (noindex)
 ```
+
+The six products had a page each. They are now sections of `/products`, reached
+by anchor. `/products/:slug` is kept as a permanent redirect to `/products` in
+[`next.config.ts`](next.config.ts), so every old URL and inbound link still
+lands somewhere real.
 
 Both endpoints always answer with JSON in one of exactly two shapes:
 

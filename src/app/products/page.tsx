@@ -44,6 +44,8 @@ export default function ProductsPage() {
                 key={service.title}
                 title={service.title}
                 description={service.description}
+                // Directly under the h1 here, with no section heading between.
+                headingLevel="h2"
               />
             ))}
           </ul>

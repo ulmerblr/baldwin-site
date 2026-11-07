@@ -75,12 +75,26 @@ export function CheckMark() {
  * One product card. Shared by the home page and the products overview so the
  * approved blurb and the link to the detail page stay in one place.
  */
-export function ProductCard({ title, description }: { title: string; description: string }) {
+export function ProductCard({
+  title,
+  description,
+  headingLevel = 'h3',
+}: {
+  title: string
+  description: string
+  /**
+   * The card sits under a section heading on the home page, so h3 is right
+   * there. On /products the grid is the page's contents list, directly below
+   * the h1 with no h2 between, and an h3 there skips a level.
+   */
+  headingLevel?: 'h2' | 'h3'
+}) {
   const product = productByApprovedTitle.get(title)
+  const Heading = headingLevel
 
   return (
     <li className="flex flex-col rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-gold/50">
-      <h3 className="text-lg font-semibold text-ink">{title}</h3>
+      <Heading className="text-lg font-semibold text-ink">{title}</Heading>
       <p className="mt-3 flex-1 text-sm leading-relaxed text-body">{description}</p>
       {product && (
         <Link

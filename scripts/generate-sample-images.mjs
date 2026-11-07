@@ -59,8 +59,8 @@ function subjectHint(name, w, h) {
     <line x1="${w * 0.8}" y1="${headCy}" x2="${w * 0.92}" y2="${headCy}" ${stroke} />`
   }
 
-  if (name === 'family' || name === 'agent-team') {
-    const n = name === 'family' ? 4 : 5
+  if (name === 'agent-team') {
+    const n = 5
     const r = w * 0.055
     const gap = w * 0.13
     const startX = cx - ((n - 1) * gap) / 2
