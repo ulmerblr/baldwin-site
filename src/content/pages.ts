@@ -137,3 +137,50 @@ export const homeAdditions = {
 /** Sitewide footer compliance line. Carries two unfilled license numbers. */
 export const compliance =
   'Baldwin Insurance Agency. Licensed in [[TK: states licensed in]]. [[TK: CA individual license #]] · [[TK: TX individual license #]]. Products and availability vary by state. This site is for general information and is not an offer of coverage.'
+
+/**
+ * Carriers the agency places business with.
+ *
+ * Names only, exactly as supplied by the client. No logos: we hold no
+ * usage rights to carrier marks, and an insurance site displaying them
+ * without permission is a trademark problem, not a design choice.
+ */
+export const carriers = {
+  heading: 'Carriers We Represent',
+  intro:
+    'Baldwin Insurance Agency is independent. We place coverage with a wide range of carriers, which means the recommendation fits your situation rather than a single company\'s product shelf.',
+  footnote: 'Carrier availability varies by state and by product.',
+  names: [
+    'AIG/Corebridge Financial',
+    'Aflac',
+    'Allianz',
+    'American Amicable/Occidental',
+    'American Equity',
+    'Americo',
+    'Ameritas',
+    'Annexus',
+    'Assurity',
+    'Athene',
+    'Baltimore Life',
+    'Citizens/CICA Life',
+    'Clear Spring Life & Annuity',
+    'Columbian Life Group (CFG)',
+    'Columbus Life',
+    'F&G Life',
+    'Foresters Financial',
+    'Guarantee Trust Life',
+    'Guaranty Income Life (GILICO)',
+    'Liberty Bankers',
+    'Lincoln Financial',
+    'Mutual of Omaha',
+    'Nassau Re',
+    'National Life Group',
+    'North American',
+    'Ohio State Life',
+    'Royal Neighbors',
+    'SILAC Insurance Company',
+    'Sagicor',
+    'TransAmerica',
+    'Washington National',
+  ],
+} as const

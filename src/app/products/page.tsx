@@ -9,7 +9,7 @@ import {
 } from '@/components/page-sections'
 import { ProductCard } from '@/components/sections'
 import { SiteShell } from '@/components/site-shell'
-import { productsIndex } from '@/content/pages'
+import { carriers, productsIndex } from '@/content/pages'
 import { productPage, products } from '@/content/products'
 import { site } from '@/content/site'
 import { pageMetadata } from '@/lib/seo'
@@ -94,6 +94,35 @@ export default function ProductsPage() {
           </div>
         </section>
       ))}
+
+      {/* Carriers. Text only -- see the note in content/pages.ts on why there
+          are no logos here. Columns rather than one long strip so 31 names
+          stay scannable; CSS columns keep the alphabetical order reading
+          down each column. */}
+      <section id="carriers" className="scroll-mt-24 border-b border-line bg-surface py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
+            {carriers.heading}
+          </h2>
+          <p className="measure mt-5 leading-relaxed text-body">{carriers.intro}</p>
+
+          <ul className="mt-10 gap-x-10 text-body sm:columns-2 lg:columns-3">
+            {carriers.names.map((name) => (
+              <li
+                key={name}
+                className="mb-2.5 flex break-inside-avoid items-baseline gap-2.5 leading-snug"
+              >
+                <span aria-hidden="true" className="mt-px text-gold">
+                  &#8226;
+                </span>
+                {name}
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-10 text-sm text-muted">{carriers.footnote}</p>
+        </div>
+      </section>
 
       <CtaBand
         lead={productsIndex.ctaLead}
