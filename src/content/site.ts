@@ -72,7 +72,7 @@ export const site = {
           'Build cash value while protecting your family. IUL policies offer growth potential tied to market indexes with downside protection and tax advantages.',
       },
       {
-        title: 'Mortgage Protection Life Insurance',
+        title: 'Term Life / Mortgage Protection',
         description:
           "Keep your family in their home even if you can't make the payments. Protect your most valuable asset with term life coverage.",
       },
@@ -87,7 +87,7 @@ export const site = {
           'Build a reliable income stream for retirement. Grow your savings with guaranteed, tax-deferred options.',
       },
       {
-        title: 'Retirement Rollovers',
+        title: 'IRA and 401(k) Rollovers',
         description:
           'Consolidate old 401(k)s and IRAs into one secure account. Simplify your retirement planning today.',
       },

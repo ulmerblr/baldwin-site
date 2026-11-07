@@ -64,17 +64,17 @@ export const products: readonly Product[] = [
       'Caps limit your upside in strong years, and the policy has costs that come out of cash value. IUL rewards patience — it works best when funded consistently over a long horizon. It\'s a poor fit if you need maximum death benefit per dollar today; term does that better.',
   },
   {
-    slug: 'mortgage-protection',
-    href: '/products/mortgage-protection',
-    title: 'Mortgage Protection Life Insurance',
-    navLabel: 'Mortgage Protection',
-    imageSlot: 'product-mortgage-protection',
+    slug: 'term-life-mortgage-protection',
+    href: '/products/term-life-mortgage-protection',
+    title: 'Term Life / Mortgage Protection',
+    navLabel: 'Term Life / Mortgage Protection',
+    imageSlot: 'product-term-life-mortgage-protection',
     meta: {
-      title: 'Mortgage Protection Life Insurance | Baldwin Insurance Agency',
+      title: 'Term Life / Mortgage Protection | Baldwin Insurance Agency',
       description:
         'Mortgage protection life insurance helps keep your family in their home.',
     },
-    lead: approvedLead('Mortgage Protection Life Insurance'),
+    lead: approvedLead('Term Life / Mortgage Protection'),
     howItWorks:
       'This is term life insurance sized to your mortgage. If you die during the term, the benefit gives your family the means to pay off the loan or keep making payments. The money goes to your beneficiary, not the lender — so they decide what to do with it.',
     whoItsFor: [
@@ -133,17 +133,17 @@ export const products: readonly Product[] = [
       'Annuities are long-term commitments. Most carry surrender charges if you withdraw early, and terms vary widely between products. Guarantees depend on the issuing insurance company\'s financial strength. Read the surrender schedule before you sign anything — this is the product where the fine print matters most.',
   },
   {
-    slug: 'retirement-rollovers',
-    href: '/products/retirement-rollovers',
-    title: 'Retirement Rollovers',
-    navLabel: 'Retirement Rollovers',
-    imageSlot: 'product-retirement-rollovers',
+    slug: 'ira-401k-rollovers',
+    href: '/products/ira-401k-rollovers',
+    title: 'IRA and 401(k) Rollovers',
+    navLabel: 'IRA and 401(k) Rollovers',
+    imageSlot: 'product-ira-401k-rollovers',
     meta: {
-      title: '401(k) & IRA Rollovers | Baldwin Insurance Agency',
+      title: 'IRA and 401(k) Rollovers | Baldwin Insurance Agency',
       description:
         'Consolidate old 401(k)s and IRAs into one account.',
     },
-    lead: approvedLead('Retirement Rollovers'),
+    lead: approvedLead('IRA and 401(k) Rollovers'),
     howItWorks:
       'When you leave a job, the retirement account stays behind. A rollover moves it into an IRA or another qualified account you control. Done as a direct transfer, it isn\'t a taxable event — the money never passes through your hands.',
     whoItsFor: [

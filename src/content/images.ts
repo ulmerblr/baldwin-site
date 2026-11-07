@@ -35,10 +35,10 @@ export type StandaloneSlotName =
   | 'chris-portrait'
   | 'about-secondary'
   | 'product-indexed-universal-life'
-  | 'product-mortgage-protection'
+  | 'product-term-life-mortgage-protection'
   | 'product-final-expense'
   | 'product-annuities'
-  | 'product-retirement-rollovers'
+  | 'product-ira-401k-rollovers'
   | 'product-estate-planning'
   | 'agent-team'
   | 'family'
@@ -157,9 +157,9 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     where: 'Indexed Universal Life product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
-  'product-mortgage-protection': {
+  'product-term-life-mortgage-protection': {
     ref: 8,
-    where: 'Mortgage Protection product page',
+    where: 'Term Life / Mortgage Protection product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-final-expense': {
@@ -172,9 +172,9 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     where: 'Annuities product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
-  'product-retirement-rollovers': {
+  'product-ira-401k-rollovers': {
     ref: 11,
-    where: 'Retirement Rollovers product page',
+    where: 'IRA and 401(k) Rollovers product page',
     type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'product-estate-planning': {
