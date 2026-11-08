@@ -151,8 +151,16 @@ live; tracking is tightened at display sizes so it never reads as a default stac
 Both are self-hosted through `next/font` — no runtime request to Google.
 
 **Surfaces.** Hairline rules in `--color-line` do the separating. There is exactly
-one elevation level (`.raised`), used sparingly. Body copy is constrained to ~68
-characters with `.measure`.
+one elevation level (`.raised`), used sparingly.
+
+**Measure.** Prefer `.measure-body` (16px copy) and `.measure-lead` (18px copy)
+for anything long enough to read as prose. Both are set in `rem` and were
+calibrated against rendered paragraphs: each lands at roughly 70 characters a
+line. The older `.measure` is `68ch` and does *not* deliver 68 characters — `ch`
+is the advance width of "0", about a third wider than the average letter in
+running prose, so it sets closer to 90. It is still used by the hero subhead and
+by the shared page header's intro paragraph; those are worth converting when
+something else is being changed on those pages.
 
 **Focus.** Re-derived for light: a 2px ink ring with a paper halo, so it stays
 visible on gold fills and on photography alike. `.on-dark` inverts it for anything
@@ -182,26 +190,23 @@ handed over as "this is photo 07" and land in exactly one place.
 refer to a slot; renumbering would send a photo filed against an old number to
 the wrong position. `check:images` fails if two slots share a number. It does
 *not* require the sequence to be unbroken: when a slot is retired its number is
-left as a permanent gap rather than reused, so 03 is missing below and nothing
-ever fills it again.
+left as a permanent gap rather than reused. 03 was the "Wherever You Are" band
+and 07 to 12 were the six per-product photographs, dropped when the product
+sections lost their image column. Nothing ever fills those numbers again.
 
 | # | Where it goes | Slot | Size | Ratio |
 | --- | --- | --- | --- | --- |
 | **01** | Home page, the wide banner behind the headline | `home-hero` | 2400×1400 | 1.71:1 |
-| **02** ✅ | About page, the portrait at the top | `chris-portrait` | 1200×800 | 3:2 |
+| **02** ✅ | About page, the portrait at the top | `chris-portrait` | 1024×1536 | 2:3 |
 | **04** | About page, the wide banner across the top | `about-header` | 2400×1000 | 12:5 |
 | **05** | About page, supporting photo lower down | `about-secondary` | 1200×800 | 3:2 |
 | **06** | Products page, the wide banner across the top | `products-header` | 2400×1000 | 12:5 |
-| **07** | Products page, Indexed Universal Life section | `product-indexed-universal-life` | 1200×800 | 3:2 |
-| **08** | Products page, Term Life / Mortgage Protection section | `product-term-life-mortgage-protection` | 1200×800 | 3:2 |
-| **09** | Products page, Final Expense section | `product-final-expense` | 1200×800 | 3:2 |
-| **10** | Products page, Annuities section | `product-annuities` | 1200×800 | 3:2 |
-| **11** | Products page, IRA and 401(k) Rollovers section | `product-ira-401k-rollovers` | 1200×800 | 3:2 |
-| **12** | Products page, Estate Planning section | `product-estate-planning` | 1200×800 | 3:2 |
+|  | *The six product sections carry no photograph — see below.* | | | |
 | **13** | Agent Opportunity page, the wide banner across the top | `agent-header` | 2400×1000 | 12:5 |
 | **14** | Agent Opportunity page, beside the benefits | `agent-team` | 1200×800 | 3:2 |
 | **15** | Contact page, the wide banner across the top | `contact-header` | 2400×1000 | 12:5 |
 | **16** ✅ | Home page, the promotional card between the hero and the products | `chris-card` | 1254×1254 | 1:1 |
+| **17** ✅ | About page, with the personal background | `baldwin-family` | 1600×1066 | 3:2 |
 
 ✅ = real photography supplied. Everything else is still a sample.
 
@@ -221,7 +226,7 @@ answer in one place.
 | `sample` | a generated stand-in, marked `SAMPLE — REPLACE` | **no** |
 | `real` | the actual photograph | yes |
 
-**Three slots are `real` — 01, 02 and 16. The rest are `sample`.** Samples are
+**Four slots are `real` — 01, 02, 16 and 17. The rest are `sample`.** Samples are
 scaffolding: they make layout, cropping and overlay contrast reviewable before any
 photography exists. A sample is never a filled slot — `data-slot-filled` stays `"false"`, and `check:images` fails
 while any remain.
@@ -229,10 +234,10 @@ while any remain.
 Two consequences worth knowing:
 
 - A sample's `alt` is forced empty and the image is hidden from assistive tech.
-  `chris-portrait` is configured as "Chris Baldwin, founder of Baldwin Insurance
-  Agency" — announcing that over a magenta test card would tell a screen reader user
-  a photograph of a real person is present when it is not. The configured `alt` stays
-  in the config, ready for the real file.
+  Announcing "Chris Baldwin, founder of Baldwin Insurance Agency" over a magenta
+  test card would tell a screen reader user that a photograph of a real person is
+  present when it is not. The configured `alt` stays in the config, ready for the
+  real file.
 - Samples are generated by `npm run images:samples` into `public/images/samples/`.
   Their paths are *derived from the slot name*, never configured, so a sample cannot
   be typed into `src` and quietly pass as supplied artwork.
@@ -256,8 +261,8 @@ That is the whole change — no component is touched.
 The distinction is structural, not cosmetic: a Type B slot has to carry a scrim, a
 focal point, and text contrast that survives whatever photograph lands in it later.
 
-**Type A (10):** `chris-portrait`, `about-secondary`, `product-<slug>` ×6,
-`agent-team`, `chris-card`.
+**Type A (5):** `chris-portrait`, `baldwin-family`, `chris-card`,
+`about-secondary`, `agent-team`.
 
 **Type B (5):** `home-hero`, `about-header`, `products-header`, `agent-header`,
 `contact-header`.
@@ -345,6 +350,8 @@ src/
     site-shell.tsx        header + footer + dialog provider, used by every page
     site-header.tsx       nav — five flat links, no submenus
     sections.tsx          the home page bands
+    brand-mark.tsx        the Baldwin Insurance Agency shield (inline SVG)
+    brand-logo.tsx        the Baldwin Life Insurance wings mark (image asset)
     page-sections.tsx     shared furniture for the interior pages
     image-slot.tsx        named photography slots (see Images)
     tk.tsx                renders unfilled [[TK:]] facts as visible chips

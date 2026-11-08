@@ -215,7 +215,7 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
   },
   'products-header': {
     ref: 6,
-    where: 'Products overview page, the wide banner across the top',
+    where: 'Products page, the wide banner across the top',
     type: 'overlay',
     state: 'sample',
     src: null,
