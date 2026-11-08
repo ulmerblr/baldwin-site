@@ -165,7 +165,17 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
   'agent-team': {
     ref: 14,
     where: 'Agent Opportunity page, beside the benefits',
-    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
+    type: 'standalone',
+    state: 'real',
+    src: '/images/chris-baldwin-alaska.webp',
+    alt: 'Chris Baldwin and his wife holding up Alaska-branded merchandise.',
+    // Reboxed from a 1200x800 landscape guess to the file's own 604x895.
+    // This is the placement where the whole photograph survives: the header
+    // band above crops to a horizontal slice and loses the merchandise, which
+    // is the part of the picture a recruiting page is actually using.
+    width: 604,
+    height: 895,
+    focalPoint: CENTER,
   },
 
   'chris-card': {
@@ -205,12 +215,22 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     ref: 4,
     where: 'About page, the wide banner across the top',
     type: 'overlay',
-    state: 'sample',
-    src: null,
+    state: 'real',
+    src: '/images/baldwin-family-airport.webp',
+    // Decorative: the headline over it says everything this image would, and
+    // the same family is described properly in slot 17 further down the page.
     alt: '',
-    width: 2400,
-    height: 1000,
-    focalPoint: { x: 60, y: 40 },
+    // The file's own size. An overlay slot renders with `fill`, so these are
+    // metadata rather than layout -- the band's height comes from the words
+    // on top of it, and the crop follows from that.
+    width: 2000,
+    height: 1329,
+    // Six people in a row, and the band gets very shallow on a wide screen:
+    // at 2560 it shows under a fifth of the frame's height, which is the
+    // difference between six faces and six foreheads. Picked by sweeping the
+    // value against the real page at 1280, 1920 and 2560 and looking -- at 32
+    // the two tallest heads lose their crowns at 2560; 26 clears everyone.
+    focalPoint: { x: 50, y: 26 },
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'products-header': {
@@ -229,12 +249,26 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     ref: 13,
     where: 'Agent Opportunity page, the wide banner across the top',
     type: 'overlay',
-    state: 'sample',
-    src: null,
+    state: 'real',
+    // The same photograph as slot 14 below, by request. Up here it is a
+    // scrimmed background cropped to the two faces; down there it is the
+    // whole picture including the merchandise. Worth knowing before this is
+    // changed: the file is 604px wide and this band runs the full viewport,
+    // so on a large screen the browser is upscaling it about 3x. The scrim
+    // hides most of that. A wider original would be a straight improvement
+    // here and would need no code change -- only `src`, `width`, `height`.
+    src: '/images/chris-baldwin-alaska.webp',
+    // Decorative: the headline over it says everything this image would, and
+    // slot 14 carries the describing alt text for the same photograph.
     alt: '',
-    width: 2400,
-    height: 1000,
-    focalPoint: { x: 55, y: 40 },
+    width: 604,
+    height: 895,
+    // A portrait file in a band that gets as wide as 4:1 shows roughly a
+    // sixth of its height on a desktop, so this is the difference between
+    // two faces and two foreheads. Picked by sweeping the value at 1280 and
+    // 1920 and 2560 and looking: by 18 his scalp is cut at 2560, and by 5 her face
+    // drops out of the band on a wide screen. 12 clears both with margin.
+    focalPoint: { x: 50, y: 15 },
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'contact-header': {

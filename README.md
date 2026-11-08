@@ -196,14 +196,14 @@ sections lost their image column. Nothing ever fills those numbers again.
 
 | # | Where it goes | Slot | Size | Ratio |
 | --- | --- | --- | --- | --- |
-| **01** | Home page, the wide banner behind the headline | `home-hero` | 2400×1400 | 1.71:1 |
+| **01** ✅ | Home page, the wide banner behind the headline | `home-hero` | 2400×1400 | 1.71:1 |
 | **02** ✅ | About page, the portrait at the top | `chris-portrait` | 1024×1536 | 2:3 |
-| **04** | About page, the wide banner across the top | `about-header` | 2400×1000 | 12:5 |
+| **04** ✅ | About page, the wide banner across the top | `about-header` | 2000×1329 | 3:2 |
 | **05** | About page, supporting photo lower down | `about-secondary` | 1200×800 | 3:2 |
 | **06** | Products page, the wide banner across the top | `products-header` | 2400×1000 | 12:5 |
 |  | *The six product sections carry no photograph — see below.* | | | |
-| **13** | Agent Opportunity page, the wide banner across the top | `agent-header` | 2400×1000 | 12:5 |
-| **14** | Agent Opportunity page, beside the benefits | `agent-team` | 1200×800 | 3:2 |
+| **13** ✅ | Agent Opportunity page, the wide banner across the top | `agent-header` | 604×895 | 2:3 |
+| **14** ✅ | Agent Opportunity page, beside the benefits | `agent-team` | 604×895 | 2:3 |
 | **15** | Contact page, the wide banner across the top | `contact-header` | 2400×1000 | 12:5 |
 | **16** ✅ | Home page, the promotional card between the hero and the products | `chris-card` | 1254×1254 | 1:1 |
 | **17** ✅ | About page, with the personal background | `baldwin-family` | 1600×1066 | 3:2 |
@@ -213,6 +213,20 @@ sections lost their image column. Nothing ever fills those numbers again.
 Type B (overlay) slots are the wide banners with the headline over them —
 numbers 01, 04, 06, 13 and 15. They need a photograph that reads with text on
 top and something plain on the left. The rest are contained images.
+
+An overlay band's height comes from the words on top of it, not from the slot's
+declared size, so the band gets *more* extreme as the window widens: the About
+one is 1.6:1 at 360 and over 8:1 at 2560. That is what the `focalPoint` is for,
+and on a group photograph it is the difference between faces and foreheads.
+Both were set by sweeping the value against the rendered page at 1280, 1920 and
+2560 and looking at the result — not by reading it off the file.
+
+Slots **13** and **14** are the same photograph twice on one page, by request:
+cropped to the two faces behind the heading up top, and whole — including the
+Alaska merchandise, which the band crops out — beside the benefits. The file is
+604px wide and the band runs the full viewport, so on a large screen the browser
+upscales it around 4x; the 0.78 scrim hides most of that. A wider original is a
+drop-in improvement, needing only `src`, `width` and `height`.
 ### Three states
 
 `state` in [`src/content/images.ts`](src/content/images.ts) is the only thing that
@@ -226,7 +240,7 @@ answer in one place.
 | `sample` | a generated stand-in, marked `SAMPLE — REPLACE` | **no** |
 | `real` | the actual photograph | yes |
 
-**Four slots are `real` — 01, 02, 16 and 17. The rest are `sample`.** Samples are
+**Seven slots are `real` — 01, 02, 04, 13, 14, 16 and 17. The rest are `sample`.** Samples are
 scaffolding: they make layout, cropping and overlay contrast reviewable before any
 photography exists. A sample is never a filled slot — `data-slot-filled` stays `"false"`, and `check:images` fails
 while any remain.
