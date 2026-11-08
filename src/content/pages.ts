@@ -34,6 +34,19 @@ export const about = {
       "That's true whether you're comparing term coverage for a young family, considering an indexed universal life policy for its tax advantages, or rolling an old 401(k) into something that produces reliable retirement income.",
     ],
   },
+  /**
+   * The personal half of his story, supplied by the client and reproduced
+   * exactly as written. No dates, job titles or employer names beyond what is
+   * here -- anything more would be invented, and this is a regulated industry.
+   */
+  personal: {
+    heading: 'From Fort Wayne to Carlsbad',
+    paragraphs: [
+      'Chris Baldwin came to financial services from construction management. He earned his degree from Purdue University and built the first part of his career on job sites, where the work rewarded an analytical approach and left no room for guessing. He brought that same approach with him when he changed fields, and it still shapes how he works today.',
+      'He grew up in Fort Wayne, Indiana, and spent his early professional years on the East Coast. After completing his scope on the Petco Park project in San Diego, he stayed in California and started his financial services business.',
+      'He is a proud father of four and has been married for years. The Midwest upbringing stuck — the straightforward manner, the belief that you tell people the truth about their options and let them decide.',
+    ],
+  },
   licensing: {
     heading: 'Licensed and Credentialed',
     body: "Licensing and product availability vary by state. Here's where we're licensed and what we hold.",

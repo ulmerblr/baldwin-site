@@ -33,6 +33,7 @@
 
 export type StandaloneSlotName =
   | 'chris-portrait'
+  | 'baldwin-family'
   | 'chris-card'
   | 'about-secondary'
   | 'product-indexed-universal-life'
@@ -127,19 +128,34 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     where: 'About page, the portrait at the top',
     type: 'standalone',
     state: 'real',
-    src: '/images/chris-baldwin-desk.jpg',
-    alt: 'Chris Baldwin at his desk in the Baldwin Life Insurance office.',
-    // Reboxed from the original 900x1100 guess. That portrait ratio was set
-    // before any photograph existed; the real asset is 640x427 landscape
-    // (1.4988), so a portrait box would have cropped 45% of the width -- the
-    // branded sign and most of the desk -- and upscaled it 2.06x at 768px.
-    // 1200x800 is 1.5, which the file fills essentially exactly.
-    width: 1200,
-    height: 800,
-    // The ratios match to within 0.08%, so nothing meaningful is cropped.
-    // Biased left-of-centre onto his face anyway, so any rounding crop at an
-    // odd viewport width takes it off the empty right side of the frame.
-    focalPoint: { x: 40, y: 40 },
+    src: '/images/chris-baldwin-headshot.webp',
+    alt: 'Chris Baldwin, founder of Baldwin Insurance Agency.',
+    // Reboxed a second time, and for the same reason as the first: the box
+    // follows the file, never the other way round. It was 1200x800 for the
+    // landscape desk photograph; the studio headshot is 1024x1536 portrait
+    // (0.667), so holding the landscape box would have cropped 55% of the
+    // frame's height and taken the top of his head with it.
+    width: 1024,
+    height: 1536,
+    // The box matches the file, so nothing is cropped at any breakpoint.
+    // Still biased up onto his face, so a rounding crop at an odd viewport
+    // width comes off the jacket at the bottom rather than the forehead.
+    focalPoint: { x: 50, y: 30 },
+  },
+  'baldwin-family': {
+    ref: 17,
+    where: 'About page, with the personal background',
+    type: 'standalone',
+    state: 'real',
+    src: '/images/baldwin-family.webp',
+    alt: 'Chris Baldwin with his wife and four children.',
+    // 3:2, matching the file, so the group is never cropped at the edges --
+    // losing a person off the end of a family photograph is not a crop you
+    // can make safely at any breakpoint.
+    width: 1600,
+    height: 1066,
+    // Six people standing: the faces sit in the upper third.
+    focalPoint: { x: 50, y: 38 },
   },
   'about-secondary': {
     ref: 5,

@@ -31,6 +31,36 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/*
+        The personal half of the story, sitting with the professional half
+        above it and ahead of the approved "Family & Integrity Come First"
+        copy further down.
+
+        The family photograph is a casual snapshot and the portrait above it
+        is a studio headshot, which is a real shift in register. Left to sit
+        plainly next to each other they would look like a mismatch rather
+        than a choice, so this one is framed: its own band, its own ground, a
+        ruled and padded frame around the photograph, and a caption-sized
+        line of clear space under it. The separation is what makes the
+        informality read as deliberate.
+      */}
+      <section className="border-b border-line bg-gold-wash py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-start lg:gap-16">
+            <div className="measure">
+              <TextBlock
+                heading={about.personal.heading}
+                paragraphs={about.personal.paragraphs}
+              />
+            </div>
+
+            <figure className="rounded-3xl border border-line bg-paper p-3 sm:p-4">
+              <ImageSlot name="baldwin-family" />
+            </figure>
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-line bg-surface py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-16">
