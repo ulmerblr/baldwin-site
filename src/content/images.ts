@@ -36,12 +36,6 @@ export type StandaloneSlotName =
   | 'baldwin-family'
   | 'chris-card'
   | 'about-secondary'
-  | 'product-indexed-universal-life'
-  | 'product-term-life-mortgage-protection'
-  | 'product-final-expense'
-  | 'product-annuities'
-  | 'product-ira-401k-rollovers'
-  | 'product-estate-planning'
   | 'agent-team'
 
 export type OverlaySlotName =
@@ -167,36 +161,6 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     width: 1200,
     height: 800,
     focalPoint: CENTER,
-  },
-  'product-indexed-universal-life': {
-    ref: 7,
-    where: 'Products page, Indexed Universal Life section',
-    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
-  },
-  'product-term-life-mortgage-protection': {
-    ref: 8,
-    where: 'Products page, Term Life / Mortgage Protection section',
-    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
-  },
-  'product-final-expense': {
-    ref: 9,
-    where: 'Products page, Final Expense section',
-    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
-  },
-  'product-annuities': {
-    ref: 10,
-    where: 'Products page, Annuities section',
-    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
-  },
-  'product-ira-401k-rollovers': {
-    ref: 11,
-    where: 'Products page, IRA and 401(k) Rollovers section',
-    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
-  },
-  'product-estate-planning': {
-    ref: 12,
-    where: 'Products page, Estate Planning section',
-    type: 'standalone', state: 'sample', src: null, alt: '', width: 1200, height: 800, focalPoint: CENTER,
   },
   'agent-team': {
     ref: 14,
@@ -346,10 +310,12 @@ export function refProblems(): string[] {
   for (const [ref, names] of seen) {
     if (names.length > 1) problems.push(`ref ${photoRef(ref)} is used by ${names.join(' and ')}`)
   }
-  // Deliberately NOT a contiguity check. When a slot is retired -- 03, the
-  // "Wherever You Are" band -- its number retires with it and the rest keep
-  // theirs. A gap is the correct outcome; renumbering to close it would send
-  // a photograph filed against an old number to the wrong place.
+  // Deliberately NOT a contiguity check. When a slot is retired its number
+  // retires with it and the rest keep theirs: 03 was the "Wherever You Are"
+  // band, and 07 to 12 were the six per-product photographs, dropped when
+  // the product sections lost their image column. A gap is the correct
+  // outcome; renumbering to close it would send a photograph filed against
+  // an old number to the wrong place.
   return problems
 }
 

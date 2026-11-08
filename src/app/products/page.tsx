@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { ImageSlot } from '@/components/image-slot'
 import {
   BulletList,
   CtaBand,
@@ -24,6 +23,17 @@ export const metadata: Metadata = pageMetadata(productsIndex.meta)
  * down rather than to a separate route. Every section keeps its own copy
  * exactly as it was: the approved lead, How it works, Who it's for, What to
  * consider, and the shared state-variation disclaimer at the foot of the page.
+ *
+ * LAYOUT. Each section used to run its copy down a narrow left column with a
+ * photograph parked in a sticky right column. The six per-product photographs
+ * are gone, and the fix is not to let the paragraphs run the full width of the
+ * page -- at 1280 that is about 140 characters a line, which is unreadable.
+ * Instead the recovered width carries structure: the two prose blocks stay
+ * together on the left at a measured width, and Who it's for moves beside them
+ * as a card. That splits roughly equal amounts of copy into two balanced
+ * columns, halves the height of every section, and keeps each column near 70
+ * characters -- the `measure` cap holds the prose at 68ch however wide the
+ * window gets, so the line length cannot drift on a large monitor.
  */
 export default function ProductsPage() {
   return (
@@ -65,33 +75,45 @@ export default function ProductsPage() {
             <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
               {product.title}
             </h2>
-            {/* The approved home page blurb, verbatim. */}
-            <p className="measure mt-5 text-base leading-relaxed text-body sm:text-lg">
+            {/* The approved home page blurb, verbatim. `measure-lead` rather
+                than `measure`: at 18px the latter sets about 92 characters a
+                line, which is past the point where the eye reliably finds the
+                next one. */}
+            <p className="measure-lead mt-5 text-base leading-relaxed text-body sm:text-lg">
               {product.lead}
             </p>
 
-            <div className="mt-12 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-16">
-              <div>
+            <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-14">
+              {/* The prose. `measure` caps it at 68ch, so the column can be
+                  as wide as the grid gives it without the lines getting
+                  longer than they should. */}
+              <div className="measure">
                 <TextBlock
                   heading={productPage.howItWorksLabel}
                   paragraphs={[product.howItWorks]}
                 />
-
-                <div className="mt-12">
-                  <h3 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.015em] text-ink sm:text-3xl">
-                    {productPage.whoItsForLabel}
-                  </h3>
-                  <BulletList items={product.whoItsFor} />
-                </div>
-
                 <TextBlock
                   heading={productPage.whatToConsiderLabel}
                   paragraphs={[product.whatToConsider]}
-                  className="mt-12"
+                  className="mt-10"
                 />
               </div>
 
-              <ImageSlot name={product.imageSlot} className="lg:sticky lg:top-24" />
+              {/* The list, in the same card treatment the rest of the site
+                  uses, so the right half of the section carries weight
+                  instead of standing empty where the photograph was. On the
+                  alternating bands it takes the opposite ground to the
+                  section it sits in, so the card reads as a card either way. */}
+              <div
+                className={`rounded-2xl border border-line p-6 sm:p-8 ${
+                  index % 2 === 1 ? 'bg-paper' : 'bg-surface'
+                }`}
+              >
+                <h3 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.015em] text-ink">
+                  {productPage.whoItsForLabel}
+                </h3>
+                <BulletList items={product.whoItsFor} />
+              </div>
             </div>
           </div>
         </section>
@@ -106,7 +128,7 @@ export default function ProductsPage() {
           <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
             {carriers.heading}
           </h2>
-          <p className="measure mt-5 leading-relaxed text-body">{carriers.intro}</p>
+          <p className="measure-body mt-5 leading-relaxed text-body">{carriers.intro}</p>
 
           <ul className="mt-10 gap-x-10 text-body sm:columns-2 lg:columns-3">
             {carriers.names.map((name) => (

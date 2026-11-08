@@ -10,7 +10,6 @@
  * can never drift apart.
  */
 
-import type { StandaloneSlotName } from './images'
 import { site } from './site'
 
 /** Pulls the client-approved blurb for a product out of the home page copy. */
@@ -34,8 +33,6 @@ export type Product = {
   title: string
   /** Shorter label for the nav dropdown. */
   navLabel: string
-  /** Always a Type A slot: the product photo is contained, nothing overlays it. */
-  imageSlot: StandaloneSlotName
   meta: { title: string; description: string }
   /** Approved home page blurb, verbatim. */
   lead: string
@@ -50,7 +47,6 @@ export const products: readonly Product[] = [
     href: '/products#indexed-universal-life',
     title: 'Indexed Universal Life',
     navLabel: 'Indexed Universal Life',
-    imageSlot: 'product-indexed-universal-life',
     meta: {
       title: 'Indexed Universal Life Insurance | Baldwin Insurance Agency',
       description:
@@ -73,7 +69,6 @@ export const products: readonly Product[] = [
     href: '/products#term-life-mortgage-protection',
     title: 'Term Life / Mortgage Protection',
     navLabel: 'Term Life / Mortgage Protection',
-    imageSlot: 'product-term-life-mortgage-protection',
     meta: {
       title: 'Term Life / Mortgage Protection | Baldwin Insurance Agency',
       description:
@@ -96,7 +91,6 @@ export const products: readonly Product[] = [
     href: '/products#final-expense',
     title: 'Final Expense',
     navLabel: 'Final Expense',
-    imageSlot: 'product-final-expense',
     meta: {
       title: 'Final Expense Insurance | Baldwin Insurance Agency',
       description:
@@ -119,7 +113,6 @@ export const products: readonly Product[] = [
     href: '/products#annuities',
     title: 'Annuities',
     navLabel: 'Annuities',
-    imageSlot: 'product-annuities',
     meta: {
       title: 'Annuities & Retirement Income | Baldwin Insurance Agency',
       description:
@@ -142,7 +135,6 @@ export const products: readonly Product[] = [
     href: '/products#ira-401k-rollovers',
     title: 'IRA and 401(k) Rollovers',
     navLabel: 'IRA and 401(k) Rollovers',
-    imageSlot: 'product-ira-401k-rollovers',
     meta: {
       title: 'IRA and 401(k) Rollovers | Baldwin Insurance Agency',
       description:
@@ -165,7 +157,6 @@ export const products: readonly Product[] = [
     href: '/products#estate-planning',
     title: 'Estate Planning',
     navLabel: 'Estate Planning',
-    imageSlot: 'product-estate-planning',
     meta: {
       title: 'Estate Planning & Legacy Protection | Baldwin Insurance Agency',
       description:

@@ -125,6 +125,23 @@
     max-width: 68ch;
   }
 
+  /*
+    Calibrated body measures, in rem rather than ch.
+    `ch` is the advance width of "0", and in Inter that is about a third
+    wider than the average letter in running prose -- so the familiar `68ch`
+    above actually sets around 90 characters a line, not 68. These two were
+    measured on rendered paragraphs instead of assumed, and both land at
+    roughly 70 characters: one for 16px body copy, one for the 18px leads.
+    Prefer them over `.measure` for anything long enough to read as prose.
+  */
+  .measure-body {
+    max-width: 35rem;
+  }
+
+  .measure-lead {
+    max-width: 38rem;
+  }
+
   /* The single elevation level. One soft shadow, used sparingly on raised
      cards -- everything else separates with a hairline rule in --color-line. */
   .raised {
