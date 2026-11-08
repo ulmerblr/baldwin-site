@@ -1,6 +1,6 @@
 import { SiteShell } from '@/components/site-shell'
 import { StructuredData } from '@/components/structured-data'
-import { ChrisCard, Hero, Services, Testimonials } from '@/components/sections'
+import { ChrisCard, Hero, LogoBand, Services, Testimonials } from '@/components/sections'
 
 /**
  * Home page.
@@ -13,6 +13,10 @@ import { ChrisCard, Hero, Services, Testimonials } from '@/components/sections'
  * The six product cards are the deliberate exception -- they are how someone
  * landing cold sees what the agency actually sells -- and now link into the
  * single products page.
+ *
+ * The Baldwin Life Insurance mark gets a band of its own after the products
+ * rather than a corner of the header -- see LogoBand for why it sits there
+ * and not next to the promotional card.
  */
 export default function HomePage() {
   return (
@@ -21,6 +25,7 @@ export default function HomePage() {
       <Hero />
       <ChrisCard />
       <Services />
+      <LogoBand />
       <Testimonials />
     </SiteShell>
   )

@@ -5,11 +5,15 @@ import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { nav, navLabels, type NavItem } from '@/content/nav'
 import { site } from '@/content/site'
+import { BrandLogoMini } from './brand-logo'
 import { BrandMark } from './brand-mark'
 import { CtaButton } from './lead-modals'
 
 export function SiteHeader() {
   const pathname = usePathname()
+  // The home page carries the Baldwin Life Insurance mark full size in a band
+  // of its own, so the header does not also shrink it into the corner there.
+  const showLogo = pathname !== '/'
   const mobileId = useId()
   const mobileToggleRef = useRef<HTMLButtonElement>(null)
 
@@ -71,6 +75,19 @@ export function SiteHeader() {
           >
             Start Quote
           </CtaButton>
+
+          {/* Top right on every page but the home page. It sits after the
+              CTA, so it is the right-most thing in the row on a desktop and
+              just inside the menu button on a phone.
+
+              The row already carries the shield, the phone number, the CTA
+              and the menu button. At 360 that leaves 72px, which a 32px mark
+              fits with room to spare; below 360 it does not fit at any size
+              worth rendering, so it drops out rather than forcing the row to
+              overflow. 360 is the narrowest width this site is held to. */}
+          {showLogo && (
+            <BrandLogoMini className="hidden h-8 min-[360px]:block xs:h-9 sm:h-11" />
+          )}
 
           <button
             ref={mobileToggleRef}

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { homeAdditions } from '@/content/pages'
 import { productByApprovedTitle, productPage } from '@/content/products'
 import { site } from '@/content/site'
+import { BrandLogoFull } from './brand-logo'
 import { ImageSlot, OverlayImage } from './image-slot'
 import { CtaButton } from './lead-modals'
 
@@ -162,6 +163,40 @@ export function ChrisCard() {
     <section className="border-b border-line py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <ImageSlot name="chris-card" />
+      </div>
+    </section>
+  )
+}
+
+/* ----------------------------------------------------------------- logo band */
+
+/**
+ * The Baldwin Life Insurance mark, with a band to itself.
+ *
+ * WHY HERE, between the products and the testimonials, rather than higher up.
+ * The promotional card above already has this exact logo printed inside it,
+ * across the top of the artwork. Putting the standalone mark immediately
+ * above or below that card would show the same wings twice inside one
+ * screen, which reads as a mistake rather than as branding. Sitting it after
+ * the product grid puts a full band of clear space between the two, and gives
+ * the page a brand beat between what the agency sells and what its clients
+ * say about it.
+ *
+ * WHY A BAND AND NOT THE HEADER. It is dense line art -- hatched feathers and
+ * three sizes of type, down to LOVE MY LIFE INSURANCE. Shrunk to header
+ * height that bottom line is under two pixels and the feathers turn to mud.
+ * At the 448px cap here the smallest line clears 15px on a desktop and 11px
+ * at 360, which is the whole reason the band exists.
+ *
+ * WHY NO WHITE BOX. The committed asset has had its white background removed
+ * -- see brand-logo.tsx. The mark sits on the page ground, so the band needs
+ * no white tile and none of the page's own grounds have to change for it.
+ */
+export function LogoBand() {
+  return (
+    <section className="border-b border-line py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto flex max-w-6xl justify-center px-4 sm:px-6">
+        <BrandLogoFull className="max-w-[17.5rem] sm:max-w-md" />
       </div>
     </section>
   )
