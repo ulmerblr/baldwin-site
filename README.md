@@ -200,11 +200,11 @@ sections lost their image column. Nothing ever fills those numbers again.
 | **02** ✅ | About page, the portrait at the top | `chris-portrait` | 1024×1536 | 2:3 |
 | **04** ✅ | About page, the wide banner across the top | `about-header` | 2000×1329 | 3:2 |
 | **05** | About page, supporting photo lower down | `about-secondary` | 1200×800 | 3:2 |
-| **06** | Products page, the wide banner across the top | `products-header` | 2400×1000 | 12:5 |
+| **06** ✅ | Products page, the wide banner across the top | `products-header` | 1440×1920 | 3:4 |
 |  | *The six product sections carry no photograph — see below.* | | | |
 | **13** ✅ | Agent Opportunity page, the wide banner across the top | `agent-header` | 604×895 | 2:3 |
 | **14** ✅ | Agent Opportunity page, beside the benefits | `agent-team` | 604×895 | 2:3 |
-| **15** | Contact page, the wide banner across the top | `contact-header` | 2400×1000 | 12:5 |
+| **15** ✅ | Contact page, the wide banner across the top | `contact-header` | 1500×2000 | 3:4 |
 | **16** ✅ | Home page, the promotional card between the hero and the products | `chris-card` | 1254×1254 | 1:1 |
 | **17** ✅ | About page, with the personal background | `baldwin-family` | 1600×1066 | 3:2 |
 
@@ -218,8 +218,19 @@ An overlay band's height comes from the words on top of it, not from the slot's
 declared size, so the band gets *more* extreme as the window widens: the About
 one is 1.6:1 at 360 and over 8:1 at 2560. That is what the `focalPoint` is for,
 and on a group photograph it is the difference between faces and foreheads.
-Both were set by sweeping the value against the rendered page at 1280, 1920 and
-2560 and looking at the result — not by reading it off the file.
+Every one of them was set by sweeping the value against the rendered page at
+several widths and looking at the result — not by reading it off the file. Four
+of the five banner photographs are portrait files in landscape bands, so the
+focal point is the only thing deciding what survives, and arithmetic on paper
+got it wrong more than once.
+
+Two consequences worth stating plainly, because they are not bugs to be fixed:
+the cat in **06** only appears on a phone, where that band is nearly square and
+shows about 88% of the frame — from 768 up there is no band shallow enough to
+hold a face and a lap at once. The shirt slogans in **15** sit well below any
+desktop crop for the same reason. Both photographs were chosen for the header
+anyway: the repeated-logo backdrop behind **06** makes a better banner than most
+photographs would, and **15** keeps both faces at every width.
 
 Slots **13** and **14** are the same photograph twice on one page, by request:
 cropped to the two faces behind the heading up top, and whole — including the
@@ -240,7 +251,7 @@ answer in one place.
 | `sample` | a generated stand-in, marked `SAMPLE — REPLACE` | **no** |
 | `real` | the actual photograph | yes |
 
-**Seven slots are `real` — 01, 02, 04, 13, 14, 16 and 17. The rest are `sample`.** Samples are
+**Nine of the ten slots are `real`. Only 05 is still a `sample`.** Samples are
 scaffolding: they make layout, cropping and overlay contrast reviewable before any
 photography exists. A sample is never a filled slot — `data-slot-filled` stays `"false"`, and `check:images` fails
 while any remain.

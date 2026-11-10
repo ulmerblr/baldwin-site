@@ -237,12 +237,24 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     ref: 6,
     where: 'Products page, the wide banner across the top',
     type: 'overlay',
-    state: 'sample',
-    src: null,
+    state: 'real',
+    src: '/images/chris-baldwin-backdrop-cat.webp',
+    // Decorative: the headline over it says everything this image would.
     alt: '',
-    width: 2400,
-    height: 1000,
-    focalPoint: CENTER,
+    // The file's own size. 3:4 portrait going into a band that runs from
+    // 0.85:1 at 360 to over 6:1 at 2560, so most of the frame is outside the
+    // crop on a desktop -- see focalPoint.
+    width: 1440,
+    height: 1920,
+    // Swept against the rendered page at 360, 768, 1280, 1920 and 2560 and
+    // looked at. 32 is the value that keeps his face inside the band at every
+    // one of them: by 28 the band cuts him at the eyes on a wide screen.
+    //
+    // The cat only survives on a phone, where the band is nearly square and
+    // shows ~88% of the frame. From 768 up the band is too shallow to hold
+    // both a face and a lap, and the face wins. Nothing can be done about
+    // that short of a landscape photograph.
+    focalPoint: { x: 50, y: 32 },
     scrim: { direction: 'left', opacity: 0.78 },
   },
   'agent-header': {
@@ -275,12 +287,20 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     ref: 15,
     where: 'Contact page, the wide banner across the top',
     type: 'overlay',
-    state: 'sample',
-    src: null,
+    state: 'real',
+    src: '/images/chris-vickie-zipline.webp',
+    // Decorative: the headline over it says everything this image would.
     alt: '',
-    width: 2400,
-    height: 1000,
-    focalPoint: CENTER,
+    // The file's own size. This is the shallowest band on the site -- the
+    // Contact heading and intro are short -- so it crops hardest: 7.7:1 at
+    // 2560, where under a tenth of the frame's height is on screen.
+    width: 1500,
+    height: 2000,
+    // Swept and looked at, same as the others. 25 holds both faces whole at
+    // 1280 and 1920; by 30 his hat crown is cut and by 20 hers drops low. At
+    // 2560 the band is too thin for two whole faces and keeps the eye line.
+    // The slogans on the shirts sit well below any desktop crop.
+    focalPoint: { x: 50, y: 25 },
     scrim: { direction: 'left', opacity: 0.78 },
   },
 }
