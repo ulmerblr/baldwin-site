@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import {
   BulletList,
   CtaBand,
@@ -119,10 +120,10 @@ export default function ProductsPage() {
         </section>
       ))}
 
-      {/* Carriers. Text only -- see the note in content/pages.ts on why there
-          are no logos here. Columns rather than one long strip so 31 names
-          stay scannable; CSS columns keep the alphabetical order reading
-          down each column. */}
+      {/* Carriers. Columns rather than one long strip so 31 names stay
+          scannable; CSS columns keep the alphabetical order reading down each
+          column. The client-supplied logo directory follows the names rather
+          than leading them -- see the note on the figure below. */}
       <section id="carriers" className="scroll-mt-24 border-b border-line bg-surface py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
@@ -143,6 +144,36 @@ export default function ProductsPage() {
               </li>
             ))}
           </ul>
+
+          {/*
+            The carrier logo directory, supplied by the client.
+
+            AFTER the names, not before them. The list is the usable version
+            of this information -- it is live text, so it is searchable, it is
+            read correctly by a screen reader, and it reflows to one column on
+            a phone. The sheet is a dense four-column graphic: at 1104px it is
+            essentially 1:1 and every caption reads, but on a 360px screen the
+            same captions land near 2px and nothing can be done about that. So
+            the readable thing goes first and the picture closes the section.
+
+            No heading of ours above it: the sheet carries its own title and
+            its own attribution line, and a second heading would compete with
+            the one printed inside it.
+
+            Short alt rather than a recital of the names -- they are already
+            live text directly above, and repeating all 31 would make a screen
+            reader read the list twice.
+          */}
+          <figure className="mt-12">
+            <Image
+              src="/images/carrier-logo-directory.webp"
+              alt="Logo directory of the 31 carriers named above."
+              width={1193}
+              height={923}
+              sizes="(min-width: 1152px) 1104px, 100vw"
+              className="h-auto w-full rounded-2xl border border-line"
+            />
+          </figure>
 
           <p className="mt-10 text-sm text-muted">{carriers.footnote}</p>
         </div>

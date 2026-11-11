@@ -162,9 +162,20 @@ export const compliance =
 /**
  * Carriers the agency places business with.
  *
- * Names only, exactly as supplied by the client. No logos: we hold no
- * usage rights to carrier marks, and an insurance site displaying them
- * without permission is a trademark problem, not a design choice.
+ * Names exactly as supplied by the client. These stay the authoritative
+ * version of this list: live text, searchable, read correctly aloud, and
+ * readable at every width.
+ *
+ * This list was originally names ONLY, on the grounds that the agency held
+ * no usage rights to the carrier marks and an insurance site showing them
+ * without permission is a trademark problem rather than a design choice.
+ * The client has since supplied a logo directory sheet and asked for it on
+ * the page, so it is rendered under the names on /products. That is the
+ * client's call to make and it has been made -- but the original reasoning
+ * has not stopped being true, so whoever maintains this should know that the
+ * permission question was never answered, only overtaken. The sheet carries
+ * its own "names and marks are the property of their respective owners"
+ * line, which is the usual disclaimer and not the same thing as a licence.
  */
 export const carriers = {
   heading: 'Carriers We Represent',
