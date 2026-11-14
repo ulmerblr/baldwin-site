@@ -51,7 +51,7 @@ export const about = {
     heading: 'Licensed and Credentialed',
     body: "Licensing and product availability vary by state. Here's where we're licensed and what we hold.",
     items: [
-      { label: 'California License', value: '[[TK: CA individual license #]]' },
+      { label: 'California License', value: '0C97369' },
       { label: 'Texas License', value: '[[TK: TX individual license #]]' },
       { label: 'Agency License', value: '[[TK: agency license #, if separate]]' },
       { label: 'Certifications', value: '[[TK: designations/certifications]]' },
@@ -155,9 +155,16 @@ export const homeAdditions = {
   },
 } as const
 
-/** Sitewide footer compliance line. Carries two unfilled license numbers. */
+/**
+ * Sitewide footer compliance line.
+ *
+ * The licence numbers sit bare in a sentence here, with no labels of the kind
+ * the About page's table gives them, so each one carries its state: "CA #..."
+ * rather than a lone number nobody can attribute. Keep that when the Texas
+ * placeholder is filled.
+ */
 export const compliance =
-  'Baldwin Insurance Agency. Licensed in [[TK: states licensed in]]. [[TK: CA individual license #]] · [[TK: TX individual license #]]. Products and availability vary by state. This site is for general information and is not an offer of coverage.'
+  'Baldwin Insurance Agency. Licensed in [[TK: states licensed in]]. CA #0C97369 · [[TK: TX individual license #]]. Products and availability vary by state. This site is for general information and is not an offer of coverage.'
 
 /**
  * Carriers the agency places business with.
