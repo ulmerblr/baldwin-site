@@ -40,13 +40,18 @@ export const about = {
    * The second paragraph went later, also at the client's request: the one
    * beginning "That belief shapes how Baldwin Insurance Agency works", with
    * the four questions and the line about coverage falling out of the
-   * answers. One paragraph is the whole section now. Do not write a
-   * replacement for it.
+   * answers. Then the second sentence of the first paragraph, "In that time
+   * he's learned that the conversation that matters starts with what you're
+   * trying to protect, and why."
+   *
+   * What is left is a heading and one sentence. That is the client's call
+   * and it has been made four times over. Do not write a replacement line,
+   * and do not pad it out.
    */
   story: {
     heading: 'Twenty-Five Years of Putting Families First',
     paragraphs: [
-      "Chris Baldwin has spent more than 25 years helping families make confident decisions about their financial futures. In that time he's learned that the conversation that matters starts with what you're trying to protect, and why.",
+      'Chris Baldwin has spent more than 25 years helping families make confident decisions about their financial futures.',
     ],
   },
   /**
