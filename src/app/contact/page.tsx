@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { PageHeader } from '@/components/page-sections'
 import { SiteShell } from '@/components/site-shell'
 import { CtaButton } from '@/components/lead-modals'
-import { Copy } from '@/components/tk'
+import { LicenseLine } from '@/components/license-line'
 import { contact } from '@/content/pages'
 import { site } from '@/content/site'
 import { pageMetadata } from '@/lib/seo'
@@ -21,11 +21,14 @@ export default function ContactPage() {
       <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <li className={CARD}>
+            {/* text-lg on the card, not on the link, so the licence under
+                the number is the same size as the number. */}
+            <li className={`${CARD} text-lg`}>
               <h2 className={LABEL}>{site.contact.phoneLabel}</h2>
-              <a href={site.contact.phoneHref} className={`${LINK} text-lg font-semibold`}>
+              <a href={site.contact.phoneHref} className={`${LINK} font-semibold`}>
                 {site.contact.phone}
               </a>
+              <LicenseLine className="mt-1 block text-muted" />
             </li>
             <li className={CARD}>
               <h2 className={LABEL}>{site.contact.emailLabel}</h2>
@@ -39,15 +42,12 @@ export default function ContactPage() {
             </li>
             <li className={CARD}>
               <h2 className={LABEL}>{contact.licensedInLabel}</h2>
-              <p className="mt-2 text-body">
-                <Copy text={contact.licensedIn} />
-              </p>
+              <p className="mt-2 text-body">{site.contact.licensedIn}</p>
+              <p className="mt-2 text-sm text-muted">{site.contact.otherStatesNote}</p>
             </li>
             <li className={`${CARD} sm:col-span-2`}>
               <h2 className={LABEL}>{contact.officeLabel}</h2>
-              <p className="mt-2 text-body">
-                <Copy text={contact.office} />
-              </p>
+              <address className="mt-2 not-italic text-body">{site.contact.address}</address>
             </li>
           </ul>
 

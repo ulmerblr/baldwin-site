@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { CanonicalLink } from '@/components/canonical-link'
+import { LicenseLine } from '@/components/license-line'
 import { site } from '@/content/site'
 
 /** Shared shell for the two legal routes. */
@@ -36,8 +37,13 @@ export function LegalPage({ title, path }: { title: string; path: string }) {
             >
               {site.contact.phone}
             </a>
+            {/* Same list, same text-sm: the licence matches the number. */}
+            <LicenseLine className="mt-1 block text-muted" />
           </li>
           <li className="text-muted">{site.contact.hours}</li>
+          <li>
+            <address className="not-italic text-body">{site.contact.address}</address>
+          </li>
         </ul>
       </div>
     </main>

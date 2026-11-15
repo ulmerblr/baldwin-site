@@ -2,6 +2,7 @@ import type { OverlaySlotName } from '@/content/images'
 import { site } from '@/content/site'
 import { OverlayImage } from './image-slot'
 import { CtaButton } from './lead-modals'
+import { LicenseLine } from './license-line'
 import { LinkButton } from './link-button'
 import { Copy } from './tk'
 
@@ -161,6 +162,10 @@ export function CtaBand({
             {callToAction ?? `Call ${site.contact.phone}`}
           </LinkButton>
         </div>
+        {/* The button above puts a telephone number on the page, so the
+            licence has to appear with it at the same size. LinkButton sets no
+            size either, so both inherit the band's -- see LicenseLine. */}
+        <LicenseLine className="text-muted" />
       </div>
     </section>
   )

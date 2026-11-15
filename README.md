@@ -110,13 +110,20 @@ guard them.
 The tokens live in [`src/content/pages.ts`](src/content/pages.ts). Replace the token
 with the real value — no other edit is needed.
 
-> `[[TK: states licensed in]]` is load-bearing. The site deliberately names no state
-> in any title, description, heading or body: where the agency is licensed is stated
-> **only** in the licensing disclosures, from that one list. Do not substitute
-> "nationwide" or "all 50 states" for it — if it is unfilled, the placeholder ships.
-> Two related claims are left out of the machine-readable layer for the same reason
-> and should be restored from the real list once it exists: `areaServed` in the
-> home page's structured data, and the `geo.*` meta tags in the root layout.
+> **Licensing is now supplied, and lives in `site.contact`, not in a TK token.**
+> The agency states it is licensed in all fifty states and shows one number, the
+> California resident licence. Other states' numbers are not listed; the site says
+> they are available on request. `areaServed` is back in the home page's structured
+> data as a result. The legacy `geo.*` meta tags stay out: they would need
+> coordinates nobody has supplied, and the `PostalAddress` in the structured data
+> already carries the real location.
+>
+> **The licence number and the telephone number are a pair.** California wants the
+> number in type no smaller than the phone number it appears with, so they are
+> rendered together by [`LicenseLine`](src/components/license-line.tsx), which sets
+> no font size of its own and inherits one from the context the phone number is in.
+> If you add a seventh place that prints a phone number, put one of these beside it.
+> Read that file before changing either.
 
 ---
 

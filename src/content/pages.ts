@@ -50,12 +50,17 @@ export const about = {
   licensing: {
     heading: 'Licensed and Credentialed',
     body: "Licensing and product availability vary by state. Here's where we're licensed and what we hold.",
+    /**
+     * Resident licence only. Other states' numbers came out at the agency's
+     * instruction -- the site says they are available on request instead of
+     * listing them, which is also what the Contact page says.
+     */
     items: [
-      { label: 'California License', value: '0C97369' },
-      { label: 'Texas License', value: '[[TK: TX individual license #]]' },
+      { label: 'California Resident License', value: '0C97369' },
+      { label: 'Licensed in', value: 'All 50 states' },
+      { label: 'Other states', value: 'License numbers available on request' },
       { label: 'Agency License', value: '[[TK: agency license #, if separate]]' },
       { label: 'Certifications', value: '[[TK: designations/certifications]]' },
-      { label: 'Licensed in', value: '[[TK: states licensed in]]' },
     ],
   },
   secondaryCta: 'Call (858) 729-0003',
@@ -115,9 +120,7 @@ export const contact = {
   intro:
     "Whether you're comparing coverage, reviewing a policy you already have, or exploring a career with us, we'd like to hear from you. No pressure and no obligation.",
   licensedInLabel: 'Licensed in',
-  licensedIn: '[[TK: states licensed in]]',
   officeLabel: 'Office',
-  office: '[[TK: office address, if public]]',
 } as const
 
 /** Two new bands on the home page. Everything already there stays. */
@@ -158,13 +161,16 @@ export const homeAdditions = {
 /**
  * Sitewide footer compliance line.
  *
- * The licence numbers sit bare in a sentence here, with no labels of the kind
- * the About page's table gives them, so each one carries its state: "CA #..."
- * rather than a lone number nobody can attribute. Keep that when the Texas
- * placeholder is filled.
+ * Deliberately carries NO licence number. It renders at text-xs, and the
+ * telephone number a few centimetres above it in the same footer renders at
+ * text-sm -- California wants the licence number no smaller than the phone
+ * number it appears with, so a copy of it down here would be the one place on
+ * the site that breaks the rule. The number is shown at the right size in the
+ * contact column instead, by `LicenseLine`. Say licensing *status* here; put
+ * the number next to a phone number.
  */
 export const compliance =
-  'Baldwin Insurance Agency. Licensed in [[TK: states licensed in]]. CA #0C97369 · [[TK: TX individual license #]]. Products and availability vary by state. This site is for general information and is not an offer of coverage.'
+  'Baldwin Insurance Agency. Licensed in all 50 states; license numbers for states other than California are available on request. Products and availability vary by state. This site is for general information and is not an offer of coverage.'
 
 /**
  * Carriers the agency places business with.

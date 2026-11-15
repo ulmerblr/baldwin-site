@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react'
 import { site } from '@/content/site'
+import { LicenseLine } from './license-line'
 
 /** Mirrors HONEYPOT_FIELD in src/lib/validate.ts. */
 const HONEYPOT_FIELD = 'company_website'
@@ -227,12 +228,15 @@ export function LeadForm({
         {busy ? submittingLabel : submitLabel}
       </button>
 
+      {/* Display only -- nothing here touches validation or submission.
+          The line prints a telephone number, so it carries the licence at the
+          same size; text-xs is on the paragraph, not on either child. */}
       <p className="mt-3 text-center text-xs text-muted">
         We never sell your information. Reach us any time at{' '}
         <a href={site.contact.phoneHref} className="underline hover:text-body">
           {site.contact.phone}
         </a>
-        .
+        . <LicenseLine />
       </p>
     </form>
   )

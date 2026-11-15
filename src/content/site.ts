@@ -49,6 +49,29 @@ export const site = {
     phoneLabel: 'Call Us:',
     emailLabel: 'Email Us:',
     hoursLabel: 'Business Hours:',
+
+    /**
+     * Resident licence, and the only licence number the site shows.
+     *
+     * California is the resident state. Other states' numbers are not listed
+     * -- the agency's instruction -- and the site says they can be had on
+     * request instead.
+     *
+     * `licenseInline` is the form that sits beside a telephone number. It has
+     * to, everywhere: California requires a licensee's number to appear in
+     * type no smaller than the telephone number it is shown with, so the two
+     * are rendered together by `LicenseLine` and never sized apart. See
+     * src/components/license-line.tsx before moving either of them.
+     */
+    license: '0C97369',
+    licenseLabel: 'CA Resident License:',
+    licenseInline: 'CA Lic. #0C97369',
+    licensedIn: 'All 50 states',
+    otherStatesNote: 'License numbers for other states are available on request.',
+
+    /** Public business address. Shown in the footer of every page. */
+    address: '276 Carlsbad Village Drive, Unit A, Carlsbad, California 92008',
+    addressLabel: 'Office:',
   },
 
   hero: {

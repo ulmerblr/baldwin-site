@@ -6,6 +6,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { nav, navLabels, type NavItem } from '@/content/nav'
 import { site } from '@/content/site'
 import { BrandLogoMini } from './brand-logo'
+import { LicenseLine } from './license-line'
 import { BrandMark } from './brand-mark'
 import { CtaButton } from './lead-modals'
 
@@ -42,13 +43,20 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-1.5 px-3 py-3 xs:gap-2 xs:px-4 sm:gap-4 sm:px-6 sm:py-3.5">
         <Link href="/" className="flex shrink-0 items-center gap-2 rounded-lg sm:gap-2.5">
           <BrandMark />
-          <span className="font-display hidden text-sm font-semibold leading-tight tracking-[-0.01em] text-ink xs:block sm:text-base">
+          {/* The wordmark waits for sm rather than xs. Between 400 and 639
+              the row has to carry the shield, the phone number, the licence
+              that by law goes with it, the CTA, the Baldwin Life Insurance
+              mark and the menu button, and the wordmark is the one item of
+              the seven that is purely a repeat -- the shield beside it and
+              the mark on the right already say whose site this is. It costs
+              63px there, which is more than the row has. */}
+          <span className="font-display hidden text-sm font-semibold leading-tight tracking-[-0.01em] text-ink sm:block sm:text-base">
             Baldwin
             <span className="hidden font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-gold-deep sm:block sm:text-[11px]">
               Insurance Agency
             </span>
           </span>
-          <span className="sr-only xs:hidden">{site.name}</span>
+          <span className="sr-only sm:hidden">{site.name}</span>
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
@@ -61,13 +69,22 @@ export function SiteHeader() {
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-4">
           {/* Tappable at every breakpoint -- calling is the fastest path to a
-              human, and on a phone it is one tap. */}
-          <a
-            href={site.contact.phoneHref}
-            className="whitespace-nowrap rounded-lg text-[11px] font-semibold text-body transition-colors hover:text-gold-deep xs:text-xs sm:text-sm"
-          >
-            {site.contact.phone}
-          </a>
+              human, and on a phone it is one tap.
+
+              The licence sits under the number rather than beside it: stacked
+              costs about four pixels of width over the phone number alone,
+              where side by side would cost eighty and the 360px row does not
+              have eighty. The size classes live on the wrapper, so both lines
+              are the same size by construction -- see LicenseLine. */}
+          <div className="text-[11px] leading-tight xs:text-xs sm:text-sm">
+            <a
+              href={site.contact.phoneHref}
+              className="block whitespace-nowrap rounded-lg font-semibold text-body transition-colors hover:text-gold-deep"
+            >
+              {site.contact.phone}
+            </a>
+            <LicenseLine className="block text-muted" />
+          </div>
 
           <CtaButton
             kind="quote"

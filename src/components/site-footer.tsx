@@ -3,6 +3,7 @@ import { compliance } from '@/content/pages'
 import { site } from '@/content/site'
 import { BrandMark } from './brand-mark'
 import { CurrentYear } from './current-year'
+import { LicenseLine } from './license-line'
 import { NavLink } from './nav-link'
 import { Copy } from './tk'
 
@@ -44,12 +45,15 @@ export function SiteFooter() {
             <h2 className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
               {site.footer.contactLabel}
             </h2>
+            {/* text-sm sizes the whole column, so the licence under the
+                phone number is the same size as it without being told to. */}
             <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <span className="block text-muted">{site.contact.phoneLabel}</span>
                 <a href={site.contact.phoneHref} className={FOOTER_LINK}>
                   {site.contact.phone}
                 </a>
+                <LicenseLine className="mt-1 block text-muted" />
               </li>
               <li>
                 <span className="block text-muted">{site.contact.emailLabel}</span>
@@ -60,6 +64,13 @@ export function SiteFooter() {
               <li>
                 <span className="block text-muted">{site.contact.hoursLabel}</span>
                 <span className="text-body">{site.contact.hours}</span>
+              </li>
+              {/* The public address, at the bottom of every page that has a
+                  footer. <address> rather than <p>: this is the contact
+                  address for the business the page belongs to. */}
+              <li>
+                <span className="block text-muted">{site.contact.addressLabel}</span>
+                <address className="not-italic text-body">{site.contact.address}</address>
               </li>
             </ul>
           </div>

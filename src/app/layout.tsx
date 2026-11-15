@@ -66,10 +66,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  // No geo.* tags. They are a machine-readable claim about where the agency
-  // operates, the same kind of assertion as schema.org areaServed, and are
-  // left out for the same reason: accurate or absent. Restore them from the
-  // real state list once it exists.
+  // Still no geo.* tags, though the reason has changed. The state list exists
+  // now, so schema.org areaServed and a real PostalAddress are both back in
+  // the home page's structured data. These stay out because they are a legacy
+  // format whose useful field is a coordinate pair nobody has supplied, and a
+  // guessed one would be the same kind of invented claim the rest of this file
+  // avoids. The structured data already says where the agency is.
 }
 
 export const viewport: Viewport = {
