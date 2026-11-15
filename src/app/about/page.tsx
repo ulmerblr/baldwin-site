@@ -16,7 +16,12 @@ export default function AboutPage() {
 
       <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-12 lg:grid-cols-[0.62fr_1fr] lg:items-center lg:gap-14">
+          {/* The copy here has been cut twice by the client and is one
+              paragraph now, so the portrait is given a fixed 18rem rather
+              than a share of the grid: a full-height 2:3 portrait beside
+              four lines of text left most of the band empty. Centred, so
+              the short column sits against the middle of the tall one. */}
+          <div className="grid gap-10 lg:grid-cols-[18rem_1fr] lg:items-center lg:gap-14">
             <ImageSlot name="chris-portrait" />
 
             {/* One block of copy now, not two: "A Straightforward Approach"

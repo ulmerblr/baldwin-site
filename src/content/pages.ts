@@ -36,12 +36,17 @@ export const about = {
    * client asked to be rid of. The products it name-checked -- term, indexed
    * universal life, 401(k) rollovers -- all have their own sections on
    * /products, so nothing was lost but the framing.
+   *
+   * The second paragraph went later, also at the client's request: the one
+   * beginning "That belief shapes how Baldwin Insurance Agency works", with
+   * the four questions and the line about coverage falling out of the
+   * answers. One paragraph is the whole section now. Do not write a
+   * replacement for it.
    */
   story: {
     heading: 'Twenty-Five Years of Putting Families First',
     paragraphs: [
       "Chris Baldwin has spent more than 25 years helping families make confident decisions about their financial futures. In that time he's learned that the conversation that matters starts with what you're trying to protect, and why.",
-      'That belief shapes how Baldwin Insurance Agency works. Every client relationship starts with understanding your situation. What does your family depend on? What would change if your income stopped? What are you hoping to leave behind? The right coverage falls out of those answers.',
     ],
   },
   /**
