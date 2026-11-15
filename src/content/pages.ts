@@ -47,11 +47,14 @@ export const about = {
   /**
    * The personal half of his story.
    *
-   * The interests in the closing paragraph came from the client as "hiking,
-   * skiing, scuba and international travel". Only the verb form changed:
-   * "scuba diving" for the activity, and the stray apostrophe in "Enjoy's"
-   * dropped. The sentence sits between the family and the Midwest line so
-   * that line still closes the section.
+   * The closing paragraph is one sentence by instruction. The interests came
+   * from the client as "hiking, skiing, scuba and international travel";
+   * only the verb form changed, "scuba diving" for the activity, and the
+   * stray apostrophe in "Enjoy's" dropped. The two sentences that used to
+   * sit either side of it -- "He is a proud father of four and has been
+   * married for years" and the Midwest-upbringing line -- were removed at
+   * the client's request. Do not restore them, and do not write a new
+   * closing line to replace them: the section is meant to end here.
    *
    * Reordered at the client's request to run in the order it happened --
    * Fort Wayne, Purdue, a decade in construction management, then the
@@ -67,7 +70,7 @@ export const about = {
     paragraphs: [
       'Chris Baldwin grew up in Fort Wayne, Indiana, and earned his degree from Purdue University. He spent his early professional years on the East Coast and the first decade of his career in construction management, on job sites where the work rewarded an analytical approach and left no room for guessing.',
       'After completing his scope on the Petco Park project in San Diego, he stayed in California and found his passion owning an insurance and financial services brokerage. He brought that same analytical approach with him when he changed fields, and it still shapes how he works today.',
-      'He is a proud father of four and has been married for years. He enjoys hiking, skiing, scuba diving and international travel. The Midwest upbringing stuck — the straightforward manner, the belief that you tell people the truth about their options and let them decide.',
+      'He enjoys hiking, skiing, scuba diving and international travel.',
     ],
   },
   licensing: {
