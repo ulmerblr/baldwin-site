@@ -18,8 +18,8 @@ export default function ContactPage() {
     <SiteShell path="/contact">
       <PageHeader heading={contact.heading} intro={contact.intro} imageSlot="contact-header" />
 
-      <section className="border-b border-line py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {/* text-lg on the card, not on the link, so the licence under
                 the number is the same size as the number. */}

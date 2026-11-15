@@ -40,7 +40,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/92 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-1.5 px-3 py-3 xs:gap-2 xs:px-4 sm:gap-4 sm:px-6 sm:py-3.5">
+      <div className="mx-auto flex max-w-6xl 2xl:max-w-7xl items-center justify-between gap-1.5 px-3 py-3 xs:gap-2 xs:px-4 sm:gap-4 sm:px-6 sm:py-3.5">
         <Link href="/" className="flex shrink-0 items-center gap-2 rounded-lg sm:gap-2.5">
           <BrandMark />
           {/* The wordmark waits for sm rather than xs. Between 400 and 639
@@ -122,7 +122,7 @@ export function SiteHeader() {
 
       {mobileOpen && (
         <div id={mobileId} className="border-t border-line bg-paper lg:hidden">
-          <nav aria-label="Main" className="mx-auto max-w-6xl px-4 py-3 sm:px-6">
+          <nav aria-label="Main" className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 py-3 sm:px-6">
             <ul className="flex flex-col">
               {nav.map((item) => (
                 <MobileItem key={item.href} item={item} pathname={pathname} />

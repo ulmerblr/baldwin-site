@@ -47,8 +47,8 @@ export default function ProductsPage() {
 
       {/* Contents. Same cards as the home page, same approved blurbs; each
           links down to its own section instead of out to a page. */}
-      <section className="border-b border-line py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {site.services.items.map((service) => (
               <ProductCard
@@ -68,11 +68,11 @@ export default function ProductsPage() {
           key={product.slug}
           id={product.slug}
           // scroll-mt clears the sticky header when a card jumps down here.
-          className={`scroll-mt-24 border-b border-line py-16 sm:py-20 ${
+          className={`scroll-mt-24 border-b border-line py-16 sm:py-20 lg:py-14 ${
             index % 2 === 1 ? 'bg-surface' : ''
           }`}
         >
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
             <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
               {product.title}
             </h2>
@@ -85,10 +85,12 @@ export default function ProductsPage() {
             </p>
 
             <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-14">
-              {/* The prose. `measure` caps it at 68ch, so the column can be
-                  as wide as the grid gives it without the lines getting
-                  longer than they should. */}
-              <div className="measure">
+              {/* `measure-body`, not `measure`: the latter is 68ch, which is
+                  about 90 characters of real prose. It was harmless while the
+                  grid column was the narrower constraint, but the container
+                  widens on a very large screen and then the cap is what binds
+                  -- lines ran to 85 characters at 1920 before this. */}
+              <div className="measure-body">
                 <TextBlock
                   heading={productPage.howItWorksLabel}
                   paragraphs={[product.howItWorks]}
@@ -124,8 +126,8 @@ export default function ProductsPage() {
           scannable; CSS columns keep the alphabetical order reading down each
           column. The client-supplied logo directory follows the names rather
           than leading them -- see the note on the figure below. */}
-      <section id="carriers" className="scroll-mt-24 border-b border-line bg-surface py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section id="carriers" className="scroll-mt-24 border-b border-line bg-surface py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
             {carriers.heading}
           </h2>
@@ -164,14 +166,17 @@ export default function ProductsPage() {
             live text directly above, and repeating all 31 would make a screen
             reader read the list twice.
           */}
-          <figure className="mt-12">
+          {/* Capped at the file's own 1193px. The container widens past that
+              on a very large screen, and this is a raster of small type --
+              upscaling it would soften exactly the captions it exists for. */}
+          <figure className="mt-12 flex justify-center">
             <Image
               src="/images/carrier-logo-directory.webp"
               alt="Logo directory of the 31 carriers named above."
               width={1193}
               height={923}
-              sizes="(min-width: 1152px) 1104px, 100vw"
-              className="h-auto w-full rounded-2xl border border-line"
+              sizes="(min-width: 1241px) 1193px, 100vw"
+              className="h-auto w-full max-w-[1193px] rounded-2xl border border-line"
             />
           </figure>
 

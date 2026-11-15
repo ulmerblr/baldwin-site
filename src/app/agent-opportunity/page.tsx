@@ -20,8 +20,8 @@ export default function AgentOpportunity() {
         intro={site.agentOpportunity.intro}
       />
 
-      <section className="border-b border-line py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {site.agentOpportunity.benefits.map((benefit) => (
               <li
@@ -36,10 +36,12 @@ export default function AgentOpportunity() {
         </div>
       </section>
 
-      <section className="border-b border-line bg-surface py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line bg-surface py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-16">
-            <div>
+            {/* Capped: these paragraphs had no measure of their own and ran
+                to 98 characters once the container widened. */}
+            <div className="measure-body">
               <TextBlock
                 heading={agentOpportunityPage.theWork.heading}
                 paragraphs={[agentOpportunityPage.theWork.body]}

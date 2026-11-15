@@ -135,7 +135,11 @@
     Prefer them over `.measure` for anything long enough to read as prose.
   */
   .measure-body {
-    max-width: 35rem;
+    /* ~70 characters at 16px. Was 35rem, which measured fine while a grid
+       column was narrower than it and doing the real capping; once the
+       container widened on large screens this became the binding constraint
+       and let prose reach 77. Measured, not assumed. */
+    max-width: 33rem;
   }
 
   .measure-lead {

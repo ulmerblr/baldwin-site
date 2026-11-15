@@ -14,8 +14,8 @@ export default function AboutPage() {
     <SiteShell path="/about">
       <PageHeader eyebrow={about.eyebrow} heading={about.heading} imageSlot="about-header" />
 
-      <section className="border-b border-line py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           {/* The working half of the bio, with the studio portrait. The
               opening section that used to sit above this one is gone: it had
               been cut down to a heading over a single sentence, and that
@@ -23,7 +23,7 @@ export default function AboutPage() {
           <div className="grid gap-10 lg:grid-cols-[20rem_1fr] lg:items-center lg:gap-14">
             <ImageSlot name="chris-portrait" />
 
-            <div className="measure">
+            <div className="measure-body">
               <TextBlock heading={about.bio.heading} paragraphs={about.bio.professional} />
             </div>
           </div>
@@ -44,10 +44,10 @@ export default function AboutPage() {
         line of clear space under it. The separation is what makes the
         informality read as deliberate.
       */}
-      <section className="border-b border-line bg-gold-wash py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line bg-gold-wash py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-start lg:gap-16">
-            <div className="measure">
+            <div className="measure-body">
               <TextBlock paragraphs={about.bio.personal} />
             </div>
 
@@ -58,8 +58,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-line bg-surface py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line bg-surface py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-16">
             <div>
               <TextBlock heading={about.licensing.heading} paragraphs={[about.licensing.body]} />
@@ -91,8 +91,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-line py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="border-b border-line py-16 sm:py-20 lg:py-14">
+        <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-16">
             {/* The client's approved About copy, reused verbatim from the home
                 page rather than restated. */}

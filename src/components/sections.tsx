@@ -11,7 +11,7 @@ import { CtaButton } from './lead-modals'
 export function Hero() {
   return (
     <OverlayImage name="home-hero" priority className="border-b border-line">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
+      <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
 {/* Opaque ink fill, not just a border: gold-bright is a FILL colour, and
             as small text directly on a scrim it fails AA the moment a bright
             photograph lands behind it (2.56:1 over a white frame). Holding it
@@ -112,8 +112,8 @@ export function ProductCard({
 
 export function Services() {
   return (
-    <section id="services" className="border-b border-line py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="services" className="border-b border-line py-20 sm:py-24 lg:py-16">
+      <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
         <SectionHeading title={site.services.heading} intro={site.services.intro} />
 
         <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -160,7 +160,7 @@ export function Services() {
  */
 export function ChrisCard() {
   return (
-    <section className="border-b border-line py-16 sm:py-20 lg:py-24">
+    <section className="border-b border-line py-16 sm:py-20 lg:py-16">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <ImageSlot name="chris-card" />
       </div>
@@ -194,9 +194,9 @@ export function ChrisCard() {
  */
 export function LogoBand() {
   return (
-    <section className="border-b border-line py-16 sm:py-20 lg:py-24">
-      <div className="mx-auto flex max-w-6xl justify-center px-4 sm:px-6">
-        <BrandLogoFull className="max-w-[17.5rem] sm:max-w-md" />
+    <section className="border-b border-line py-16 sm:py-20 lg:py-16">
+      <div className="mx-auto flex max-w-6xl 2xl:max-w-7xl justify-center px-4 sm:px-6">
+        <BrandLogoFull className="max-w-[17.5rem] sm:max-w-md lg:max-w-xl xl:max-w-2xl" />
       </div>
     </section>
   )
@@ -214,8 +214,8 @@ export function LogoBand() {
  */
 export function Testimonials() {
   return (
-    <section id="testimonials" className="border-b border-line bg-surface py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="testimonials" className="border-b border-line bg-surface py-20 sm:py-24 lg:py-16">
+      <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
         <h2 className="font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl lg:text-[2.75rem]">
           {homeAdditions.testimonials.heading}
         </h2>

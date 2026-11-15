@@ -59,7 +59,7 @@ export function BrandLogoFull({ className = '' }: { className?: string }) {
       alt={BRAND_LOGO_ALT}
       width={LOGO_W}
       height={LOGO_H}
-      sizes="(min-width: 640px) 448px, 100vw"
+      sizes="(min-width: 1280px) 672px, (min-width: 1024px) 576px, (min-width: 640px) 448px, 100vw"
       className={`h-auto w-full ${className}`}
     />
   )

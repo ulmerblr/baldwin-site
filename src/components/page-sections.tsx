@@ -29,7 +29,7 @@ export function PageHeader({
   imageSlot?: OverlaySlotName
 }) {
   const inner = (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+    <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
       {eyebrow && (
         <p
           className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] ${
@@ -163,8 +163,8 @@ export function CtaBand({
   callToAction?: string
 }) {
   return (
-    <section className="border-b border-line bg-gold-wash py-16 sm:py-20">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-4 text-center sm:px-6">
+    <section className="border-b border-line bg-gold-wash py-16 sm:py-20 lg:py-14">
+      <div className="mx-auto flex max-w-6xl 2xl:max-w-7xl flex-col items-center gap-5 px-4 text-center sm:px-6">
         {lead && (
           <p className="font-display text-xl font-semibold tracking-[-0.01em] text-ink sm:text-2xl">
             {lead}
@@ -189,8 +189,13 @@ export function CtaBand({
 export function Disclaimer({ text }: { text: string }) {
   return (
     <section className="py-10">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-muted">
+      <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
+        {/* The box is sized to the text rather than to the page. Spanning
+            the full container, this note was setting 169 characters a line
+            at 1280 and 188 at 1920 -- unreadable as a paragraph and a wide
+            band of mostly-empty box besides. Narrow and centred, it reads as
+            the contained legal note it is. */}
+        <p className="mx-auto max-w-xl rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-muted">
           {text}
         </p>
       </div>
