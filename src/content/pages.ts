@@ -20,30 +20,47 @@ export const about = {
   },
   eyebrow: 'Led by Chris Baldwin',
   heading: 'Meet Chris Baldwin',
+  /**
+   * The opening section.
+   *
+   * At the client's instruction this page no longer talks about selling, in
+   * either direction. The phrases that went were "isn't a sales pitch",
+   * "before anyone talks about a policy" and "not out of a product brochure"
+   * -- all of them framed around the transaction rather than the client, and
+   * protesting that something is not a sales pitch is itself sales language.
+   * The questions and the substance are unchanged. Keep it that way: do not
+   * reintroduce selling vocabulary here.
+   *
+   * A second section, "A Straightforward Approach", was removed entirely in
+   * the same pass. It described how Chris sells, which is the thing the
+   * client asked to be rid of. The products it name-checked -- term, indexed
+   * universal life, 401(k) rollovers -- all have their own sections on
+   * /products, so nothing was lost but the framing.
+   */
   story: {
     heading: 'Twenty-Five Years of Putting Families First',
     paragraphs: [
-      "Chris Baldwin has spent more than 25 years helping families make confident decisions about their financial futures. In that time he's learned that the best insurance conversation isn't a sales pitch — it's a conversation about what you're trying to protect and why.",
-      'That belief shapes how Baldwin Insurance Agency works. Every client relationship starts with understanding your situation before anyone talks about a policy. What does your family depend on? What would change if your income stopped? What are you hoping to leave behind? The right coverage falls out of those answers, not out of a product brochure.',
-    ],
-  },
-  approach: {
-    heading: 'A Straightforward Approach',
-    paragraphs: [
-      "Insurance is full of language designed to be confusing. Chris takes the opposite approach — plain explanations, honest tradeoffs, and the reasoning behind every recommendation. You should understand what you're buying and why it fits, and you should never feel rushed.",
-      "That's true whether you're comparing term coverage for a young family, considering an indexed universal life policy for its tax advantages, or rolling an old 401(k) into something that produces reliable retirement income.",
+      "Chris Baldwin has spent more than 25 years helping families make confident decisions about their financial futures. In that time he's learned that the conversation that matters starts with what you're trying to protect, and why.",
+      'That belief shapes how Baldwin Insurance Agency works. Every client relationship starts with understanding your situation. What does your family depend on? What would change if your income stopped? What are you hoping to leave behind? The right coverage falls out of those answers.',
     ],
   },
   /**
-   * The personal half of his story, supplied by the client and reproduced
-   * exactly as written. No dates, job titles or employer names beyond what is
-   * here -- anything more would be invented, and this is a regulated industry.
+   * The personal half of his story.
+   *
+   * Reordered at the client's request to run in the order it happened --
+   * Fort Wayne, Purdue, a decade in construction management, then the
+   * brokerage -- rather than opening with the career change and doubling
+   * back. Two facts came with that instruction and are theirs, not ours:
+   * the decade, and that he owns the brokerage rather than simply works in
+   * it. Nothing else was added. Still no dates, job titles or employer
+   * names beyond what the client has supplied; this is a regulated
+   * industry and an invented detail is worse than a missing one.
    */
   personal: {
     heading: 'From Fort Wayne to Carlsbad',
     paragraphs: [
-      'Chris Baldwin came to financial services from construction management. He earned his degree from Purdue University and built the first part of his career on job sites, where the work rewarded an analytical approach and left no room for guessing. He brought that same approach with him when he changed fields, and it still shapes how he works today.',
-      'He grew up in Fort Wayne, Indiana, and spent his early professional years on the East Coast. After completing his scope on the Petco Park project in San Diego, he stayed in California and started his financial services business.',
+      'Chris Baldwin grew up in Fort Wayne, Indiana, and earned his degree from Purdue University. He spent his early professional years on the East Coast and the first decade of his career in construction management, on job sites where the work rewarded an analytical approach and left no room for guessing.',
+      'After completing his scope on the Petco Park project in San Diego, he stayed in California and found his passion owning an insurance and financial services brokerage. He brought that same analytical approach with him when he changed fields, and it still shapes how he works today.',
       'He is a proud father of four and has been married for years. The Midwest upbringing stuck — the straightforward manner, the belief that you tell people the truth about their options and let them decide.',
     ],
   },

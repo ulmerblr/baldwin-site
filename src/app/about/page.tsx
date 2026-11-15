@@ -16,16 +16,16 @@ export default function AboutPage() {
 
       <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-16">
+          <div className="grid gap-12 lg:grid-cols-[0.62fr_1fr] lg:items-center lg:gap-14">
             <ImageSlot name="chris-portrait" />
 
-            <div>
+            {/* One block of copy now, not two: "A Straightforward Approach"
+                was removed at the client's instruction. `measure` keeps the
+                line length honest beside the portrait, and items-center
+                rather than items-start so the shorter column does not leave
+                the tall portrait hanging. */}
+            <div className="measure">
               <TextBlock heading={about.story.heading} paragraphs={about.story.paragraphs} />
-              <TextBlock
-                heading={about.approach.heading}
-                paragraphs={about.approach.paragraphs}
-                className="mt-12"
-              />
             </div>
           </div>
         </div>

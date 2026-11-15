@@ -182,10 +182,10 @@ Every photograph on the site resolves through a **named slot** in
 `<ImageSlot name="chris-portrait" />` or `<OverlayImage name="home-hero">…</OverlayImage>`
 and never mention a file path.
 
-No real photography has been supplied yet, so each slot draws a neutral placeholder
-at that slot's exact aspect ratio — so nothing on the page moves when a real file
-lands. **There is no stock photography and no generated imagery in this repo, and
-nothing has been copied from any other site.**
+Every slot now holds a real photograph supplied by the agency. A slot without one
+draws a neutral placeholder at its exact aspect ratio instead, so nothing on the
+page moves when the real file lands. **There is no stock photography and no
+generated imagery in this repo, and nothing has been copied from any other site.**
 
 ### The photo list
 
@@ -206,7 +206,7 @@ sections lost their image column. Nothing ever fills those numbers again.
 | **01** ✅ | Home page, the wide banner behind the headline | `home-hero` | 2400×1400 | 1.71:1 |
 | **02** ✅ | About page, the portrait at the top | `chris-portrait` | 1024×1536 | 2:3 |
 | **04** ✅ | About page, the wide banner across the top | `about-header` | 2000×1329 | 3:2 |
-| **05** | About page, supporting photo lower down | `about-secondary` | 1200×800 | 3:2 |
+| **05** ✅ | About page, supporting photo lower down | `about-secondary` | 1788×1242 | 13:9 |
 | **06** ✅ | Products page, the wide banner across the top | `products-header` | 1440×1920 | 3:4 |
 |  | *The six product sections carry no photograph — see below.* | | | |
 | **13** ✅ | Agent Opportunity page, the wide banner across the top | `agent-header` | 604×895 | 2:3 |
@@ -258,10 +258,16 @@ answer in one place.
 | `sample` | a generated stand-in, marked `SAMPLE — REPLACE` | **no** |
 | `real` | the actual photograph | yes |
 
-**Nine of the ten slots are `real`. Only 05 is still a `sample`.** Samples are
-scaffolding: they make layout, cropping and overlay contrast reviewable before any
-photography exists. A sample is never a filled slot — `data-slot-filled` stays `"false"`, and `check:images` fails
-while any remain.
+**All ten slots are `real`, and `check:images` passes.** That is the first time it
+has: the gate existed to fail loudly until every slot held a genuine photograph,
+and there is nothing left for it to complain about.
+
+The sample machinery stays, and should. `npm run images:samples` still regenerates
+a stand-in for any slot put back to `sample`, which is what makes it safe to add a
+slot before the photograph for it exists. Samples are scaffolding: they make
+layout, cropping and overlay contrast reviewable before any photography exists. A
+sample is never a filled slot — `data-slot-filled` stays `"false"`, and
+`check:images` fails again the moment one reappears.
 
 Two consequences worth knowing:
 

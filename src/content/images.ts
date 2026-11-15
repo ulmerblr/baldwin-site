@@ -155,11 +155,14 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     ref: 5,
     where: 'About page, supporting photo lower down',
     type: 'standalone',
-    state: 'sample',
-    src: null,
-    alt: '',
-    width: 1200,
-    height: 800,
+    state: 'real',
+    src: '/images/baldwin-family-garden.webp',
+    alt: 'Chris Baldwin in the garden with his four children, their dog and their cat.',
+    // Reboxed from the 1200x800 guess to the file's own 1788x1242. A contained
+    // slot, so the box matches the file and the group is never cropped at the
+    // edges -- six subjects spread the full width of this frame.
+    width: 1788,
+    height: 1242,
     focalPoint: CENTER,
   },
   'agent-team': {
