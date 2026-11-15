@@ -75,23 +75,37 @@ export function PageHeader({
   return <section className="border-b border-line bg-gold-wash">{inner}</section>
 }
 
-/** A titled block of body copy. TK placeholders inside render as chips. */
+/**
+ * A block of body copy, optionally titled. TK placeholders inside render as
+ * chips.
+ *
+ * `heading` is optional so that a band continuing the one above it can carry
+ * copy without a title. Leave it out only in that case -- a standalone
+ * section with no heading is a navigation and screen-reader problem, not a
+ * style choice.
+ */
 export function TextBlock({
   heading,
   paragraphs,
   className = '',
 }: {
-  heading: string
+  heading?: string
   paragraphs: readonly string[]
   className?: string
 }) {
   return (
     <div className={className}>
-      <h2 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.015em] text-ink sm:text-3xl">
-        {heading}
-      </h2>
-      {paragraphs.map((paragraph) => (
-        <p key={paragraph} className="mt-4 leading-relaxed text-body">
+      {heading && (
+        <h2 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.015em] text-ink sm:text-3xl">
+          {heading}
+        </h2>
+      )}
+      {paragraphs.map((paragraph, index) => (
+        <p
+          key={paragraph}
+          // No heading above the first paragraph means no gap to clear.
+          className={`leading-relaxed text-body ${index === 0 && !heading ? '' : 'mt-4'}`}
+        >
           <Copy text={paragraph} />
         </p>
       ))}

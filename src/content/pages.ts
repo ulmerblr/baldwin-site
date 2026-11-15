@@ -21,64 +21,47 @@ export const about = {
   eyebrow: 'Led by Chris Baldwin',
   heading: 'Meet Chris Baldwin',
   /**
-   * The opening section.
+   * The bio, in one piece.
    *
-   * At the client's instruction this page no longer talks about selling, in
-   * either direction. The phrases that went were "isn't a sales pitch",
-   * "before anyone talks about a policy" and "not out of a product brochure"
-   * -- all of them framed around the transaction rather than the client, and
-   * protesting that something is not a sales pitch is itself sales language.
-   * The questions and the substance are unchanged. Keep it that way: do not
-   * reintroduce selling vocabulary here.
+   * It used to be two sections with two headings: an opening one, and this
+   * one. The client cut the opening down over four passes until it was a
+   * heading over a single sentence, which reads as something that got
+   * truncated rather than something written short. That sentence is now the
+   * first line here and the spare heading is gone -- no wording changed, it
+   * only moved.
    *
-   * A second section, "A Straightforward Approach", was removed entirely in
-   * the same pass. It described how Chris sells, which is the thing the
-   * client asked to be rid of. The products it name-checked -- term, indexed
-   * universal life, 401(k) rollovers -- all have their own sections on
-   * /products, so nothing was lost but the framing.
+   * Split into `professional` and `personal` because the page renders them
+   * as two bands and the split is the point: the studio portrait sits with
+   * the working half, the family snapshot with the home half, and the
+   * change of ground between them is what makes the change of register look
+   * deliberate. The second band deliberately carries no heading of its own
+   * -- it is a continuation, and inventing a title for it would be adding
+   * words nobody asked for.
    *
-   * The second paragraph went later, also at the client's request: the one
-   * beginning "That belief shapes how Baldwin Insurance Agency works", with
-   * the four questions and the line about coverage falling out of the
-   * answers. Then the second sentence of the first paragraph, "In that time
-   * he's learned that the conversation that matters starts with what you're
-   * trying to protect, and why."
+   * Reordered earlier at the client's request to run in the order it
+   * happened -- Fort Wayne, Purdue, a decade in construction management,
+   * then the brokerage. The decade and the fact that he owns the brokerage
+   * came with that instruction and are theirs. The closing paragraph is
+   * their own text, supplied whole and reproduced verbatim: the pets, the
+   * exclamation mark and the serial commas are all as written.
    *
-   * What is left is a heading and one sentence. That is the client's call
-   * and it has been made four times over. Do not write a replacement line,
-   * and do not pad it out.
+   * Sentences cut along the way and not to be restored: "He is a proud
+   * father of four and has been married for years", the Midwest-upbringing
+   * line, "That belief shapes how Baldwin Insurance Agency works" with its
+   * four questions, and "In that time he's learned that the conversation
+   * that matters starts with what you're trying to protect, and why."
+   * Still no dates, job titles or employer names beyond what the client has
+   * supplied; this is a regulated industry and an invented detail is worse
+   * than a missing one.
    */
-  story: {
-    heading: 'Twenty-Five Years of Putting Families First',
-    paragraphs: [
-      'Chris Baldwin has spent more than 25 years helping families make confident decisions about their financial futures.',
-    ],
-  },
-  /**
-   * The personal half of his story.
-   *
-   * The closing paragraph is the client's own text, supplied whole and
-   * reproduced verbatim -- the pets, the exclamation mark and the serial
-   * commas are all theirs. It replaced a single sentence about his
-   * interests, which had itself replaced a longer paragraph. Two earlier
-   * sentences, "He is a proud father of four and has been married for
-   * years" and the Midwest-upbringing line, were cut along the way and
-   * should not be restored: the family is in this paragraph now.
-   *
-   * Reordered at the client's request to run in the order it happened --
-   * Fort Wayne, Purdue, a decade in construction management, then the
-   * brokerage -- rather than opening with the career change and doubling
-   * back. Two facts came with that instruction and are theirs, not ours:
-   * the decade, and that he owns the brokerage rather than simply works in
-   * it. Nothing else was added. Still no dates, job titles or employer
-   * names beyond what the client has supplied; this is a regulated
-   * industry and an invented detail is worse than a missing one.
-   */
-  personal: {
+  bio: {
     heading: 'From Fort Wayne to Carlsbad',
-    paragraphs: [
+    professional: [
+      'Chris Baldwin has spent more than 25 years helping families make confident decisions about their financial futures.',
       'Chris Baldwin grew up in Fort Wayne, Indiana, and earned his degree from Purdue University. He spent his early professional years on the East Coast and the first decade of his career in construction management, on job sites where the work rewarded an analytical approach and left no room for guessing.',
       'After completing his scope on the Petco Park project in San Diego, he stayed in California and found his passion owning an insurance and financial services brokerage. He brought that same analytical approach with him when he changed fields, and it still shapes how he works today.',
+    ],
+    personal: [
       'Outside of his professional life, he enjoys spending time with his wife and their four grown children. Their home in Carlsbad is also shared with a lively collection of pets, including a dog, cat, a giant tortoise, and chickens! An avid outdoor enthusiast and adventurer, he enjoys hiking, skiing, scuba diving, and exploring destinations around the world. Whether spending time with family, enjoying the outdoors, or traveling internationally, he embraces life to the fullest.',
     ],
   },

@@ -16,30 +16,25 @@ export default function AboutPage() {
 
       <section className="border-b border-line py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          {/* The copy here has been cut twice by the client and is one
-              paragraph now, so the portrait is given a fixed 18rem rather
-              than a share of the grid: a full-height 2:3 portrait beside
-              four lines of text left most of the band empty. Centred, so
-              the short column sits against the middle of the tall one. */}
-          <div className="grid gap-10 lg:grid-cols-[18rem_1fr] lg:items-center lg:gap-14">
+          {/* The working half of the bio, with the studio portrait. The
+              opening section that used to sit above this one is gone: it had
+              been cut down to a heading over a single sentence, and that
+              sentence is now the first line here. */}
+          <div className="grid gap-10 lg:grid-cols-[20rem_1fr] lg:items-center lg:gap-14">
             <ImageSlot name="chris-portrait" />
 
-            {/* One block of copy now, not two: "A Straightforward Approach"
-                was removed at the client's instruction. `measure` keeps the
-                line length honest beside the portrait, and items-center
-                rather than items-start so the shorter column does not leave
-                the tall portrait hanging. */}
             <div className="measure">
-              <TextBlock heading={about.story.heading} paragraphs={about.story.paragraphs} />
+              <TextBlock heading={about.bio.heading} paragraphs={about.bio.professional} />
             </div>
           </div>
         </div>
       </section>
 
       {/*
-        The personal half of the story, sitting with the professional half
-        above it and ahead of the approved "Family & Integrity Come First"
-        copy further down.
+        The home half of the same bio, continuing the band above it and
+        sitting ahead of the approved "Family & Integrity Come First" copy
+        further down. No heading of its own: it is a continuation, and a
+        title for it would be words nobody asked for.
 
         The family photograph is a casual snapshot and the portrait above it
         is a studio headshot, which is a real shift in register. Left to sit
@@ -53,10 +48,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-start lg:gap-16">
             <div className="measure">
-              <TextBlock
-                heading={about.personal.heading}
-                paragraphs={about.personal.paragraphs}
-              />
+              <TextBlock paragraphs={about.bio.personal} />
             </div>
 
             <figure className="rounded-3xl border border-line bg-paper p-3 sm:p-4">
