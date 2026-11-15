@@ -57,14 +57,13 @@ export const about = {
   /**
    * The personal half of his story.
    *
-   * The closing paragraph is one sentence by instruction. The interests came
-   * from the client as "hiking, skiing, scuba and international travel";
-   * only the verb form changed, "scuba diving" for the activity, and the
-   * stray apostrophe in "Enjoy's" dropped. The two sentences that used to
-   * sit either side of it -- "He is a proud father of four and has been
-   * married for years" and the Midwest-upbringing line -- were removed at
-   * the client's request. Do not restore them, and do not write a new
-   * closing line to replace them: the section is meant to end here.
+   * The closing paragraph is the client's own text, supplied whole and
+   * reproduced verbatim -- the pets, the exclamation mark and the serial
+   * commas are all theirs. It replaced a single sentence about his
+   * interests, which had itself replaced a longer paragraph. Two earlier
+   * sentences, "He is a proud father of four and has been married for
+   * years" and the Midwest-upbringing line, were cut along the way and
+   * should not be restored: the family is in this paragraph now.
    *
    * Reordered at the client's request to run in the order it happened --
    * Fort Wayne, Purdue, a decade in construction management, then the
@@ -80,7 +79,7 @@ export const about = {
     paragraphs: [
       'Chris Baldwin grew up in Fort Wayne, Indiana, and earned his degree from Purdue University. He spent his early professional years on the East Coast and the first decade of his career in construction management, on job sites where the work rewarded an analytical approach and left no room for guessing.',
       'After completing his scope on the Petco Park project in San Diego, he stayed in California and found his passion owning an insurance and financial services brokerage. He brought that same analytical approach with him when he changed fields, and it still shapes how he works today.',
-      'He enjoys hiking, skiing, scuba diving and international travel.',
+      'Outside of his professional life, he enjoys spending time with his wife and their four grown children. Their home in Carlsbad is also shared with a lively collection of pets, including a dog, cat, a giant tortoise, and chickens! An avid outdoor enthusiast and adventurer, he enjoys hiking, skiing, scuba diving, and exploring destinations around the world. Whether spending time with family, enjoying the outdoors, or traveling internationally, he embraces life to the fullest.',
     ],
   },
   licensing: {
