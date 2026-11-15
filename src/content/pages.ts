@@ -90,13 +90,17 @@ export const about = {
      * Resident licence only. Other states' numbers came out at the agency's
      * instruction -- the site says they are available on request instead of
      * listing them, which is also what the Contact page says.
+     *
+     * The Agency License and Certifications rows were deleted rather than
+     * left as placeholders: the agency has not supplied either, and a row
+     * whose value is a visible [[TK]] chip tells a visitor less than no row
+     * at all. If those values ever arrive, add the rows back -- do not
+     * reintroduce them empty in the meantime.
      */
     items: [
       { label: 'California Resident License', value: '0C97369' },
       { label: 'Licensed in', value: 'All 50 states' },
       { label: 'Other states', value: 'License numbers available on request' },
-      { label: 'Agency License', value: '[[TK: agency license #, if separate]]' },
-      { label: 'Certifications', value: '[[TK: designations/certifications]]' },
     ],
   },
   secondaryCta: 'Call (858) 729-0003',

@@ -29,9 +29,10 @@ npm run check:images   # fails while any image slot is not real photography
 npm run images:samples # regenerate the sample placeholder images
 ```
 
-> **Both `check:tk` and `check:images` must pass before the DNS cutover.** They
-> guard the two categories of deliberate blank on this site: facts nobody has
-> supplied yet, and photography nobody has shot yet.
+> **Both `check:tk` and `check:images` now pass.** They guard the two categories
+> of deliberate blank on this site — facts nobody had supplied, and photography
+> nobody had shot — and there is nothing left in either. Keep them in the
+> pre-deploy routine: they exist to fail the moment a new blank appears.
 
 Node 22 or newer.
 
@@ -86,15 +87,24 @@ two-line fix once the file is added.
 
 ## Placeholders
 
-Some facts nobody has supplied yet — license numbers, professional designations,
-client testimonials, the office address — are written in the content files as
-`[[TK: ...]]` tokens. They render on the page as a visible muted chip carrying the
-token text.
+**There are none left.** Every fact that was once a placeholder now has a real
+value, or the row carrying it was deleted. The mechanism stays, because the next
+unsupplied fact should go through it rather than be guessed at.
+
+A fact nobody has supplied — a license number, a designation, an address — is
+written in the content files as a `[[TK: ...]]` token. It renders on the page as a
+visible muted chip carrying the token text.
 
 **That is deliberate and it is not a bug.** These are regulated advertising claims on
 an insurance site: a plausible-looking invented license number is materially worse
 than an obvious blank. Nothing guesses at them, and nothing quietly drops the sentence
 around them.
+
+A token is one of two things, never a third. Either the value arrives and replaces
+it, or the thing it was holding open is deleted — as the Agency License and
+Certifications rows were, because a row whose value is a visible placeholder chip
+tells a visitor less than no row at all. What a token must never become is an
+invented value.
 
 ```bash
 npm run check:tk     # exits 1 and lists every unfilled token, with file:line
