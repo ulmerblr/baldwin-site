@@ -10,27 +10,27 @@
  */
 
 export const site = {
-  name: 'Baldwin Insurance Agency',
-  legalName: 'Baldwin Insurance Agency',
+  name: 'Baldwin Life Insurance',
+  legalName: 'Baldwin Life Insurance',
   domain: 'baldwinlifeinsurance.com',
   canonical: 'https://www.baldwinlifeinsurance.com/',
 
   meta: {
-    title: 'Baldwin Insurance Agency — Life Insurance & Annuities',
+    title: 'Baldwin Life Insurance — Life Insurance & Annuities',
     description:
       'Life insurance, annuity, and retirement solutions built around your family. Personal guidance from a licensed agency with more than 25 years of experience.',
-    author: 'Baldwin Insurance Agency',
+    author: 'Baldwin Life Insurance',
     keywords: [
       'life insurance agent',
       'term life insurance',
       'whole life insurance',
       'final expense insurance',
       'retirement annuity',
-      'Baldwin Insurance Agency',
+      'Baldwin Life Insurance',
     ],
-    socialTitle: 'Baldwin Insurance Agency – Life Insurance & Annuities',
+    socialTitle: 'Baldwin Life Insurance – Life Insurance & Annuities',
     socialDescription:
-      "Protect your family's financial future with life insurance and annuity solutions from Baldwin Insurance Agency.",
+      "Protect your family's financial future with life insurance and annuity solutions from Baldwin Life Insurance.",
     /**
      * The live site's OG image. NOT YET PRESENT in /public/images -- the file
      * could not be retrieved (see public/images/README.md). The OG/Twitter
@@ -125,7 +125,7 @@ export const site = {
   about: {
     eyebrow: 'Led by Chris Baldwin – 25+ Years Experience',
     heading: 'Family & Integrity Come First',
-    body: "At Baldwin Insurance Agency, we're not just selling policies—we're protecting families and securing financial futures. With over 25 years of experience and a commitment to putting your needs first, Chris Baldwin and our team provide personalized guidance you can trust.",
+    body: "At Baldwin Life Insurance, we're not just selling policies—we're protecting families and securing financial futures. With over 25 years of experience and a commitment to putting your needs first, Chris Baldwin and our team provide personalized guidance you can trust.",
     /** Not yet present in /public/images -- see meta.socialImage above. */
     image: { src: '/images/image-3.jpg', alt: 'Advisor meeting with couple' },
     valueProps: [
@@ -150,7 +150,7 @@ export const site = {
     eyebrow: 'Build Your Career',
     heading: 'Join a Team That Invests in Your Success',
     intro:
-      "Whether you're new to insurance or an experienced agent, Baldwin Insurance Agency offers comprehensive training, mentorship, and cutting-edge AI-powered lead tools to help you thrive.",
+      "Whether you're new to insurance or an experienced agent, Baldwin Life Insurance offers comprehensive training, mentorship, and cutting-edge AI-powered lead tools to help you thrive.",
     // The live site reads "Upload Your Resume →". There is no upload in this
     // build, so the control does not claim one.
     cta: 'Join Our Team →',
@@ -169,7 +169,7 @@ export const site = {
   howItWorks: {
     heading: 'How It Works',
     intro:
-      'Getting the right coverage for your family is simple and stress-free with Baldwin Insurance Agency',
+      'Getting the right coverage for your family is simple and stress-free with Baldwin Life Insurance',
     cta: 'Start Quote →',
     footnote: 'Takes less than 5 minutes • No obligation',
     steps: [

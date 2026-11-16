@@ -123,7 +123,7 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     type: 'standalone',
     state: 'real',
     src: '/images/chris-baldwin-headshot.webp',
-    alt: 'Chris Baldwin, founder of Baldwin Insurance Agency.',
+    alt: 'Chris Baldwin, founder of Baldwin Life Insurance.',
     // Reboxed a second time, and for the same reason as the first: the box
     // follows the file, never the other way round. It was 1200x800 for the
     // landscape desk photograph; the studio headshot is 1024x1536 portrait
@@ -187,7 +187,7 @@ export const imageSlots: Record<ImageSlotName, ImageSlotConfig> = {
     type: 'standalone',
     state: 'real',
     src: '/images/chris-baldwin-card.webp',
-    alt: 'Chris Baldwin, licensed life insurance agent at Baldwin Insurance Agency, with contact details.',
+    alt: 'Chris Baldwin, licensed life insurance agent at Baldwin Life Insurance, with contact details.',
     // Square, and the artwork already carries its own text and layout, so it
     // is never cropped: the reserved box matches the file exactly.
     width: 1254,
@@ -386,7 +386,7 @@ export type ResolvedSlot = {
    * The alt text to use NOW.
    *
    * Forced empty while a slot holds a sample: `chris-portrait` is configured
-   * as "Chris Baldwin, founder of Baldwin Insurance Agency", and announcing
+   * as "Chris Baldwin, founder of Baldwin Life Insurance", and announcing
    * that over a magenta test card tells a screen reader user a photograph of a
    * real person is present when it is not. The configured value stays in the
    * config, ready for the day the real photo lands.

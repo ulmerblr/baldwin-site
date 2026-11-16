@@ -3,7 +3,7 @@ import { LegalPage } from '../legal-page'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'Privacy policy for Baldwin Insurance Agency.',
+  description: 'Privacy policy for Baldwin Life Insurance.',
   robots: { index: false, follow: true },
 }
 

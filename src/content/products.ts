@@ -48,7 +48,7 @@ export const products: readonly Product[] = [
     title: 'Indexed Universal Life',
     navLabel: 'Indexed Universal Life',
     meta: {
-      title: 'Indexed Universal Life Insurance | Baldwin Insurance Agency',
+      title: 'Indexed Universal Life Insurance | Baldwin Life Insurance',
       description:
         'Indexed universal life insurance offers growth potential tied to market indexes with downside protection.',
     },
@@ -70,7 +70,7 @@ export const products: readonly Product[] = [
     title: 'Term Life / Mortgage Protection',
     navLabel: 'Term Life / Mortgage Protection',
     meta: {
-      title: 'Term Life / Mortgage Protection | Baldwin Insurance Agency',
+      title: 'Term Life / Mortgage Protection | Baldwin Life Insurance',
       description:
         'Mortgage protection life insurance helps keep your family in their home.',
     },
@@ -92,7 +92,7 @@ export const products: readonly Product[] = [
     title: 'Final Expense',
     navLabel: 'Final Expense',
     meta: {
-      title: 'Final Expense Insurance | Baldwin Insurance Agency',
+      title: 'Final Expense Insurance | Baldwin Life Insurance',
       description:
         'Affordable final expense coverage so your family isn\'t left with funeral costs.',
     },
@@ -114,7 +114,7 @@ export const products: readonly Product[] = [
     title: 'Annuities',
     navLabel: 'Annuities',
     meta: {
-      title: 'Annuities & Retirement Income | Baldwin Insurance Agency',
+      title: 'Annuities & Retirement Income | Baldwin Life Insurance',
       description:
         'Build reliable retirement income with annuity solutions.',
     },
@@ -136,7 +136,7 @@ export const products: readonly Product[] = [
     title: 'IRA and 401(k) Rollovers',
     navLabel: 'IRA and 401(k) Rollovers',
     meta: {
-      title: 'IRA and 401(k) Rollovers | Baldwin Insurance Agency',
+      title: 'IRA and 401(k) Rollovers | Baldwin Life Insurance',
       description:
         'Consolidate old 401(k)s and IRAs into one account.',
     },
@@ -158,7 +158,7 @@ export const products: readonly Product[] = [
     title: 'Estate Planning',
     navLabel: 'Estate Planning',
     meta: {
-      title: 'Estate Planning & Legacy Protection | Baldwin Insurance Agency',
+      title: 'Estate Planning & Legacy Protection | Baldwin Life Insurance',
       description:
         'Protect your legacy and plan for your family\'s future.',
     },
@@ -172,7 +172,7 @@ export const products: readonly Product[] = [
       'People who want their wishes followed without a court deciding',
     ],
     whatToConsider:
-      'This is where insurance meets law and tax, and no one profession covers all of it. We work alongside your attorney and CPA rather than in place of them. Baldwin Insurance Agency does not provide legal or tax advice.',
+      'This is where insurance meets law and tax, and no one profession covers all of it. We work alongside your attorney and CPA rather than in place of them. Baldwin Life Insurance does not provide legal or tax advice.',
   },
 ]
 

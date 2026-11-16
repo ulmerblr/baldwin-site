@@ -14,7 +14,7 @@
 
 export const about = {
   meta: {
-    title: 'Meet Chris Baldwin | Baldwin Insurance Agency',
+    title: 'Meet Chris Baldwin | Baldwin Life Insurance',
     description:
       'Chris Baldwin has spent more than 25 years helping families protect their financial futures with life insurance and annuity solutions.',
   },
@@ -47,7 +47,7 @@ export const about = {
    *
    * Sentences cut along the way and not to be restored: "He is a proud
    * father of four and has been married for years", the Midwest-upbringing
-   * line, "That belief shapes how Baldwin Insurance Agency works" with its
+   * line, "That belief shapes how Baldwin Life Insurance works" with its
    * four questions, and "In that time he's learned that the conversation
    * that matters starts with what you're trying to protect, and why."
    * Still no dates, job titles or employer names beyond what the client has
@@ -90,9 +90,9 @@ export const about = {
 
 export const productsIndex = {
   meta: {
-    title: 'Life Insurance & Annuity Products | Baldwin Insurance Agency',
+    title: 'Life Insurance & Annuity Products | Baldwin Life Insurance',
     description:
-      'Explore life insurance, annuity, and retirement solutions from Baldwin Insurance Agency.',
+      'Explore life insurance, annuity, and retirement solutions from Baldwin Life Insurance.',
   },
   heading: 'Coverage Built Around Your Family',
   intro:
@@ -103,7 +103,7 @@ export const productsIndex = {
 
 export const agentOpportunityPage = {
   meta: {
-    title: 'Insurance Agent Careers | Baldwin Insurance Agency',
+    title: 'Insurance Agent Careers | Baldwin Life Insurance',
     description:
       'Join a team that invests in your success. Training, mentorship, and AI-powered lead tools for new and experienced agents.',
   },
@@ -134,9 +134,9 @@ export const agentOpportunityPage = {
 
 export const contact = {
   meta: {
-    title: 'Contact Baldwin Insurance Agency',
+    title: 'Contact Baldwin Life Insurance',
     description:
-      'Get in touch with Baldwin Insurance Agency. Call (858) 729-0003 or request your free quote online.',
+      'Get in touch with Baldwin Life Insurance. Call (858) 729-0003 or request your free quote online.',
   },
   heading: "Let's Talk",
   intro:
@@ -192,7 +192,7 @@ export const homeAdditions = {
  * the number next to a phone number.
  */
 export const compliance =
-  'Baldwin Insurance Agency. Licensed in all 50 states; license numbers for states other than California are available on request. Products and availability vary by state. This site is for general information and is not an offer of coverage.'
+  'Baldwin Life Insurance. Licensed in all 50 states; license numbers for states other than California are available on request. Products and availability vary by state. This site is for general information and is not an offer of coverage.'
 
 /**
  * Carriers the agency places business with.
@@ -215,7 +215,7 @@ export const compliance =
 export const carriers = {
   heading: 'Carriers We Represent',
   intro:
-    'Baldwin Insurance Agency is independent. We place coverage with a wide range of carriers, which means the recommendation fits your situation rather than a single company\'s product shelf.',
+    'Baldwin Life Insurance is independent. We place coverage with a wide range of carriers, which means the recommendation fits your situation rather than a single company\'s product shelf.',
   footnote: 'Carrier availability varies by state and by product.',
   names: [
     'AIG/Corebridge Financial',

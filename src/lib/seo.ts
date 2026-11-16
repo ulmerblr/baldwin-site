@@ -19,7 +19,7 @@ export function canonicalUrl(path: string): string {
  * Per-page title and description.
  *
  * Titles from the copy already include the site name, so they are set as
- * `absolute` -- the layout's "%s | Baldwin Insurance Agency" template would
+ * `absolute` -- the layout's "%s | Baldwin Life Insurance" template would
  * otherwise append it twice. OG and Twitter tags deliberately fall through to
  * the sitewide defaults in the root layout.
  */
