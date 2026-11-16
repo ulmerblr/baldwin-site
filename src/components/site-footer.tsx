@@ -1,7 +1,6 @@
 import { legalNav, nav, navLabels } from '@/content/nav'
 import { compliance } from '@/content/pages'
 import { site } from '@/content/site'
-import { BrandMark } from './brand-mark'
 import { CurrentYear } from './current-year'
 import { LicenseLine } from './license-line'
 import { NavLink } from './nav-link'
@@ -15,10 +14,10 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="flex items-center gap-2.5">
-              <BrandMark />
-              <span className="font-bold text-ink">{site.name}</span>
-            </div>
+            {/* The shield is gone from the whole site, so the footer brand
+                block is the name alone. The wings mark is not repeated here:
+                it already opens every page from the header. */}
+            <div className="font-bold text-ink">{site.name}</div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
               {site.footer.blurb}
             </p>

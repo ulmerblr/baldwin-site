@@ -7,14 +7,10 @@ import { nav, navLabels, type NavItem } from '@/content/nav'
 import { site } from '@/content/site'
 import { BrandLogoMini } from './brand-logo'
 import { LicenseLine } from './license-line'
-import { BrandMark } from './brand-mark'
 import { CtaButton } from './lead-modals'
 
 export function SiteHeader() {
   const pathname = usePathname()
-  // The home page carries the Baldwin Life Insurance mark full size in a band
-  // of its own, so the header does not also shrink it into the corner there.
-  const showLogo = pathname !== '/'
   const mobileId = useId()
   const mobileToggleRef = useRef<HTMLButtonElement>(null)
 
@@ -41,22 +37,21 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/92 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl 2xl:max-w-7xl items-center justify-between gap-1.5 px-3 py-3 xs:gap-2 xs:px-4 sm:gap-4 sm:px-6 sm:py-3.5">
-        <Link href="/" className="flex shrink-0 items-center gap-2 rounded-lg sm:gap-2.5">
-          <BrandMark />
-          {/* The wordmark waits for sm rather than xs. Between 400 and 639
-              the row has to carry the shield, the phone number, the licence
-              that by law goes with it, the CTA, the Baldwin Life Insurance
-              mark and the menu button, and the wordmark is the one item of
-              the seven that is purely a repeat -- the shield beside it and
-              the mark on the right already say whose site this is. It costs
-              63px there, which is more than the row has. */}
-          <span className="font-display hidden text-sm font-semibold leading-tight tracking-[-0.01em] text-ink sm:block sm:text-base">
-            Baldwin
-            <span className="hidden font-sans text-[10px] font-medium uppercase tracking-[0.18em] text-gold-deep sm:block sm:text-[11px]">
-              Insurance Agency
-            </span>
-          </span>
-          <span className="sr-only sm:hidden">{site.name}</span>
+        {/* The wings mark is the header identity now, on every page. The
+            shield and its wordmark are gone -- they said the same thing twice
+            beside a mark that says it better.
+
+            On how large it reads: this is detailed line art and the type
+            inside it does not survive header scale. At the sizes below the
+            wings and the word LIFE carry; EST. 1999 and LOVE MY LIFE
+            INSURANCE do not, at any height a sticky bar can afford -- the
+            smallest line needs roughly 180px of mark height to clear 8px.
+            That is the artwork, not the sizing. The full-size mark on the
+            home page is where it is meant to be read. The image's alt text
+            is the link's accessible name, so a screen reader still gets the
+            agency name. */}
+        <Link href="/" className="flex shrink-0 items-center rounded-lg">
+          <BrandLogoMini className="h-11 sm:h-12 lg:h-14" />
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
@@ -92,19 +87,6 @@ export function SiteHeader() {
           >
             Start Quote
           </CtaButton>
-
-          {/* Top right on every page but the home page. It sits after the
-              CTA, so it is the right-most thing in the row on a desktop and
-              just inside the menu button on a phone.
-
-              The row already carries the shield, the phone number, the CTA
-              and the menu button. At 360 that leaves 72px, which a 32px mark
-              fits with room to spare; below 360 it does not fit at any size
-              worth rendering, so it drops out rather than forcing the row to
-              overflow. 360 is the narrowest width this site is held to. */}
-          {showLogo && (
-            <BrandLogoMini className="hidden h-8 min-[360px]:block xs:h-9 sm:h-11" />
-          )}
 
           <button
             ref={mobileToggleRef}

@@ -1,4 +1,4 @@
-# Baldwin Insurance Agency — marketing site
+# Baldwin Life Insurance — marketing site
 
 Next.js App Router site for [baldwinlifeinsurance.com](https://www.baldwinlifeinsurance.com/),
 deployed on Vercel. Everything is statically rendered except two API routes, which
@@ -47,7 +47,7 @@ Set in **Vercel → Project → Settings → Environment Variables**. Locally th
 | --- | --- | --- |
 | `RESEND_API_KEY` | yes | [resend.com](https://resend.com) → API Keys. Already set in Vercel. |
 | `NOTIFY_EMAIL` | yes | The inbox that receives form notifications. Already set in Vercel. |
-| `NOTIFY_FROM` | no | A verified Resend sender, e.g. `Baldwin Site <no-reply@baldwinlifeinsurance.com>`. Defaults to Resend's shared `onboarding@resend.dev`, which works before the domain is verified. |
+| `NOTIFY_FROM` | no | A verified Resend sender, e.g. `Baldwin Life Insurance <no-reply@baldwinlifeinsurance.com>`. Defaults to Resend's shared `onboarding@resend.dev`, which works before the domain is verified. |
 | `ATS_INTAKE_URL` | no | Unset today. Setting it turns on application forwarding — see [Seams](#seams-built-but-not-wired). |
 | `ATS_SHARED_SECRET` | no | Auth for the above. |
 
@@ -282,7 +282,7 @@ sample is never a filled slot — `data-slot-filled` stays `"false"`, and
 Two consequences worth knowing:
 
 - A sample's `alt` is forced empty and the image is hidden from assistive tech.
-  Announcing "Chris Baldwin, founder of Baldwin Insurance Agency" over a magenta
+  Announcing "Chris Baldwin, founder of Baldwin Life Insurance" over a magenta
   test card would tell a screen reader user that a photograph of a real person is
   present when it is not. The configured `alt` stays in the config, ready for the
   real file.
@@ -398,8 +398,7 @@ src/
     site-shell.tsx        header + footer + dialog provider, used by every page
     site-header.tsx       nav — five flat links, no submenus
     sections.tsx          the home page bands
-    brand-mark.tsx        the Baldwin Insurance Agency shield (inline SVG)
-    brand-logo.tsx        the Baldwin Life Insurance wings mark (image asset)
+    brand-logo.tsx        the wings mark -- header on every page, and the home page band
     page-sections.tsx     shared furniture for the interior pages
     image-slot.tsx        named photography slots (see Images)
     tk.tsx                renders unfilled [[TK:]] facts as visible chips

@@ -4,9 +4,11 @@ import Image from 'next/image'
  * The Baldwin Life Insurance logo: angel wings flanking the wordmark, with
  * EST. 1999 above and LOVE MY LIFE INSURANCE below.
  *
- * Distinct from `BrandMark`, which is the Baldwin Insurance Agency shield that
- * identifies the header. Both appear on the interior pages -- the shield on
- * the left as the site's identity, this mark reduced on the right.
+ * The only brand mark on the site. It opens the header on every page and
+ * carries a band of its own on the home page. There used to be a second
+ * mark, a shield with a wordmark, sitting on the left of the header while
+ * this one sat reduced on the right; the shield is gone and this took its
+ * place.
  *
  * TRANSPARENCY. The supplied artwork is navy line art flat on pure white with
  * no alpha channel, so dropped onto any ground that is not pure white it shows
@@ -18,8 +20,12 @@ import Image from 'next/image'
  *
  * SIZE. It is a detailed illustrative mark -- hatched feathers and three
  * separate lines of type -- so it does not survive being made small. The
- * header instance is deliberately as large as a sticky header can carry, and
- * the home page gets a band of its own instead.
+ * header instance is as large as a sticky bar can carry and still only
+ * delivers the wings and the word LIFE; the smaller lines need roughly
+ * 180px of mark height to clear 8px, which no header has. That is why the
+ * home page gives it a band of its own, and why the header link leans on
+ * the image's alt text for its accessible name rather than on the type
+ * being readable.
  */
 
 const LOGO_SRC = '/images/baldwin-life-insurance-logo.webp'
@@ -40,9 +46,9 @@ export function BrandLogoMini({ className = '' }: { className?: string }) {
       alt={BRAND_LOGO_ALT}
       width={LOGO_W}
       height={LOGO_H}
-      // Rendered at roughly 60px wide; ask for twice that so it stays crisp
-      // on a 2x screen without shipping the full-size file to a phone.
-      sizes="70px"
+      // Rendered 56-71px wide depending on breakpoint; ask for twice that so
+      // it stays crisp on a 2x screen.
+      sizes="(min-width: 1024px) 72px, 62px"
       className={`w-auto ${className}`}
     />
   )
