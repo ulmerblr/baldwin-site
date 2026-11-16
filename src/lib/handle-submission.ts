@@ -8,6 +8,15 @@
  *   { ok: true }
  *   { ok: false, error: "<something a person can read>" }
  * Internal detail is logged server-side and never returned.
+ *
+ * LOGGING. Every outcome writes exactly one line, success included. This is
+ * not decoration. For a while the only paths that logged were the ones where
+ * Resend failed, so a form that was turning submissions away -- on the rate
+ * limit, on unreadable JSON, on the honeypot -- produced no trace at all, and
+ * a quiet log could mean the form was healthy or that it was refusing
+ * everyone. Those two states must never look the same again. No line carries
+ * the submitter's name, telephone number or email: the log says what
+ * happened, not who it happened to.
  */
 
 import { NextResponse } from 'next/server'
@@ -28,6 +37,7 @@ export async function handleSubmission(
   // Rate limit before doing any work on the body.
   const limit = rateLimit(clientIp(request.headers))
   if (!limit.allowed) {
+    console.warn(`submission(${kind}): refused by rate limit, retry after ${limit.retryAfter}s`)
     return json(
       {
         ok: false,
@@ -42,11 +52,17 @@ export async function handleSubmission(
   try {
     body = await request.json()
   } catch {
+    console.warn(`submission(${kind}): refused, request body was not valid JSON`)
     return json({ ok: false, error: 'We could not read that submission. Please try again.' }, 400)
   }
 
   const parsed = validateSubmission(body)
   if (!parsed.ok) {
+    // `honeypot` here means a real browser filled a field no human can see --
+    // usually a password manager or autofill reaching a field it should have
+    // left alone. It reads as a bot and the person is turned away with no
+    // idea why, so it is worth seeing in the log.
+    console.warn(`submission(${kind}): refused by validation, reason=${parsed.reason}`)
     return json({ ok: false, error: parsed.error }, 400)
   }
 
@@ -72,5 +88,6 @@ export async function handleSubmission(
     )
   }
 
+  console.info(`submission(${kind}): accepted and notified`)
   return json({ ok: true }, 200)
 }

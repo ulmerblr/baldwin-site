@@ -196,6 +196,16 @@ export function LeadForm({
       </div>
 
       {/* Honeypot: hidden from sighted users and removed from the a11y tree. */}
+      {/* The honeypot. It keeps a bot-attractive name on purpose -- that is
+          the whole trap -- which is also exactly what a password manager
+          matches on when it fills a form. The field is off-screen and
+          invisible, so Chrome's own autofill leaves it alone, but extensions
+          fill by name and reach it anyway; when one does, a real person is
+          turned away as a bot and told only that their submission could not
+          be processed. Hence the opt-out attributes: 1Password, LastPass,
+          Bitwarden and Dashlane each read a different one, so all four are
+          present. `autoComplete="off"` alone is not enough; none of them
+          honour it. Keep every one of these if you touch this field. */}
       <div className="honeypot" aria-hidden="true">
         <label htmlFor={`${formId}-hp`}>Company website (leave blank)</label>
         <input
@@ -204,6 +214,10 @@ export function LeadForm({
           name={HONEYPOT_FIELD}
           tabIndex={-1}
           autoComplete="off"
+          data-1p-ignore=""
+          data-lpignore="true"
+          data-bwignore=""
+          data-form-type="other"
           value={honeypot}
           onChange={(e) => setHoneypot(e.target.value)}
         />

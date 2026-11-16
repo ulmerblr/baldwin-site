@@ -12,9 +12,16 @@ export type SubmissionFields = {
   email: string
 }
 
+/**
+ * Why a submission was turned away. The `error` is for the person; this is
+ * for the log. A rejection used to be silent, which meant a form that was
+ * refusing every submission looked identical to a form nobody had used.
+ */
+export type RejectionReason = 'not-an-object' | 'honeypot' | 'name' | 'phone' | 'email'
+
 export type ValidationResult =
   | { ok: true; data: SubmissionFields }
-  | { ok: false; error: string }
+  | { ok: false; error: string; reason: RejectionReason }
 
 /** Hidden field name. A real user never fills this; bots usually do. */
 export const HONEYPOT_FIELD = 'company_website'
@@ -63,7 +70,11 @@ export function isValidPhone(digits: string): boolean {
  */
 export function validateSubmission(body: unknown): ValidationResult {
   if (typeof body !== 'object' || body === null) {
-    return { ok: false, error: 'We could not read that submission. Please try again.' }
+    return {
+      ok: false,
+      error: 'We could not read that submission. Please try again.',
+      reason: 'not-an-object',
+    }
   }
 
   const raw = body as Record<string, unknown>
@@ -71,22 +82,26 @@ export function validateSubmission(body: unknown): ValidationResult {
   // Honeypot: hidden from humans and screen readers. Anything here is a bot.
   const honeypot = raw[HONEYPOT_FIELD]
   if (typeof honeypot === 'string' && honeypot.trim() !== '') {
-    return { ok: false, error: 'Your submission could not be processed.' }
+    return { ok: false, error: 'Your submission could not be processed.', reason: 'honeypot' }
   }
 
   const name = clean(raw.name, MAX_NAME)
   if (name.length < 2) {
-    return { ok: false, error: 'Please enter your full name.' }
+    return { ok: false, error: 'Please enter your full name.', reason: 'name' }
   }
 
   const phone = normalizePhone(raw.phone)
   if (!isValidPhone(phone)) {
-    return { ok: false, error: 'Please enter a valid phone number with at least 10 digits.' }
+    return {
+      ok: false,
+      error: 'Please enter a valid phone number with at least 10 digits.',
+      reason: 'phone',
+    }
   }
 
   const email = clean(raw.email, MAX_EMAIL).toLowerCase()
   if (!isValidEmail(email)) {
-    return { ok: false, error: 'Please enter a valid email address.' }
+    return { ok: false, error: 'Please enter a valid email address.', reason: 'email' }
   }
 
   return { ok: true, data: { name, phone, email } }
