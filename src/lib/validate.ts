@@ -5,11 +5,16 @@
  * Every submission is re-parsed from the raw request body.
  */
 
+import { parsePhone, type PhoneFlag } from './phone'
+
 /** Field set shared by both forms. */
 export type SubmissionFields = {
   name: string
   phone: string
   email: string
+  /** Digits only, empty when none was given. Kept apart so it is never
+   *  mistaken for part of the number itself. */
+  phoneExt: string
 }
 
 /**
@@ -37,7 +42,7 @@ export type RejectionReason = 'not-an-object' | 'name' | 'phone' | 'email'
 export type BotSignal = 'honeypot' | 'fast-submit'
 
 export type ValidationResult =
-  | { ok: true; data: SubmissionFields; signals: BotSignal[] }
+  | { ok: true; data: SubmissionFields; signals: BotSignal[]; phoneFlags: PhoneFlag[] }
   | { ok: false; error: string; reason: RejectionReason }
 
 /**
@@ -71,7 +76,6 @@ const FAST_SUBMIT_MS = 1500
 
 const MAX_NAME = 120
 const MAX_EMAIL = 254
-const MAX_PHONE_DIGITS = 15
 
 /**
  * Deliberately conservative: one @, a dot-separated domain, no whitespace or
@@ -93,18 +97,8 @@ function clean(value: unknown, max: number): string {
     .slice(0, max)
 }
 
-/** Digits only. US numbers may arrive as "(858) 729-0003" or "+1 858...". */
-export function normalizePhone(value: unknown): string {
-  if (typeof value !== 'string') return ''
-  return value.replace(/\D/g, '').slice(0, MAX_PHONE_DIGITS)
-}
-
 export function isValidEmail(value: string): boolean {
   return value.length > 0 && value.length <= MAX_EMAIL && EMAIL_RE.test(value)
-}
-
-export function isValidPhone(digits: string): boolean {
-  return digits.length >= 10
 }
 
 /**
@@ -141,13 +135,11 @@ export function validateSubmission(body: unknown): ValidationResult {
     return { ok: false, error: 'Please enter your full name.', reason: 'name' }
   }
 
-  const phone = normalizePhone(raw.phone)
-  if (!isValidPhone(phone)) {
-    return {
-      ok: false,
-      error: 'Please enter a valid phone number with at least 10 digits.',
-      reason: 'phone',
-    }
+  // Format only, and refusing only what cannot be a number at all. Anything
+  // merely odd comes back accepted with a flag on it -- see src/lib/phone.ts.
+  const phone = parsePhone(raw.phone)
+  if (!phone.ok) {
+    return { ok: false, error: phone.error, reason: 'phone' }
   }
 
   const email = clean(raw.email, MAX_EMAIL).toLowerCase()
@@ -155,12 +147,11 @@ export function validateSubmission(body: unknown): ValidationResult {
     return { ok: false, error: 'Please enter a valid email address.', reason: 'email' }
   }
 
-  return { ok: true, data: { name, phone, email }, signals }
+  return {
+    ok: true,
+    data: { name, phone: phone.digits, email, phoneExt: phone.ext },
+    signals,
+    phoneFlags: phone.flags,
+  }
 }
 
-/** Format 10- and 11-digit US numbers for display in the notification email. */
-export function formatPhone(digits: string): string {
-  const d = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits
-  if (d.length !== 10) return digits
-  return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`
-}

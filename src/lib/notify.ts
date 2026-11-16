@@ -13,7 +13,8 @@
 
 import { site } from '@/content/site'
 import { Resend } from 'resend'
-import { formatPhone, type BotSignal, type SubmissionFields } from './validate'
+import { formatPhone, type PhoneFlag } from './phone'
+import { type BotSignal, type SubmissionFields } from './validate'
 
 export type SubmissionKind = 'quote' | 'apply'
 
@@ -33,6 +34,13 @@ export type Submission = SubmissionFields & {
    * so a forged address never receives mail it did not ask for.
    */
   signals?: BotSignal[]
+  /**
+   * Why the telephone number is worth a second look, if it is. Separate from
+   * `signals` on purpose: an odd-looking number says nothing about whether
+   * the email address is real, so it must never suppress the confirmation
+   * the way a bot signal does.
+   */
+  phoneFlags?: PhoneFlag[]
 }
 
 /** Thrown when the agency could not be notified. Message is user-safe. */
@@ -48,11 +56,29 @@ const SUBJECTS: Record<SubmissionKind, (name: string) => string> = {
   apply: (name) => `New application — ${name}`,
 }
 
-/** Prefixed to the subject of a flagged notification. Never shown to a visitor. */
-const FLAG_PREFIX = '[possible bot] '
-
 function flagsOf(submission: Submission): BotSignal[] {
   return submission.signals ?? []
+}
+
+function phoneFlagsOf(submission: Submission): PhoneFlag[] {
+  return submission.phoneFlags ?? []
+}
+
+/**
+ * One bracket on the subject line, never two.
+ *
+ * A submission can be suspicious in more than one way at once, and stacking
+ * `[possible bot] [check number] New quote request` reads as noise and buries
+ * the part that identifies the enquiry. So there is a single prefix that lists
+ * what was flagged: `[possible bot]`, `[check number]`, or
+ * `[possible bot, check number]`. The bot wording is unchanged from before, so
+ * any filter already sorting on it keeps working.
+ */
+function subjectPrefix(submission: Submission): string {
+  const parts: string[] = []
+  if (flagsOf(submission).length > 0) parts.push('possible bot')
+  if (phoneFlagsOf(submission).length > 0) parts.push('check number')
+  return parts.length > 0 ? `[${parts.join(', ')}] ` : ''
 }
 
 const LABELS: Record<SubmissionKind, string> = {
@@ -77,17 +103,25 @@ function escapeHtml(value: string): string {
 function buildBody(submission: Submission): { text: string; html: string } {
   const rows: Array<[string, string]> = [
     ['Name', submission.name],
-    ['Phone', formatPhone(submission.phone)],
+    ['Phone', formatPhone(submission.phone, submission.phoneExt)],
     ['Email', submission.email],
   ]
   if (submission.resumeUrl) rows.push(['Resume', submission.resumeUrl])
 
   const heading = `${LABELS[submission.kind]} from baldwinlifeinsurance.com`
   const flags = flagsOf(submission)
-  const note =
-    flags.length > 0
-      ? `Heads up: this one looks automated (${flags.join(', ')}). It is passed on rather than blocked in case it is a real person. Judge it on the details above.`
-      : ''
+  const phoneFlags = phoneFlagsOf(submission)
+  const notes: string[] = []
+  if (flags.length > 0) {
+    notes.push(
+      `Heads up: this one looks automated (${flags.join(', ')}). It is passed on rather than blocked in case it is a real person. Judge it on the details above.`,
+    )
+  }
+  if (phoneFlags.length > 0) {
+    notes.push(
+      `The number given looks unusual (${phoneFlags.join(', ')}). It is passed on exactly as entered -- worth a glance before you dial.`,
+    )
+  }
 
   const text = [
     heading,
@@ -95,7 +129,7 @@ function buildBody(submission: Submission): { text: string; html: string } {
     ...rows.map(([k, v]) => `${k}: ${v}`),
     '',
     'Reply to this email to reach the sender directly.',
-    ...(note ? ['', note] : []),
+    ...notes.flatMap((n) => ['', n]),
   ].join('\n')
 
   const html = [
@@ -107,11 +141,10 @@ function buildBody(submission: Submission): { text: string; html: string } {
     ),
     '</table>',
     '<p style="font:13px system-ui,sans-serif;color:#666;margin-top:20px">Reply to this email to reach the sender directly.</p>',
-    ...(note
-      ? [
-          `<p style="font:13px/1.6 system-ui,sans-serif;color:#8a6d3b;background:#fdf6e3;border:1px solid #e8d9a8;border-radius:8px;padding:12px;margin-top:16px">${escapeHtml(note)}</p>`,
-        ]
-      : []),
+    ...notes.map(
+      (n) =>
+        `<p style="font:13px/1.6 system-ui,sans-serif;color:#8a6d3b;background:#fdf6e3;border:1px solid #e8d9a8;border-radius:8px;padding:12px;margin-top:16px">${escapeHtml(n)}</p>`,
+    ),
   ].join('')
 
   return { text, html }
@@ -135,9 +168,7 @@ async function sendEmail(submission: Submission): Promise<void> {
     result = await new Resend(apiKey).emails.send({
       from: FROM,
       to: [to],
-      subject:
-        (flagsOf(submission).length > 0 ? FLAG_PREFIX : '') +
-        SUBJECTS[submission.kind](submission.name),
+      subject: subjectPrefix(submission) + SUBJECTS[submission.kind](submission.name),
       text,
       html,
       // Replying to the notification reaches the submitter directly.
@@ -198,9 +229,14 @@ async function sendConfirmation(submission: Submission): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) return // Nothing to send with; the caller already logged it.
 
-  // A flagged submission may carry an address its owner never typed. The
-  // agency notification still goes out, so no lead is lost; this courtesy
-  // does not, so the site never mails a stranger on a bot's say-so.
+  // A probable-bot submission may carry an address its owner never typed. The
+  // agency notification still goes out, so no lead is lost; this courtesy does
+  // not, so the site never mails a stranger on a bot's say-so.
+  //
+  // Deliberately keyed on bot signals alone. An odd-looking telephone number
+  // says nothing about whether the email address belongs to the person who
+  // typed it, and a real customer with an unusual number should still get
+  // their confirmation like anybody else.
   if (flagsOf(submission).length > 0) return
 
   const { subject, body } = CONFIRMATIONS[submission.kind]

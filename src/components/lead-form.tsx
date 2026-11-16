@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import { site } from '@/content/site'
+import { parsePhone } from '@/lib/phone'
 import { ELAPSED_KEY, TRAP_VALUE_KEY } from '@/lib/validate'
 import { LicenseLine } from './license-line'
 
@@ -72,9 +73,11 @@ const EMAIL_RE = /^[^\s@<>",;:\\]+@[^\s@<>",;:\\.]+(\.[^\s@<>",;:\\.]+)+$/
 function validate(values: Values): Errors {
   const errors: Errors = {}
   if (values.name.trim().length < 2) errors.name = 'Please enter your full name.'
-  if (values.phone.replace(/\D/g, '').length < 10) {
-    errors.phone = 'Please enter a valid phone number with at least 10 digits.'
-  }
+  // The same parser the server uses, so the message shown inline is the
+  // message the server would have given -- and a person who mistyped sees
+  // which part to fix before they ever submit.
+  const phone = parsePhone(values.phone)
+  if (!phone.ok) errors.phone = phone.error
   if (!EMAIL_RE.test(values.email.trim())) errors.email = 'Please enter a valid email address.'
   return errors
 }

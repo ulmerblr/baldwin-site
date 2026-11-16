@@ -9,6 +9,13 @@
  *   { ok: false, error: "<something a person can read>" }
  * Internal detail is logged server-side and never returned.
  *
+ * ODD-LOOKING NUMBERS. Same treatment, same reasoning: a number that cannot
+ * be a telephone number is refused with a message saying which part to look
+ * at, and a number that is merely implausible is delivered with a flag on it.
+ * Chris is going to dial it either way, and dialling it is the only
+ * verification that was ever going to be real. Unlike a bot signal, this does
+ * not suppress the submitter's confirmation -- see notify.ts.
+ *
  * BOTS. A submission that trips the trap is accepted, flagged and delivered,
  * not refused. The trap used to return 400, which meant a false positive --
  * and there were false positives, from ordinary Chrome autofill -- threw the
@@ -74,11 +81,10 @@ export async function handleSubmission(
     return json({ ok: false, error: parsed.error }, 400)
   }
 
-  const { signals } = parsed
-  const flagged = signals.length > 0
+  const { signals, phoneFlags } = parsed
 
   try {
-    await notify({ kind, ...parsed.data, signals })
+    await notify({ kind, ...parsed.data, signals, phoneFlags })
   } catch (cause) {
     if (cause instanceof NotifyError) {
       return json(
@@ -99,10 +105,14 @@ export async function handleSubmission(
     )
   }
 
+  // Still one line, whatever happened, and still nothing in it that could
+  // identify the person -- the reasons are named, the number never is.
+  const notes = [
+    signals.length > 0 ? `flagged as probable bot (${signals.join(', ')})` : '',
+    phoneFlags.length > 0 ? `phone flagged (${phoneFlags.join(', ')})` : '',
+  ].filter(Boolean)
   console.info(
-    flagged
-      ? `submission(${kind}): accepted and notified, flagged as probable bot (${signals.join(', ')})`
-      : `submission(${kind}): accepted and notified`,
+    [`submission(${kind}): accepted and notified`, ...notes].join(', '),
   )
   return json({ ok: true }, 200)
 }
