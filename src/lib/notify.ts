@@ -13,7 +13,7 @@
 
 import { site } from '@/content/site'
 import { Resend } from 'resend'
-import { formatPhone, type SubmissionFields } from './validate'
+import { formatPhone, type BotSignal, type SubmissionFields } from './validate'
 
 export type SubmissionKind = 'quote' | 'apply'
 
@@ -25,6 +25,14 @@ export type Submission = SubmissionFields & {
    * into the email body below when present.
    */
   resumeUrl?: string
+  /**
+   * Why this submission looks automated, if it does. Empty for an ordinary
+   * one. A flagged submission is still delivered -- the agency would rather
+   * delete a junk email than never hear from a prospect -- but it is marked
+   * so Chris can tell at a glance, and the courtesy confirmation is withheld
+   * so a forged address never receives mail it did not ask for.
+   */
+  signals?: BotSignal[]
 }
 
 /** Thrown when the agency could not be notified. Message is user-safe. */
@@ -38,6 +46,13 @@ export class NotifyError extends Error {
 const SUBJECTS: Record<SubmissionKind, (name: string) => string> = {
   quote: (name) => `New quote request — ${name}`,
   apply: (name) => `New application — ${name}`,
+}
+
+/** Prefixed to the subject of a flagged notification. Never shown to a visitor. */
+const FLAG_PREFIX = '[possible bot] '
+
+function flagsOf(submission: Submission): BotSignal[] {
+  return submission.signals ?? []
 }
 
 const LABELS: Record<SubmissionKind, string> = {
@@ -68,8 +83,20 @@ function buildBody(submission: Submission): { text: string; html: string } {
   if (submission.resumeUrl) rows.push(['Resume', submission.resumeUrl])
 
   const heading = `${LABELS[submission.kind]} from baldwinlifeinsurance.com`
+  const flags = flagsOf(submission)
+  const note =
+    flags.length > 0
+      ? `Heads up: this one looks automated (${flags.join(', ')}). It is passed on rather than blocked in case it is a real person. Judge it on the details above.`
+      : ''
 
-  const text = [heading, '', ...rows.map(([k, v]) => `${k}: ${v}`), '', 'Reply to this email to reach the sender directly.'].join('\n')
+  const text = [
+    heading,
+    '',
+    ...rows.map(([k, v]) => `${k}: ${v}`),
+    '',
+    'Reply to this email to reach the sender directly.',
+    ...(note ? ['', note] : []),
+  ].join('\n')
 
   const html = [
     `<h2 style="font:600 18px system-ui,sans-serif;margin:0 0 16px">${escapeHtml(heading)}</h2>`,
@@ -80,6 +107,11 @@ function buildBody(submission: Submission): { text: string; html: string } {
     ),
     '</table>',
     '<p style="font:13px system-ui,sans-serif;color:#666;margin-top:20px">Reply to this email to reach the sender directly.</p>',
+    ...(note
+      ? [
+          `<p style="font:13px/1.6 system-ui,sans-serif;color:#8a6d3b;background:#fdf6e3;border:1px solid #e8d9a8;border-radius:8px;padding:12px;margin-top:16px">${escapeHtml(note)}</p>`,
+        ]
+      : []),
   ].join('')
 
   return { text, html }
@@ -103,7 +135,9 @@ async function sendEmail(submission: Submission): Promise<void> {
     result = await new Resend(apiKey).emails.send({
       from: FROM,
       to: [to],
-      subject: SUBJECTS[submission.kind](submission.name),
+      subject:
+        (flagsOf(submission).length > 0 ? FLAG_PREFIX : '') +
+        SUBJECTS[submission.kind](submission.name),
       text,
       html,
       // Replying to the notification reaches the submitter directly.
@@ -163,6 +197,11 @@ const CONFIRMATION_FOOTER = [
 async function sendConfirmation(submission: Submission): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) return // Nothing to send with; the caller already logged it.
+
+  // A flagged submission may carry an address its owner never typed. The
+  // agency notification still goes out, so no lead is lost; this courtesy
+  // does not, so the site never mails a stranger on a bot's say-so.
+  if (flagsOf(submission).length > 0) return
 
   const { subject, body } = CONFIRMATIONS[submission.kind]
 

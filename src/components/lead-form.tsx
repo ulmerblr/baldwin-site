@@ -1,11 +1,50 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import { site } from '@/content/site'
+import { ELAPSED_KEY, TRAP_VALUE_KEY } from '@/lib/validate'
 import { LicenseLine } from './license-line'
 
-/** Mirrors HONEYPOT_FIELD in src/lib/validate.ts. */
-const HONEYPOT_FIELD = 'company_website'
+/**
+ * THE TRAP'S NAME. It is random, it changes every visit, and it means nothing.
+ *
+ * The previous name was `company_website`. That contains the word `company`,
+ * which is exactly what Chrome's own field classifier looks for when deciding
+ * which input holds an organisation, so Chrome filled it from the user's saved
+ * profile -- in an incognito window, with no extensions, for someone doing
+ * nothing unusual -- and every one of those submissions was refused as a bot.
+ * The opt-out attributes added for password managers did not help, because
+ * Chrome honours none of them once it believes it has recognised a field.
+ *
+ * There is no attribute that reliably says "do not fill this". The only thing
+ * that works is leaving nothing to recognise: no label, no placeholder, no
+ * aria-label, and a name that is not a word. Randomising it per visit also
+ * means no stable field signature for a browser to accumulate predictions
+ * against, and nothing for a bot to special-case.
+ *
+ * It has to reach the element as a React prop. React manages `name` on an
+ * input itself -- it clears and restores the property while syncing value --
+ * so a name assigned imperatively is wiped on the next render, which here
+ * meant the first keystroke. And a random value produced during render would
+ * differ between the server and the browser, which is a hydration mismatch.
+ * `useSyncExternalStore` is the sanctioned way out of that corner: the server
+ * renders one constant, the browser swaps in its own value at hydration, and
+ * React treats the difference as expected rather than as a bug.
+ */
+
+/** The name never changes once set, so there is nothing to subscribe to. */
+const subscribeToNothing = () => () => {}
+
+/** Generated once per page load, in the browser only. */
+let browserTrapName = ''
+function readBrowserTrapName(): string {
+  if (!browserTrapName) browserTrapName = `f${Math.random().toString(36).slice(2, 10)}`
+  return browserTrapName
+}
+
+/** What the server renders, until hydration replaces it. Equally meaningless. */
+const SERVER_TRAP_NAME = 'f0'
+const readServerTrapName = () => SERVER_TRAP_NAME
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -62,7 +101,20 @@ export function LeadForm({
 }: LeadFormProps) {
   const formId = useId()
   const [values, setValues] = useState<Values>({ name: '', phone: '', email: '' })
-  const [honeypot, setHoneypot] = useState('')
+  // The trap is deliberately uncontrolled -- no value, no onChange, no state.
+  // React must not manage this input. A controlled one is re-rendered every
+  // time the user types, and React wipes attributes it did not set itself on
+  // the way through, which silently stripped the random name off the field
+  // after the first keystroke. Leaving it alone keeps the name for the life of
+  // the page, and its value is read straight off the element at submit.
+  const trapRef = useRef<HTMLInputElement>(null)
+  const trapName = useSyncExternalStore(subscribeToNothing, readBrowserTrapName, readServerTrapName)
+  /** When this form appeared, set on mount. Zero until then, which flags nothing. */
+  const shownAt = useRef(0)
+
+  useEffect(() => {
+    shownAt.current = Date.now()
+  }, [])
   const [errors, setErrors] = useState<Errors>({})
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({})
   const [status, setStatus] = useState<Status>('idle')
@@ -102,7 +154,16 @@ export function LeadForm({
           email: values.email,
           // Seam: `resumeUrl` joins this payload when upload ships. Nothing
           // else in this handler changes.
-          [HONEYPOT_FIELD]: honeypot,
+          //
+          // These two keys are fixed and have nothing to do with what the trap
+          // input is called in the markup -- that name is random. The server
+          // reads JSON, the browser's autofill reads the DOM; keeping the two
+          // namespaces apart is the entire fix.
+          [TRAP_VALUE_KEY]: trapRef.current?.value ?? '',
+          [ELAPSED_KEY]: Date.now() - shownAt.current,
+          // shownAt is 0 only if the effect has not run, which makes the
+          // elapsed value enormous and flags nothing. Failing open is correct
+          // here: a missing signal must never cost somebody their enquiry.
         }),
       })
 
@@ -196,30 +257,30 @@ export function LeadForm({
       </div>
 
       {/* Honeypot: hidden from sighted users and removed from the a11y tree. */}
-      {/* The honeypot. It keeps a bot-attractive name on purpose -- that is
-          the whole trap -- which is also exactly what a password manager
-          matches on when it fills a form. The field is off-screen and
-          invisible, so Chrome's own autofill leaves it alone, but extensions
-          fill by name and reach it anyway; when one does, a real person is
-          turned away as a bot and told only that their submission could not
-          be processed. Hence the opt-out attributes: 1Password, LastPass,
-          Bitwarden and Dashlane each read a different one, so all four are
-          present. `autoComplete="off"` alone is not enough; none of them
-          honour it. Keep every one of these if you touch this field. */}
+      {/* The trap.
+          Nothing here carries a word an autofiller can recognise: no label
+          text, no placeholder, no aria-label, and a random name. That is what
+          keeps real people out of it -- the opt-out attributes below are
+          belt-and-braces for extensions, and are not what does the work, since
+          Chrome honours none of them once it thinks it has recognised a field.
+          It stays out of reach of anyone browsing: off-screen and transparent
+          by CSS, removed from the tab order, and inside an aria-hidden wrapper
+          so screen readers never reach it either.
+          A value arriving here now flags a submission rather than refusing it.
+          Losing a prospect costs the agency far more than a junk email does. */}
       <div className="honeypot" aria-hidden="true">
-        <label htmlFor={`${formId}-hp`}>Company website (leave blank)</label>
         <input
-          id={`${formId}-hp`}
+          ref={trapRef}
+          id={`${formId}-t`}
           type="text"
-          name={HONEYPOT_FIELD}
+          name={trapName}
           tabIndex={-1}
           autoComplete="off"
           data-1p-ignore=""
           data-lpignore="true"
           data-bwignore=""
           data-form-type="other"
-          value={honeypot}
-          onChange={(e) => setHoneypot(e.target.value)}
+          defaultValue=""
         />
       </div>
 

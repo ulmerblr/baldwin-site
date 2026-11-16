@@ -9,6 +9,14 @@
  *   { ok: false, error: "<something a person can read>" }
  * Internal detail is logged server-side and never returned.
  *
+ * BOTS. A submission that trips the trap is accepted, flagged and delivered,
+ * not refused. The trap used to return 400, which meant a false positive --
+ * and there were false positives, from ordinary Chrome autofill -- threw the
+ * lead away and told the person only that their submission could not be
+ * processed. For a small agency a lost prospect is worth far more than the
+ * junk email that gets through instead, so the error this code now prefers to
+ * make is the cheap one. Chris sees the flag in the subject line and decides.
+ *
  * LOGGING. Every outcome writes exactly one line, success included. This is
  * not decoration. For a while the only paths that logged were the ones where
  * Resend failed, so a form that was turning submissions away -- on the rate
@@ -66,8 +74,11 @@ export async function handleSubmission(
     return json({ ok: false, error: parsed.error }, 400)
   }
 
+  const { signals } = parsed
+  const flagged = signals.length > 0
+
   try {
-    await notify({ kind, ...parsed.data })
+    await notify({ kind, ...parsed.data, signals })
   } catch (cause) {
     if (cause instanceof NotifyError) {
       return json(
@@ -88,6 +99,10 @@ export async function handleSubmission(
     )
   }
 
-  console.info(`submission(${kind}): accepted and notified`)
+  console.info(
+    flagged
+      ? `submission(${kind}): accepted and notified, flagged as probable bot (${signals.join(', ')})`
+      : `submission(${kind}): accepted and notified`,
+  )
   return json({ ok: true }, 200)
 }
