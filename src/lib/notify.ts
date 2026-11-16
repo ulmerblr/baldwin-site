@@ -11,6 +11,7 @@
  * so there is no optimistic success path here.
  */
 
+import { site } from '@/content/site'
 import { Resend } from 'resend'
 import { formatPhone, type SubmissionFields } from './validate'
 
@@ -48,7 +49,7 @@ const LABELS: Record<SubmissionKind, string> = {
  * Resend requires a verified sender. Until the domain is verified, Resend's
  * shared onboarding sender works and is the safe default.
  */
-const FROM = process.env.NOTIFY_FROM || 'Baldwin Site <onboarding@resend.dev>'
+const FROM = process.env.NOTIFY_FROM || `${site.name} <onboarding@resend.dev>`
 
 function escapeHtml(value: string): string {
   return value
@@ -120,6 +121,72 @@ async function sendEmail(submission: Submission): Promise<void> {
 }
 
 /**
+ * Confirmation to the person who filled in the form.
+ *
+ * COPY. The two messages are the client's, reproduced exactly. The agency
+ * name and the telephone number inside them are interpolated from
+ * `site.contact` rather than retyped, so the rendered text is identical to
+ * what was supplied and cannot drift from the rest of the site if either
+ * value changes. The footer's four values are pulled the same way; none of
+ * them is typed in here.
+ *
+ * SENDER. `FROM`, the same NOTIFY_FROM-driven value the agency notification
+ * uses. Nothing here hardcodes an address, so the Resend sending domain can
+ * be switched entirely from the environment.
+ *
+ * REPLY-TO. Chris, so a reply from the submitter reaches a person. Note this
+ * is the opposite of the agency notification, where reply-to is the
+ * submitter.
+ *
+ * FAILURE. This is a courtesy. It must never turn a delivered agency
+ * notification into an error the submitter sees -- see `notify()`.
+ */
+const CONFIRMATIONS: Record<SubmissionKind, { subject: string; body: string }> = {
+  quote: {
+    subject: `We got your request — ${site.name}`,
+    body: `Thanks for reaching out. A licensed Baldwin agent will contact you directly within one business day. If you need us sooner, call ${site.contact.phone}.`,
+  },
+  apply: {
+    subject: `We got your application — ${site.name}`,
+    body: `Thanks for your interest in joining ${site.name}. We review every application and will be in touch.`,
+  },
+}
+
+/** Agency name, address, phone and licence -- every one from the content file. */
+const CONFIRMATION_FOOTER = [
+  site.name,
+  site.contact.address,
+  site.contact.phone,
+  site.contact.licenseInline,
+]
+
+async function sendConfirmation(submission: Submission): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) return // Nothing to send with; the caller already logged it.
+
+  const { subject, body } = CONFIRMATIONS[submission.kind]
+
+  const text = [body, '', ...CONFIRMATION_FOOTER].join('\n')
+  const html = [
+    `<p style="font:15px/1.6 system-ui,sans-serif;margin:0 0 24px">${escapeHtml(body)}</p>`,
+    '<hr style="border:none;border-top:1px solid #e5e2da;margin:0 0 16px">',
+    `<p style="font:13px/1.6 system-ui,sans-serif;color:#666;margin:0">${CONFIRMATION_FOOTER.map(escapeHtml).join('<br>')}</p>`,
+  ].join('')
+
+  const result = await new Resend(apiKey).emails.send({
+    from: FROM,
+    to: [submission.email],
+    subject,
+    text,
+    html,
+    // A reply to the confirmation should reach Chris, not the sender itself.
+    replyTo: site.contact.email,
+  })
+
+  if (result.error) throw new Error(`resend rejected the confirmation: ${result.error.message}`)
+}
+
+/**
  * Forward to the ATS, once one exists.
  *
  * Ships disabled: `ATS_INTAKE_URL` is unset in production today, so this is a
@@ -152,8 +219,15 @@ export async function notify(submission: Submission): Promise<void> {
   // Email first: this is the delivery guarantee. If it throws, the user is told.
   await sendEmail(submission)
 
-  // Supplementary. A broken ATS must never turn a delivered email into an
-  // error the user sees, so its failures are logged and swallowed.
+  // Everything below is supplementary. The agency has been notified, so the
+  // submission is not lost and the person must still see success -- these
+  // failures are logged and swallowed rather than surfaced.
+  try {
+    await sendConfirmation(submission)
+  } catch (cause) {
+    console.error('notify: confirmation to submitter failed', cause)
+  }
+
   try {
     await forwardToAts(submission)
   } catch (cause) {
